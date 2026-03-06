@@ -6,7 +6,7 @@ A Monochromatic themed Hyprland rice with Quickshell widgets.
 >This is due to the fact that I am not proficient enough with Quickshell _yet_ to write it independently.
 >While I have tried to keep it clean, modular and de-bloated, I have not had a chance 
 >to read the code in great detail. Nonetheless, I hope they will be helpful to you.
->I will remove this WARNING admonition block when I am done reviewing + re-writing quickshell parts manually.
+>I will remove this WARNING block when I am done reviewing + re-writing quickshell parts manually.
 
 # Setup
 There is no installation script, however the setup should be pretty straightforward. You'll need to install `quickshell-git` 
