@@ -18,6 +18,10 @@ from AUR, `grimblast`, `swappy`, `brightnessctl`, `pipewire`, `hyprpaper`, `pyth
 4. Place `kitty/`, `quickshell/`, `hypr/` under `~/.config/`
 5. Try to run `quickshell` or `qs` (and pray for success)
 
+>[!TIP]
+>Optionally, configure Hyprland as per your requirements, I'm left-handed so my keybinds might not be 
+>best suited for everyone.
+
 # Showcase
 ![Wall-E Theme](.showcase/wall-e-theme.png)
 ![Nordish Theme](.showcase/nordish-theme.png)
