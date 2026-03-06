@@ -22,7 +22,7 @@ Singleton {
 
     property var parsed: ({})
 
-    property string colorsPath: "~/.cache/wal/colors.json"
+    property string colorsPath: Quickshell.env("HOME") + "/.cache/wal/colors.json"
 
     function reload() {
         reader.running = true
@@ -50,7 +50,7 @@ Singleton {
     // Watch sentinel file written by set-wallpaper.sh after wal finishes
     FileView {
         id: sentinel
-        path: "~/.cache/wal/.qs-reload"
+        path: Quickshell.env("HOME") + "/.cache/wal/.qs-reload"
         watchChanges: true
         preload: true
     }

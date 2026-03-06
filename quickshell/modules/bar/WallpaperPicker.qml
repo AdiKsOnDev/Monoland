@@ -259,7 +259,7 @@ FloatingWindow {
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
                             applyProcess.command = [
-                                "~/.local/share/bin/set-wallpaper.sh",
+                                Quickshell.env("HOME") + "/.local/share/bin/set-wallpaper.sh",
                                 root.wallpaperDir + "/" + parent.parent.modelData,
                                 root.lightMode ? "light" : "dark"
                             ]
@@ -309,7 +309,7 @@ FloatingWindow {
 
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Add images to ~/Pictures/Wallpapers"
+                text: "Add images to " + Quickshell.env("HOME") + "/Pictures/Wallpapers"
                 color: Colors.secondaryText
                 font.family: "Poppins"
                 font.italic: false
