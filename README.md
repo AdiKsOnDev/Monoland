@@ -8,9 +8,18 @@ A Monochromatic themed Hyprland rice with Quickshell widgets.
 >to read the code in great detail. Nonetheless, I hope they will be helpful to you.
 >I will remove this WARNING block when I am done reviewing + re-writing quickshell parts manually.
 
-# Setup
-There is no installation script, however the setup should be pretty straightforward. You'll need to install `quickshell-git` 
-from AUR, `grimblast`, `swappy`, `brightnessctl`, `pipewire`, `hyprpaper`, `python-pywal` before you proceed. 
+# Auto-Setup
+Make sure you have an AUR helper installed and run:
+
+```sh 
+./install.sh
+```
+
+the script *will* install `paru` if you don't have any helpers installed on your system, but it's safer to have a helper pre-installed.
+
+# Manual Setup
+If you prefer a manual setup (or the script has failed you) no worries, it should be pretty straightforward. You'll need to install `quickshell-git` and `grimblast-git`
+from AUR, and `swappy`, `brightnessctl`, `pipewire`, `hyprpaper`, `python-pywal` from official DBs before you proceed. 
 
 1. Create a directory in `.local/share/monoland` and copy one of the Wallpapers into there under name `current`.
 2. Move `Wallpapers/` into `~/Pictures/`
