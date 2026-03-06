@@ -10,11 +10,11 @@ A Monochromatic themed Hyprland rice with Quickshell widgets.
 
 # Setup
 There is no installation script, however the setup should be pretty straightforward. You'll need to install `quickshell-git` 
-from AUR, `grimblast`, `brightnessctl`, `pipewire`, `hyprpaper`, `python-pywal` before you proceed. 
+from AUR, `grimblast`, `swappy`, `brightnessctl`, `pipewire`, `hyprpaper`, `python-pywal` before you proceed. 
 
 1. Create a directory in `.local/share/monoland` and copy one of the Wallpapers into there under name `current`.
 2. Move `Wallpapers/` into `~/Pictures/`
-3.Install `JetBrains`, `Poppins` fonts into your system.
+3. Install `JetBrains`, `Poppins` fonts into your system.
 4. Place `kitty/`, `quickshell/`, `hypr/` under `~/.config/`
 5. Try to run `quickshell` or `qs` (and pray for success)
 
@@ -24,3 +24,8 @@ from AUR, `grimblast`, `brightnessctl`, `pipewire`, `hyprpaper`, `python-pywal` 
 ![Windows Theme](.showcase/windows-theme.png)
 ![Purple Theme](.showcase/purple-theme.png)
 
+
+# Known Issues
+- [ ] Theme/Wallpaper switch can be slow
+- [ ] Brightness Control is hard-coded, will not work out-of-the-box
+- [ ] Battery indicator _might_ not work on your system
