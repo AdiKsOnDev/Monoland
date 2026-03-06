@@ -31,7 +31,7 @@ AnimatedPopup {
                 font.family: "Poppins"
                 font.italic: false
                 font.pixelSize: 56
-                font.weight: Font.SemiBold
+                font.weight: Font.Bold
             }
 
             Text {
