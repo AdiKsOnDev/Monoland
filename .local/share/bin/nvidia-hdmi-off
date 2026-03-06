@@ -1,0 +1,9 @@
+#!/bin/bash
+# Suspend NVIDIA GPU to save power
+
+NVIDIA_PCI="0000:c4:00.0"
+
+echo "→ Suspending NVIDIA GPU..."
+sudo sh -c "echo auto > /sys/bus/pci/devices/$NVIDIA_PCI/power/control"
+
+echo "✓ NVIDIA GPU suspended for power saving"

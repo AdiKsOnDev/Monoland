@@ -1,0 +1,6 @@
+#!/bin/bash
+sudo modprobe nvidia
+sudo modprobe nvidia_drm
+sudo modprobe nvidia_modeset  
+sudo modprobe nvidia_uvm
+echo "NVIDIA enabled. Reboot or restart display manager to use."

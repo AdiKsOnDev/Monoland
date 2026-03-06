@@ -1,0 +1,9 @@
+module qs.modules.bar
+Bar 1.0 Bar.qml
+BarWindow 1.0 BarWindow.qml
+BarContent 1.0 BarContent.qml
+Workspaces 1.0 Workspaces.qml
+WorkspaceButton 1.0 WorkspaceButton.qml
+StatChip 1.0 StatChip.qml
+WallpaperPicker 1.0 WallpaperPicker.qml
+StatsPopup 1.0 StatsPopup.qml

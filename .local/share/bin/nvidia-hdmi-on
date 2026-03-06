@@ -1,0 +1,15 @@
+#!/bin/bash
+# Activate NVIDIA GPU for HDMI output
+
+NVIDIA_PCI="0000:c4:00.0"
+
+echo "→ Waking NVIDIA GPU..."
+sudo sh -c "echo on > /sys/bus/pci/devices/$NVIDIA_PCI/power/control"
+
+sleep 2
+
+echo "→ Reloading Hyprland..."
+hyprctl reload
+
+echo "✓ NVIDIA GPU active. Your monitor should be detected now."
+echo "  Run 'hyprctl monitors' to see connected displays"

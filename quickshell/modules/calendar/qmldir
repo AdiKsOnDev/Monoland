@@ -1,0 +1,5 @@
+module qs.modules.calendar
+AnimatedPopup 1.0 AnimatedPopup.qml
+ClockPopup 1.0 ClockPopup.qml
+Calendar 1.0 Calendar.qml
+TodoList 1.0 TodoList.qml
