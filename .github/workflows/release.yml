@@ -1,0 +1,232 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Get previous tag
+      id: prev-tag
+      run: |
+        PREV_TAG=$(git tag --sort=-version:refname | sed -n '2p')
+        if [ -z "$PREV_TAG" ]; then
+          PREV_TAG=$(git rev-list --max-parents=0 HEAD)
+        fi
+        echo "prev-tag=$PREV_TAG" >> $GITHUB_OUTPUT
+        echo "Previous tag/commit: $PREV_TAG"
+
+    - name: Generate categorized release notes
+      id: release-notes
+      run: |
+        CURRENT_TAG=${GITHUB_REF#refs/tags/}
+        PREV_TAG=${{ steps.prev-tag.outputs.prev-tag }}
+        
+        echo "Generating release notes for $CURRENT_TAG since $PREV_TAG"
+        
+        # Get all commits since last release
+        COMMITS=$(git log --pretty=format:"%s" $PREV_TAG..$CURRENT_TAG 2>/dev/null || git log --pretty=format:"%s" $PREV_TAG..$CURRENT_TAG)
+        
+        # Initialize category arrays
+        declare -a BREAKING_CHANGES
+        declare -a FEATURES
+        declare -a FIXES
+        declare -a PERFORMANCE
+        declare -a REFACTORS
+        declare -a DOCS
+        declare -a TESTS
+        declare -a CHORES
+        declare -a OTHER
+        
+        # Parse commits and categorize
+        while IFS= read -r commit; do
+          # Skip empty lines
+          [ -z "$commit" ] && continue
+          
+          # Check if it's a conventional commit
+          if echo "$commit" | grep -qE '^[a-z]+(\([^)]+\))?!?:'; then
+            # Extract type
+            TYPE=$(echo "$commit" | sed -E 's/^([a-z]+).*/\1/')
+            
+            # Check for breaking change marker
+            if echo "$commit" | grep -qE '^[a-z]+(\([^)]+\))?!:' || echo "$commit" | grep -q "BREAKING CHANGE"; then
+              IS_BREAKING=true
+            else
+              IS_BREAKING=false
+            fi
+            
+            # Extract scope and message
+            if echo "$commit" | grep -qE '^\w+\([^)]+\)!?:'; then
+              SCOPE=$(echo "$commit" | sed -E 's/^[a-z]+\(([^)]+)\)!?:.*/\1/')
+              MESSAGE=$(echo "$commit" | sed -E 's/^[a-z]+\([^)]+\)!?:[[:space:]]*//')
+              FORMATTED="- **${SCOPE}**: ${MESSAGE}"
+            else
+              MESSAGE=$(echo "$commit" | sed -E 's/^[a-z]+!?:[[:space:]]*//')
+              FORMATTED="- ${MESSAGE}"
+            fi
+            
+            # Add to breaking changes if applicable
+            if [ "$IS_BREAKING" = true ]; then
+              BREAKING_CHANGES+=("$FORMATTED")
+            fi
+            
+            # Categorize by type
+            case "$TYPE" in
+              feat)
+                FEATURES+=("$FORMATTED")
+                ;;
+              fix)
+                FIXES+=("$FORMATTED")
+                ;;
+              perf)
+                PERFORMANCE+=("$FORMATTED")
+                ;;
+              refactor)
+                REFACTORS+=("$FORMATTED")
+                ;;
+              docs)
+                DOCS+=("$FORMATTED")
+                ;;
+              test)
+                TESTS+=("$FORMATTED")
+                ;;
+              build|ci|chore)
+                CHORES+=("$FORMATTED")
+                ;;
+              *)
+                OTHER+=("$FORMATTED")
+                ;;
+            esac
+          else
+            # Non-conventional commit
+            OTHER+=("- $commit")
+          fi
+        done <<< "$COMMITS"
+        
+        # Build release notes
+        cat > release_notes.md << 'EOF'
+        ## What's Changed
+        
+        EOF
+        
+        # Add breaking changes section (highest priority)
+        if [ ${#BREAKING_CHANGES[@]} -gt 0 ]; then
+          echo "### BREAKING CHANGES" >> release_notes.md
+          echo "" >> release_notes.md
+          printf '%s\n' "${BREAKING_CHANGES[@]}" >> release_notes.md
+          echo "" >> release_notes.md
+        fi
+        
+        # Add features section
+        if [ ${#FEATURES[@]} -gt 0 ]; then
+          echo "### Features" >> release_notes.md
+          echo "" >> release_notes.md
+          printf '%s\n' "${FEATURES[@]}" >> release_notes.md
+          echo "" >> release_notes.md
+        fi
+        
+        # Add fixes section
+        if [ ${#FIXES[@]} -gt 0 ]; then
+          echo "### Bug Fixes" >> release_notes.md
+          echo "" >> release_notes.md
+          printf '%s\n' "${FIXES[@]}" >> release_notes.md
+          echo "" >> release_notes.md
+        fi
+        
+        # Add performance section
+        if [ ${#PERFORMANCE[@]} -gt 0 ]; then
+          echo "### Performance Improvements" >> release_notes.md
+          echo "" >> release_notes.md
+          printf '%s\n' "${PERFORMANCE[@]}" >> release_notes.md
+          echo "" >> release_notes.md
+        fi
+        
+        # Add refactoring section
+        if [ ${#REFACTORS[@]} -gt 0 ]; then
+          echo "### Code Refactoring" >> release_notes.md
+          echo "" >> release_notes.md
+          printf '%s\n' "${REFACTORS[@]}" >> release_notes.md
+          echo "" >> release_notes.md
+        fi
+        
+        # Add documentation section
+        if [ ${#DOCS[@]} -gt 0 ]; then
+          echo "### Documentation" >> release_notes.md
+          echo "" >> release_notes.md
+          printf '%s\n' "${DOCS[@]}" >> release_notes.md
+          echo "" >> release_notes.md
+        fi
+        
+        # Add tests section
+        if [ ${#TESTS[@]} -gt 0 ]; then
+          echo "### Tests" >> release_notes.md
+          echo "" >> release_notes.md
+          printf '%s\n' "${TESTS[@]}" >> release_notes.md
+          echo "" >> release_notes.md
+        fi
+        
+        # Add chores section (collapsed by default)
+        if [ ${#CHORES[@]} -gt 0 ]; then
+          echo "<details>" >> release_notes.md
+          echo "<summary>Chores & Maintenance</summary>" >> release_notes.md
+          echo "" >> release_notes.md
+          printf '%s\n' "${CHORES[@]}" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "</details>" >> release_notes.md
+          echo "" >> release_notes.md
+        fi
+        
+        # Add other commits if any
+        if [ ${#OTHER[@]} -gt 0 ]; then
+          echo "<details>" >> release_notes.md
+          echo "<summary>Other Changes</summary>" >> release_notes.md
+          echo "" >> release_notes.md
+          printf '%s\n' "${OTHER[@]}" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "</details>" >> release_notes.md
+          echo "" >> release_notes.md
+        fi
+        
+        echo "Release notes created:"
+        cat release_notes.md
+
+    - name: Extract release type
+      id: release-type
+      run: |
+        TAG=${GITHUB_REF#refs/tags/}
+        if [[ $TAG == *"alpha"* ]] || [[ $TAG == *"beta"* ]] || [[ $TAG == *"rc"* ]]; then
+          echo "prerelease=true" >> $GITHUB_OUTPUT
+        else
+          echo "prerelease=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        body_path: release_notes.md
+        draft: false
+        prerelease: ${{ steps.release-type.outputs.prerelease }}
+        generate_release_notes: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Generate build summary
+      run: |
+        echo "## Release ${{ github.ref_name }} Published" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Links" >> $GITHUB_STEP_SUMMARY
+        echo "- [Release Page](https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }})" >> $GITHUB_STEP_SUMMARY
+        echo "- [Full Changelog](https://github.com/${{ github.repository }}/compare/${{ steps.prev-tag.outputs.prev-tag }}...${{ github.ref_name }})" >> $GITHUB_STEP_SUMMARY
+
