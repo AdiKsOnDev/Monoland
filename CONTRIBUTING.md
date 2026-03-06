@@ -27,3 +27,4 @@ added onto as the project grows:
 
 **Misc**
 - `hypr` - hyprland configuration
+- `dev` - developers QoL
