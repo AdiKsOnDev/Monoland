@@ -8,4 +8,4 @@ do
 done
 
 layMain=$(hyprctl -j devices | jq '.keyboards' | jq '.[] | select (.main == true)' | awk -F '"' '{if ($2=="active_keymap") print $4}')
-notify-send -a "Current Layout:" -r 91190 -t 800 -i "~/.config/dunst/icons/keyboard.svg" "${layMain}"
+notify-send -a "Current Layout:" -r 91190 -t 800 -i "${HOME}/.local/share/monoland/icons/keyboard-icon.png" "${layMain}"
