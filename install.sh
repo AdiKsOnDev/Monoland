@@ -127,6 +127,8 @@ else
     info "Initial wallpaper already set, skipping"
 fi
 
+cp -r "$REPO_DIR/icons" "$MONOLAND_DIR/"
+
 section "Installing config files..."
 
 install_config() {
