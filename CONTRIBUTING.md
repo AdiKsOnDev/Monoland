@@ -28,3 +28,4 @@ added onto as the project grows:
 **Misc**
 - `hypr` - hyprland configuration
 - `dev` - developers QoL
+- `installation` - changes introduced to the automated installation process
