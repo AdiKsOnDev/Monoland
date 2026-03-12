@@ -8,6 +8,11 @@ PanelWindow {
     id: root
 
     required property var screen
+    property bool sidebarOpen: false
+
+    onSidebarOpenChanged: {
+        if (sidebarOpen) dismiss()
+    }
 
     anchors {
         top: true
@@ -43,6 +48,7 @@ PanelWindow {
     }
 
     function triggerShow() {
+        if (root.sidebarOpen) return
         visible = true
         isVisible = true
         dismissTimer.restart()

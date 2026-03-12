@@ -36,6 +36,7 @@ Scope {
 
             OsdToast {
                 screen: modelData
+                sidebarOpen: notificationSidebar.item?.isOpen ?? false
             }
 
             LazyLoader {
