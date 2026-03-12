@@ -81,9 +81,9 @@ PanelWindow {
                 top: parent.top
                 left: parent.left
                 right: parent.right
-                margins: 12
+                margins: 20
             }
-            spacing: 12
+            spacing: 20
         }
     }
 }

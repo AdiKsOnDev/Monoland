@@ -7,7 +7,7 @@ import qs.services
 AnimatedPopup {
     id: root
 
-    popupWidth: 720
+    popupWidth: 780
 
     SystemClock {
         id: clock
@@ -17,23 +17,26 @@ AnimatedPopup {
     Row {
         width: parent.width
         height: calendarPanel.implicitHeight
+        spacing: 0
 
         // Left panel: time, date, calendar
         Column {
             id: calendarPanel
-            width: parent.width / 2 - 8
-            spacing: 8
+            width: parent.width / 2 - 1
+            spacing: 16
 
+            // Time
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: Qt.formatTime(clock.date, "hh:mm")
                 color: Colors.primaryText
                 font.family: "Poppins"
                 font.italic: false
-                font.pixelSize: 56
+                font.pixelSize: 72
                 font.weight: Font.Bold
             }
 
+            // Date
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: Qt.formatDate(clock.date, "dddd, MMMM d")
@@ -41,12 +44,7 @@ AnimatedPopup {
                 font.family: "Poppins"
                 font.italic: false
                 font.pixelSize: 13
-            }
-
-            Rectangle {
-                width: parent.width
-                height: 1
-                color: Colors.border
+                bottomPadding: 4
             }
 
             Calendar {
@@ -55,23 +53,30 @@ AnimatedPopup {
         }
 
         // Vertical divider
-        Rectangle {
+        Item {
             width: 1
             height: parent.height
-            color: Colors.border
+
+            Rectangle {
+                anchors.verticalCenter: parent.verticalCenter
+                width: 1
+                height: parent.height * 0.90
+                color: Colors.border
+                opacity: 0.4
+            }
         }
 
+        // Right panel: todo list
         Item {
-            width: parent.width / 2 - 8
+            width: parent.width / 2 - 1
             height: calendarPanel.implicitHeight
 
             TodoList {
                 anchors {
-                    top: parent.top
-                    left: parent.left
-                    right: parent.right
-                    bottom: parent.bottom
-                    leftMargin: 16
+                    fill: parent
+                    leftMargin: 20
+                    rightMargin: 4
+                    topMargin: 4
                 }
             }
         }

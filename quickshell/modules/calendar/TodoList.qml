@@ -16,8 +16,6 @@ Item {
 
     property var todos: []
     property int editingId: -1
-
-    // Pending command to run — set args then trigger the process
     property var pendingArgs: []
 
     function runCommand(args) {
@@ -25,11 +23,11 @@ Item {
         todoProc.running = true
     }
 
-    function loadTodos()              { runCommand(["list"]) }
-    function addTodo(text)            { runCommand(["add", text]) }
-    function toggleTodo(id)           { runCommand(["toggle", String(id)]) }
-    function editTodo(id, text)       { runCommand(["edit", String(id), text]) }
-    function removeTodo(id)           { runCommand(["remove", String(id)]) }
+    function loadTodos()        { runCommand(["list"]) }
+    function addTodo(text)      { runCommand(["add", text]) }
+    function toggleTodo(id)     { runCommand(["toggle", String(id)]) }
+    function editTodo(id, text) { runCommand(["edit", String(id), text]) }
+    function removeTodo(id)     { runCommand(["remove", String(id)]) }
 
     Component.onCompleted: loadTodos()
 
@@ -53,7 +51,7 @@ Item {
         }
     }
 
-    // Header
+   
     Row {
         id: todoHeader
         anchors {
@@ -61,25 +59,26 @@ Item {
             left: parent.left
             right: parent.right
         }
-        height: 40
+        height: 44
 
         Text {
             text: "Tasks"
             color: Colors.primaryText
             font.family: "Poppins"
             font.italic: false
-            font.pixelSize: 14
-            font.weight: Font.SemiBold
+            font.pixelSize: 15
+            font.weight: Font.Bold
             verticalAlignment: Text.AlignVCenter
             height: parent.height
-            width: parent.width - addBtn.width
+            width: parent.width - addBtn.implicitWidth
         }
 
+        // Add button
         Rectangle {
             id: addBtn
-            width: 28
-            height: 28
-            radius: 999
+            implicitWidth: 30
+            implicitHeight: 30
+            radius: 8
             anchors.verticalCenter: parent.verticalCenter
             color: addHover.containsMouse ? Colors.surfaceVariant : "transparent"
 
@@ -90,7 +89,9 @@ Item {
                 text: "󰐕"
                 font.family: "JetBrainsMono Nerd Font"
                 font.pixelSize: 16
-                color: Colors.primaryText
+                color: addHover.containsMouse ? Colors.primaryText : Colors.secondaryText
+
+                Behavior on color { ColorAnimation { duration: 150 } }
             }
 
             MouseArea {
@@ -108,7 +109,7 @@ Item {
         }
     }
 
-    // New item input
+   
     Rectangle {
         id: newItemInput
         anchors {
@@ -116,63 +117,104 @@ Item {
             left: parent.left
             right: parent.right
         }
-        height: visible ? 36 : 0
+        height: visible ? 40 : 0
         visible: false
         color: Colors.surfaceVariant
-        radius: 8
+        radius: 10
 
-        TextInput {
-            id: newItemField
+        Behavior on height { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
+
+        Row {
             anchors {
-                left: parent.left
-                right: parent.right
-                verticalCenter: parent.verticalCenter
-                leftMargin: 10
-                rightMargin: 10
+                fill: parent
+                leftMargin: 12
+                rightMargin: 12
             }
-            color: Colors.primaryText
-            font.family: "Poppins"
-            font.italic: false
-            font.pixelSize: 12
-            selectionColor: Qt.rgba(Colors.primaryText.r, Colors.primaryText.g, Colors.primaryText.b, 0.3)
-            clip: true
+            spacing: 8
 
-            Keys.onReturnPressed: {
-                const text = newItemField.text.trim()
-                if (text !== "") root.addTodo(text)
-                newItemInput.visible = false
-                newItemField.text = ""
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                text: "󰐕"
+                font.family: "JetBrainsMono Nerd Font"
+                font.pixelSize: 13
+                color: Colors.secondaryText
             }
-            Keys.onEscapePressed: {
-                newItemInput.visible = false
-                newItemField.text = ""
+
+            TextInput {
+                id: newItemField
+                width: parent.width - 28
+                anchors.verticalCenter: parent.verticalCenter
+                color: Colors.primaryText
+                font.family: "Poppins"
+                font.italic: false
+                font.pixelSize: 13
+                selectionColor: Qt.rgba(Colors.primaryText.r, Colors.primaryText.g, Colors.primaryText.b, 0.3)
+                clip: true
+
+                Text {
+                    anchors.fill: parent
+                    text: "New task..."
+                    color: Colors.secondaryText
+                    font: parent.font
+                    visible: parent.text.length === 0
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                Keys.onReturnPressed: {
+                    const trimmed = newItemField.text.trim()
+                    if (trimmed !== "") root.addTodo(trimmed)
+                    newItemInput.visible = false
+                    newItemField.text = ""
+                }
+                Keys.onEscapePressed: {
+                    newItemInput.visible = false
+                    newItemField.text = ""
+                }
             }
         }
     }
 
-    // Todo items
+   
     ListView {
         id: todoListView
         anchors {
             top: newItemInput.visible ? newItemInput.bottom : todoHeader.bottom
-            topMargin: 4
+            topMargin: 6
             left: parent.left
             right: parent.right
             bottom: parent.bottom
         }
-        spacing: 2
+        spacing: 4
         clip: true
         model: root.todos
 
-        delegate: Item {
+        add: Transition {
+            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200; easing.type: Easing.OutCubic }
+            NumberAnimation { property: "x"; from: 20; to: 0; duration: 200; easing.type: Easing.OutCubic }
+        }
+
+        remove: Transition {
+            NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 150; easing.type: Easing.InCubic }
+        }
+
+        displaced: Transition {
+            NumberAnimation { property: "y"; duration: 200; easing.type: Easing.OutCubic }
+        }
+
+        delegate: Rectangle {
             id: todoDelegate
             required property var modelData
             width: todoListView.width
-            height: 36
+            height: 44
+            radius: 10
+            color: todoDelegate.modelData.done ? "transparent" : Colors.surfaceVariant
+
+            Behavior on color { ColorAnimation { duration: 150 } }
 
             readonly property bool isEditing: root.editingId === modelData.id
+            readonly property bool isHovered: delegateHover.containsMouse
 
-            // Strikethrough line for done items
+            // Strikethrough
             Rectangle {
                 anchors {
                     left: todoText.left
@@ -182,16 +224,18 @@ Item {
                 height: 1
                 color: Colors.secondaryText
                 visible: todoDelegate.modelData.done && !todoDelegate.isEditing
+                opacity: 0.6
             }
 
-            // Check/uncheck button
+            // Check button
             Rectangle {
                 id: checkBtn
-                width: 18
-                height: 18
-                radius: 999
+                width: 20
+                height: 20
+                radius: 6
                 anchors {
                     left: parent.left
+                    leftMargin: 12
                     verticalCenter: parent.verticalCenter
                 }
                 color: todoDelegate.modelData.done ? Colors.primaryText : "transparent"
@@ -204,7 +248,7 @@ Item {
                     anchors.centerIn: parent
                     text: "󰄬"
                     font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 10
+                    font.pixelSize: 11
                     color: Colors.background
                     visible: todoDelegate.modelData.done
                 }
@@ -216,27 +260,29 @@ Item {
                 }
             }
 
-            // Editable text / display text
+            // Task text
             TextInput {
                 id: todoText
                 anchors {
                     left: checkBtn.right
-                    leftMargin: 8
+                    leftMargin: 10
                     right: removeBtn.left
-                    rightMargin: 6
+                    rightMargin: 8
                     verticalCenter: parent.verticalCenter
                 }
                 text: todoDelegate.modelData.text
                 color: todoDelegate.modelData.done ? Colors.secondaryText : Colors.primaryText
                 font.family: "Poppins"
                 font.italic: false
-                font.pixelSize: 12
+                font.pixelSize: 13
                 font.weight: Font.Medium
                 readOnly: !todoDelegate.isEditing
                 selectionColor: Qt.rgba(Colors.primaryText.r, Colors.primaryText.g, Colors.primaryText.b, 0.3)
                 clip: true
+                opacity: todoDelegate.modelData.done ? 0.5 : 1.0
 
-                Behavior on color { ColorAnimation { duration: 150 } }
+                Behavior on color   { ColorAnimation { duration: 150 } }
+                Behavior on opacity { NumberAnimation { duration: 150 } }
 
                 MouseArea {
                     anchors.fill: parent
@@ -256,25 +302,28 @@ Item {
                 }
             }
 
-            // Remove button
+            // Remove button — only visible on hover
             Rectangle {
                 id: removeBtn
-                width: 20
-                height: 20
-                radius: 999
+                width: 24
+                height: 24
+                radius: 6
                 anchors {
                     right: parent.right
+                    rightMargin: 10
                     verticalCenter: parent.verticalCenter
                 }
-                color: removeHover.containsMouse ? Colors.surfaceVariant : "transparent"
+                color: removeHover.containsMouse ? Colors.border : "transparent"
+                opacity: todoDelegate.isHovered ? 1.0 : 0.0
 
-                Behavior on color { ColorAnimation { duration: 150 } }
+                Behavior on color   { ColorAnimation { duration: 150 } }
+                Behavior on opacity { NumberAnimation { duration: 150 } }
 
                 Text {
                     anchors.centerIn: parent
                     text: "󰅖"
                     font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 12
+                    font.pixelSize: 13
                     color: Colors.secondaryText
                 }
 
@@ -286,16 +335,24 @@ Item {
                     onClicked: root.removeTodo(todoDelegate.modelData.id)
                 }
             }
+
+            MouseArea {
+                id: delegateHover
+                anchors.fill: parent
+                hoverEnabled: true
+                acceptedButtons: Qt.NoButton
+            }
         }
 
+        // Empty state
         Text {
             anchors.centerIn: parent
             visible: root.todos.length === 0
-            text: "No tasks"
+            text: "No tasks yet"
             color: Colors.secondaryText
             font.family: "Poppins"
             font.italic: false
-            font.pixelSize: 12
+            font.pixelSize: 13
         }
     }
 }
