@@ -106,14 +106,18 @@ PanelWindow {
                 Text {
                     id: clearAllBtn
                     text: "Clear all"
-                    color: Colors.secondaryText
+                    color: clearAllHover.containsMouse ? Colors.primaryText : Colors.secondaryText
                     font.family: "Poppins"
                     font.italic: false
                     font.pixelSize: 12
                     anchors.verticalCenter: parent.verticalCenter
 
+                    Behavior on color { ColorAnimation { duration: 150 } }
+
                     MouseArea {
+                        id: clearAllHover
                         anchors.fill: parent
+                        hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                         onClicked: Notifications.dismissAll()
                     }
@@ -290,8 +294,11 @@ PanelWindow {
                     text: "󰒮"
                     font.family: "JetBrainsMono Nerd Font"
                     font.pixelSize: 22
-                    color: Colors.secondaryText
-                    MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: Media.activePlayer?.previous() }
+                    color: prevHover.containsMouse ? Colors.primaryText : Colors.secondaryText
+
+                    Behavior on color { ColorAnimation { duration: 150 } }
+
+                    MouseArea { id: prevHover; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onClicked: Media.activePlayer?.previous() }
                 }
 
                 Rectangle {
@@ -300,6 +307,9 @@ PanelWindow {
                     radius: 999
                     color: Colors.primaryText
                     anchors.verticalCenter: parent.verticalCenter
+                    scale: playPauseArea.pressed ? 0.92 : 1.0
+
+                    Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
 
                     Text {
                         anchors.centerIn: parent
@@ -309,7 +319,7 @@ PanelWindow {
                         color: Colors.background
                     }
 
-                    MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: Media.playPause() }
+                    MouseArea { id: playPauseArea; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onClicked: Media.playPause() }
                 }
 
                 Text {
@@ -317,8 +327,11 @@ PanelWindow {
                     text: "󰒭"
                     font.family: "JetBrainsMono Nerd Font"
                     font.pixelSize: 22
-                    color: Colors.secondaryText
-                    MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: Media.activePlayer?.next() }
+                    color: nextHover.containsMouse ? Colors.primaryText : Colors.secondaryText
+
+                    Behavior on color { ColorAnimation { duration: 150 } }
+
+                    MouseArea { id: nextHover; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onClicked: Media.activePlayer?.next() }
                 }
             }
         }
@@ -388,20 +401,26 @@ PanelWindow {
                     width: 40
                     height: 40
                     radius: 999
-                    color: Colors.surfaceVariant
+                    color: settingsHover.containsMouse ? Colors.primaryText : Colors.surfaceVariant
+
+                    Behavior on color { ColorAnimation { duration: 150 } }
 
                     Text {
                         anchors.centerIn: parent
                         text: "󰏘"
                         font.family: "JetBrainsMono Nerd Font"
                         font.pixelSize: 18
-                        color: Colors.primaryText
+                        color: settingsHover.containsMouse ? Colors.background : Colors.primaryText
+
+                        Behavior on color { ColorAnimation { duration: 150 } }
                     }
 
                     MouseArea {
+                        id: settingsHover
                         anchors.fill: parent
+                        hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: {} // customize action — wired up later
+                        onClicked: root.settingsRequested()
                     }
                 }
 
@@ -409,20 +428,26 @@ PanelWindow {
                     width: 40
                     height: 40
                     radius: 999
-                    color: Colors.surfaceVariant
+                    color: powerHover.containsMouse ? Colors.primaryText : Colors.surfaceVariant
+
+                    Behavior on color { ColorAnimation { duration: 150 } }
 
                     Text {
                         anchors.centerIn: parent
                         text: "󰐥"
                         font.family: "JetBrainsMono Nerd Font"
                         font.pixelSize: 18
-                        color: Colors.primaryText
+                        color: powerHover.containsMouse ? Colors.background : Colors.primaryText
+
+                        Behavior on color { ColorAnimation { duration: 150 } }
                     }
 
                     MouseArea {
+                        id: powerHover
                         anchors.fill: parent
+                        hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: {} // power menu — wired up later
+                        onClicked: {}
                     }
                 }
             }

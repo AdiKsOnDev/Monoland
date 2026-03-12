@@ -16,9 +16,14 @@ Rectangle {
     implicitWidth: 44
     implicitHeight: 44
     radius: 999
-    color: active ? Colors.primaryText : Colors.surfaceVariant
+    color: active
+        ? (hoverArea.containsMouse ? Qt.lighter(Colors.primaryText, 1.1) : Colors.primaryText)
+        : (hoverArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.4) : Colors.surfaceVariant)
+
+    scale: hoverArea.pressed ? 0.96 : 1.0
 
     Behavior on color { ColorAnimation { duration: 150 } }
+    Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
 
     // Icon-only mode (no label)
     Text {
@@ -91,7 +96,9 @@ Rectangle {
     }
 
     MouseArea {
+        id: hoverArea
         anchors.fill: parent
+        hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
         onClicked: root.clicked()
     }

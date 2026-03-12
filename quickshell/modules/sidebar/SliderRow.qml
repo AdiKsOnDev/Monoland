@@ -17,8 +17,10 @@ Item {
     Rectangle {
         id: track
         anchors.fill: parent
-            radius: 999
-        color: Colors.surfaceVariant
+        radius: 999
+        color: sliderArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.3) : Colors.surfaceVariant
+
+        Behavior on color { ColorAnimation { duration: 150 } }
 
         Rectangle {
             id: fill
@@ -66,7 +68,9 @@ Item {
         }
 
         MouseArea {
+            id: sliderArea
             anchors.fill: parent
+            hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onClicked: (event) => root.moved(Math.round((event.x / width) * 100))
             onPositionChanged: (event) => {
