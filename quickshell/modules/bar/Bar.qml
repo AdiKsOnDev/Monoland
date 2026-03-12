@@ -34,6 +34,10 @@ Scope {
                 sidebarOpen: notificationSidebar.item?.isOpen ?? false
             }
 
+            OsdToast {
+                screen: modelData
+            }
+
             LazyLoader {
                 id: clockPopup
                 loading: true

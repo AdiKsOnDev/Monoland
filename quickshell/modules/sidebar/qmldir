@@ -2,5 +2,6 @@ module qs.modules.sidebar
 NotificationSidebar 1.0 NotificationSidebar.qml
 NotificationCard 1.0 NotificationCard.qml
 NotificationToast 1.0 NotificationToast.qml
+OsdToast 1.0 OsdToast.qml
 SliderRow 1.0 SliderRow.qml
 ToggleButton 1.0 ToggleButton.qml
