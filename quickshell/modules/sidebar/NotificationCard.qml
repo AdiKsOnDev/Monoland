@@ -10,6 +10,8 @@ Rectangle {
 
     required property Notification notification
 
+    signal dismissed()
+
     implicitWidth: parent?.width ?? 0
     implicitHeight: cardColumn.implicitHeight + 24
     color: hoverArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.18) : Colors.surfaceVariant
@@ -35,7 +37,7 @@ Rectangle {
 
         onReleased: {
             if (root.x > root.width * 0.35)
-                root.notification.dismiss()
+                root.dismissed()
             else
                 snapBack.start()
         }
@@ -121,59 +123,31 @@ Rectangle {
                 }
             }
 
-            Row {
+            Text {
+                id: timestamp
                 anchors {
                     right: parent.right
                     verticalCenter: parent.verticalCenter
                 }
-                spacing: 6
-
-                Text {
-                    id: timestamp
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: {
-                        const arrived = Notifications.arrivalTimeFor(root.notification.id)
-                        if (!arrived) return ""
-                        const diffMins = Math.floor((new Date() - arrived) / 60000)
-                        if (diffMins < 1) return "now"
-                        if (diffMins < 60) return diffMins + "m ago"
-                        const diffHours = Math.floor(diffMins / 60)
-                        if (diffHours < 24) return diffHours + "h ago"
-                        return Math.floor(diffHours / 24) + "d ago"
-                    }
-                    color: Colors.secondaryText
-                    font.family: "Poppins"
-                    font.pixelSize: 10
-
-                    Timer {
-                        interval: 60000
-                        repeat: true
-                        running: true
-                        onTriggered: parent.text = parent.text
-                    }
+                text: {
+                    const arrived = Notifications.arrivalTimeFor(root.notification.id)
+                    if (!arrived) return ""
+                    const diffMins = Math.floor((new Date() - arrived) / 60000)
+                    if (diffMins < 1) return "now"
+                    if (diffMins < 60) return diffMins + "m ago"
+                    const diffHours = Math.floor(diffMins / 60)
+                    if (diffHours < 24) return diffHours + "h ago"
+                    return Math.floor(diffHours / 24) + "d ago"
                 }
+                color: Colors.secondaryText
+                font.family: "Poppins"
+                font.pixelSize: 10
 
-                Text {
-                    id: dismissBtn
-                    text: "󰅖"
-                    color: dismissHover.containsMouse ? Colors.primaryText : Colors.secondaryText
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 14
-                    anchors.verticalCenter: parent.verticalCenter
-                    opacity: hoverArea.containsMouse ? 1 : 0
-                    width: hoverArea.containsMouse ? implicitWidth : 0
-
-                    Behavior on opacity { NumberAnimation { duration: 150 } }
-                    Behavior on width { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
-                    Behavior on color { ColorAnimation { duration: 150 } }
-
-                    MouseArea {
-                        id: dismissHover
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: root.notification.dismiss()
-                    }
+                Timer {
+                    interval: 60000
+                    repeat: true
+                    running: true
+                    onTriggered: parent.text = parent.text
                 }
             }
         }
@@ -230,6 +204,5 @@ Rectangle {
                 }
             }
         }
-
     }
 }

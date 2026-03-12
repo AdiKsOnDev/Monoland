@@ -159,6 +159,7 @@ PanelWindow {
                     required property var modelData
                     notification: modelData
                     width: notifList.width
+                    onDismissed: modelData.dismiss()
                 }
 
                 Text {

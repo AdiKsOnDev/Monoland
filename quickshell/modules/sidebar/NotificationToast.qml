@@ -92,12 +92,7 @@ PanelWindow {
         sourceComponent: NotificationCard {
             notification: root.pendingNotification
             width: cardLoader.width
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: root.dismiss()
-            }
+            onDismissed: root.dismiss()
         }
     }
 }
