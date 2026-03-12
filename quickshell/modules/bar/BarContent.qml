@@ -8,53 +8,28 @@ import qs.services
 Item {
     id: root
 
-    signal archClicked()
     signal centerClicked()
     signal rightClicked()
 
     // Ensures the Notifications singleton is instantiated and the server registers on startup
     readonly property var _notifications: Notifications.notifications
 
-    Item {
-        id: archButton
+    Text {
+        id: archLogo
         anchors {
             left: parent.left
             leftMargin: 12
             verticalCenter: parent.verticalCenter
         }
-        implicitWidth: 28
-        implicitHeight: 28
-
-        readonly property bool isHovered: archHoverArea.containsMouse
-
-        Rectangle {
-            anchors.fill: parent
-            radius: width / 2
-            color: parent.isHovered ? Colors.border : "transparent"
-
-            Behavior on color { ColorAnimation { duration: 150 } }
-        }
-
-        Text {
-            anchors.centerIn: parent
-            text: "\uf303"
-            font.family: "JetBrainsMono Nerd Font"
-            font.pixelSize: 19
-            color: Colors.chipIcon
-        }
-
-        MouseArea {
-            id: archHoverArea
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onClicked: root.archClicked()
-        }
+        text: "\uf303"
+        font.family: "JetBrainsMono Nerd Font"
+        font.pixelSize: 19
+        color: Colors.chipIcon
     }
 
     Workspaces {
         anchors {
-            left: archButton.right
+            left: archLogo.right
             leftMargin: 8
             verticalCenter: parent.verticalCenter
         }

@@ -15,7 +15,6 @@ Scope {
             BarWindow {
                 id: barWindow
                 screen: modelData
-                onArchClicked: wallpaperPicker.item.open()
                 onCenterClicked: clockPopup.item.toggle()
                 onRightClicked: notificationSidebar.item.toggle()
             }
@@ -26,6 +25,7 @@ Scope {
 
                 NotificationSidebar {
                     screen: modelData
+                    onWallpaperPickerRequested: wallpaperPicker.item.open()
                 }
             }
 
