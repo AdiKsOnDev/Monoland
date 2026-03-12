@@ -25,6 +25,31 @@ Rectangle {
         acceptedButtons: Qt.NoButton
     }
 
+    MouseArea {
+        id: swipeArea
+        anchors.fill: parent
+        drag.target: root
+        drag.axis: Drag.XAxis
+        drag.minimumX: 0
+        cursorShape: drag.active ? Qt.ClosedHandCursor : Qt.OpenHandCursor
+
+        onReleased: {
+            if (root.x > root.width * 0.35)
+                root.notification.dismiss()
+            else
+                snapBack.start()
+        }
+    }
+
+    NumberAnimation {
+        id: snapBack
+        target: root
+        property: "x"
+        to: 0
+        duration: 200
+        easing.type: Easing.OutCubic
+    }
+
     Column {
         id: cardColumn
         anchors {

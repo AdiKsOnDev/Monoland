@@ -148,10 +148,7 @@ PanelWindow {
                 }
 
                 remove: Transition {
-                    ParallelAnimation {
-                        NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 180; easing.type: Easing.InCubic }
-                        NumberAnimation { property: "x"; to: notifList.width; duration: 180; easing.type: Easing.InCubic }
-                    }
+                    NumberAnimation { property: "x"; to: notifList.width * 1.5; duration: 250; easing.type: Easing.OutCubic }
                 }
 
                 displaced: Transition {
