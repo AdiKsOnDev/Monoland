@@ -45,7 +45,7 @@ Singleton {
         id: server
         keepOnReload: true
         bodySupported: true
-        actionsSupported: true
+        actionsSupported: false
 
         onNotification: (notif) => {
             notif.tracked = true
