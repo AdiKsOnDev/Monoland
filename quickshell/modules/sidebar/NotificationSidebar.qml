@@ -81,7 +81,7 @@ PanelWindow {
                 bottom: parent.bottom
             }
 
-            Row {
+            Item {
                 id: notifHeader
                 anchors {
                     top: parent.top
@@ -90,29 +90,70 @@ PanelWindow {
                     leftMargin: 16
                     rightMargin: 16
                 }
-                height: 36
+                height: 44
 
-                Text {
-                    text: "Notifications"
-                    color: Colors.primaryText
-                    font.family: "Poppins"
-                    font.italic: false
-                    font.pixelSize: 13
-                    font.weight: Font.SemiBold
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: parent.width - clearAllBtn.implicitWidth
+                Row {
+                    anchors {
+                        left: parent.left
+                        verticalCenter: parent.verticalCenter
+                    }
+                    spacing: 8
+
+                    Text {
+                        text: "Notifications"
+                        color: Colors.primaryText
+                        font.family: "Poppins"
+                        font.italic: false
+                        font.pixelSize: 13
+                        font.weight: Font.SemiBold
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Rectangle {
+                        visible: notifList.count > 0
+                        width: notifCountText.implicitWidth + 10
+                        height: 18
+                        radius: 999
+                        color: Colors.surfaceVariant
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        Text {
+                            id: notifCountText
+                            anchors.centerIn: parent
+                            text: notifList.count
+                            color: Colors.secondaryText
+                            font.family: "Poppins"
+                            font.pixelSize: 10
+                            font.weight: Font.Medium
+                        }
+                    }
                 }
 
-                Text {
+                Rectangle {
                     id: clearAllBtn
-                    text: "Clear all"
-                    color: clearAllHover.containsMouse ? Colors.primaryText : Colors.secondaryText
-                    font.family: "Poppins"
-                    font.italic: false
-                    font.pixelSize: 12
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors {
+                        right: parent.right
+                        verticalCenter: parent.verticalCenter
+                    }
+                    visible: notifList.count > 0
+                    width: clearAllLabel.implicitWidth + 16
+                    height: 28
+                    radius: 999
+                    color: clearAllHover.containsMouse ? Colors.surfaceVariant : "transparent"
 
                     Behavior on color { ColorAnimation { duration: 150 } }
+
+                    Text {
+                        id: clearAllLabel
+                        anchors.centerIn: parent
+                        text: "Clear all"
+                        color: clearAllHover.containsMouse ? Colors.primaryText : Colors.secondaryText
+                        font.family: "Poppins"
+                        font.italic: false
+                        font.pixelSize: 12
+
+                        Behavior on color { ColorAnimation { duration: 150 } }
+                    }
 
                     MouseArea {
                         id: clearAllHover
@@ -162,14 +203,27 @@ PanelWindow {
                     onDismissed: modelData.dismiss()
                 }
 
-                Text {
+                Column {
                     anchors.centerIn: parent
                     visible: notifList.count === 0
-                    text: "No notifications"
-                    color: Colors.secondaryText
-                    font.family: "Poppins"
-                    font.italic: false
-                    font.pixelSize: 13
+                    spacing: 8
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "󰂚"
+                        color: Colors.secondaryText
+                        font.family: "JetBrainsMono Nerd Font"
+                        font.pixelSize: 32
+                    }
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "No notifications"
+                        color: Colors.secondaryText
+                        font.family: "Poppins"
+                        font.italic: false
+                        font.pixelSize: 13
+                    }
                 }
             }
         }
