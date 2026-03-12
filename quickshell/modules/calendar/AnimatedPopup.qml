@@ -55,14 +55,14 @@ PanelWindow {
             : (parent.width - width) / 2
         y: root.alignRight
             ? root.barTopMargin
-            : (root.isOpen ? root.barTopMargin : -implicitHeight)
+            : (root.isOpen ? root.barTopMargin : -(implicitHeight + root.barTopMargin))
         implicitHeight: contentColumn.implicitHeight + 24
         height: implicitHeight
         color: Colors.background
         radius: 16
 
-        Behavior on x { enabled: root.alignRight; NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
-        Behavior on y { enabled: !root.alignRight; NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+        Behavior on x { enabled: root.alignRight; NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
+        Behavior on y { enabled: !root.alignRight; NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
 
         onXChanged: if (!root.isOpen && root.alignRight && x >= root.barRightEdge) root.visible = false
         onYChanged: if (!root.isOpen && !root.alignRight && y <= -implicitHeight) root.visible = false

@@ -47,7 +47,7 @@ PanelWindow {
         clip: true
         color: Colors.background
 
-        Behavior on x { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+        Behavior on x { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
 
         onXChanged: {
             if (!root.isOpen && x >= root.barRightEdge)
