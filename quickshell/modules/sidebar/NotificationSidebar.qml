@@ -247,7 +247,20 @@ PanelWindow {
             color: Colors.surfaceVariant
             visible: Media.hasPlayer
             clip: true
-            layer.enabled: true
+            layer.enabled: Media.trackArtUrl !== ""
+            layer.effect: MultiEffect {
+                maskEnabled: true
+                maskThresholdMin: 0.5
+                maskSpreadAtMin: 1.0
+                maskSource: ShaderEffectSource {
+                    sourceItem: Rectangle {
+                        width: mediaCard.width
+                        height: mediaCard.height
+                        radius: mediaCard.radius
+                        visible: false
+                    }
+                }
+            }
 
             Behavior on height { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
 
@@ -259,17 +272,6 @@ PanelWindow {
                 fillMode: Image.PreserveAspectCrop
                 visible: Media.trackArtUrl !== ""
                 smooth: true
-                layer.enabled: true
-                layer.effect: MultiEffect {
-                    maskEnabled: true
-                    maskSource: ShaderEffectSource {
-                        sourceItem: Rectangle {
-                            width: mediaArtImage.width
-                            height: mediaArtImage.height
-                            radius: mediaCard.radius
-                        }
-                    }
-                }
             }
 
             // Dark scrim over art so text stays readable
