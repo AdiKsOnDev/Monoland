@@ -32,10 +32,12 @@ from AUR, and `swappy`, `brightnessctl`, `pipewire`, `hyprpaper`, `python-pywal`
 >best suited for everyone.
 
 # Showcase
-![Wall-E Theme](.showcase/wall-e-theme.png)
-![Nordish Theme](.showcase/nordish-theme.png)
-![Windows Theme](.showcase/windows-theme.png)
+![Black & White Theme](.showcase/black-white-theme.png)
+
 ![Purple Theme](.showcase/purple-theme.png)
+![Wall-E Theme](.showcase/wall-e-theme.png)
+
+![Nordish Theme](.showcase/nordish-theme.png)
 
 
 # Known Issues
