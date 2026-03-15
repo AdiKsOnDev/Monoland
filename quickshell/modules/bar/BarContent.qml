@@ -8,23 +8,36 @@ import qs.services
 Item {
     id: root
 
+    signal archClicked()
     signal centerClicked()
     signal rightClicked()
 
     // Ensures the Notifications singleton is instantiated and the server registers on startup
     readonly property var _notifications: Notifications.notifications
 
-    Text {
+    Item {
         id: archLogo
         anchors {
             left: parent.left
             leftMargin: 12
             verticalCenter: parent.verticalCenter
         }
-        text: "\uf303"
-        font.family: "JetBrainsMono Nerd Font"
-        font.pixelSize: 19
-        color: Colors.chipIcon
+        width: 28
+        height: 28
+
+        Text {
+            anchors.centerIn: parent
+            text: "\uf303"
+            font.family: "JetBrainsMono Nerd Font"
+            font.pixelSize: 19
+            color: Colors.chipIcon
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: root.archClicked()
+        }
     }
 
     Workspaces {

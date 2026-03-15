@@ -7,6 +7,7 @@ import qs.services
 PanelWindow {
     id: root
 
+    signal archClicked()
     signal centerClicked()
     signal rightClicked()
 
@@ -41,6 +42,7 @@ PanelWindow {
         BarContent {
             id: barContent
             anchors.fill: parent
+            onArchClicked: root.archClicked()
             onCenterClicked: root.centerClicked()
             onRightClicked: root.rightClicked()
         }
