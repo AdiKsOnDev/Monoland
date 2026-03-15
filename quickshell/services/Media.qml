@@ -24,8 +24,14 @@ Singleton {
     readonly property bool hasPlayer: activePlayer !== null
     readonly property string trackTitle: activePlayer?.trackTitle ?? ""
     readonly property string trackArtist: activePlayer?.trackArtist ?? ""
-    readonly property string trackArtUrl: activePlayer?.trackArtUrl ?? ""
+    readonly property string trackArtUrl: resolveArtUrl(activePlayer?.trackArtUrl ?? "")
     readonly property bool isPlaying: activePlayer?.isPlaying ?? false
+
+    // Spotify CDN URLs contain a size segment (e.g. /image/ab67616d00004851...)
+    // where 00004851 = 300px. Replacing it with 000001b2 requests the 640px version.
+    function resolveArtUrl(url) {
+        return url.replace("00004851", "000001b2")
+    }
 
     // Bypasses Quickshell's canPlay guard by calling D-Bus directly
     function playPause() {

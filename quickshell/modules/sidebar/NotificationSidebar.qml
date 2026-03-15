@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import qs.services
 
 PanelWindow {
@@ -230,7 +231,7 @@ PanelWindow {
             }
         }
 
-        // Media player card (between controls and notifications)
+        // Media player card
         Rectangle {
             id: mediaCard
             anchors {
@@ -241,75 +242,187 @@ PanelWindow {
                 leftMargin: 20
                 rightMargin: 20
             }
-            height: Media.hasPlayer ? 110 : 0
-            radius: 10
+            height: Media.hasPlayer ? 200 : 0
+            radius: 16
             color: Colors.surfaceVariant
             visible: Media.hasPlayer
             clip: true
+            layer.enabled: true
 
-            Behavior on height { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+            Behavior on height { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
 
-            Rectangle {
-                id: mediaArt
-                width: 80
-                height: 80
-                anchors {
-                    left: parent.left
-                    leftMargin: 12
-                    verticalCenter: parent.verticalCenter
-                }
-                radius: 6
+            // Album art as full card background
+            Image {
+                id: mediaArtImage
+                anchors.fill: parent
+                source: Media.trackArtUrl
+                fillMode: Image.PreserveAspectCrop
                 visible: Media.trackArtUrl !== ""
-                clip: true
-
-                Image {
-                    anchors.fill: parent
-                    source: Media.trackArtUrl
-                    fillMode: Image.PreserveAspectCrop
+                smooth: true
+                layer.enabled: true
+                layer.effect: MultiEffect {
+                    maskEnabled: true
+                    maskSource: ShaderEffectSource {
+                        sourceItem: Rectangle {
+                            width: mediaArtImage.width
+                            height: mediaArtImage.height
+                            radius: mediaCard.radius
+                        }
+                    }
                 }
             }
 
+            // Dark scrim over art so text stays readable
+            Rectangle {
+                anchors.fill: parent
+                color: Qt.rgba(0, 0, 0, Media.trackArtUrl !== "" ? 0.55 : 0)
+
+                Behavior on color { ColorAnimation { duration: 200 } }
+            }
+
+            // Track info — bottom left
             Column {
                 anchors {
-                    left: Media.trackArtUrl !== "" ? mediaArt.right : parent.left
-                    leftMargin: 14
-                    right: mediaControls.left
-                    rightMargin: 10
-                    verticalCenter: parent.verticalCenter
+                    left: parent.left
+                    right: playPauseBtn.left
+                    bottom: progressBar.top
+                    leftMargin: 16
+                    rightMargin: 12
+                    bottomMargin: 12
                 }
-                spacing: 0
+                spacing: 2
 
                 Text {
                     width: parent.width
                     text: Media.trackTitle
-                    color: Colors.primaryText
+                    color: "white"
                     font.family: "Poppins"
                     font.italic: false
-                    font.pixelSize: 16
-                    font.weight: Font.Medium
+                    font.pixelSize: 18
+                    font.weight: Font.Bold
                     elide: Text.ElideRight
                 }
 
                 Text {
                     width: parent.width
                     text: Media.trackArtist
-                    color: Colors.secondaryText
+                    color: Qt.rgba(1, 1, 1, 0.75)
                     font.family: "Poppins"
                     font.italic: false
-                    font.pixelSize: 11
+                    font.pixelSize: 13
                     font.weight: Font.Medium
                     elide: Text.ElideRight
                     visible: Media.trackArtist !== ""
                 }
+            }
 
+            // Play/pause — bottom right, above progress bar
+            Rectangle {
+                id: playPauseBtn
+                width: 52
+                height: 52
+                radius: 999
+                color: Qt.rgba(1, 1, 1, 0.2)
+                anchors {
+                    right: parent.right
+                    rightMargin: 16
+                    bottom: progressBar.top
+                    bottomMargin: 10
+                }
+                scale: playPauseArea.pressed ? 0.92 : 1.0
+
+                Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
+
+                Text {
+                    anchors.centerIn: parent
+                    text: Media.isPlaying ? "󰏤" : "󰐊"
+                    font.family: "JetBrainsMono Nerd Font"
+                    font.pixelSize: 22
+                    color: "white"
+                }
+
+                MouseArea {
+                    id: playPauseArea
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: Media.playPause()
+                }
+            }
+
+            // Progress bar + prev/next row at the bottom
+            Item {
+                id: progressBar
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                    leftMargin: 16
+                    rightMargin: 16
+                    bottomMargin: 14
+                }
+                height: 28
+
+                // Prev
+                Text {
+                    id: prevBtn
+                    anchors {
+                        left: parent.left
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: "󰒮"
+                    font.family: "JetBrainsMono Nerd Font"
+                    font.pixelSize: 18
+                    color: prevHover.containsMouse ? "white" : Qt.rgba(1, 1, 1, 0.6)
+
+                    Behavior on color { ColorAnimation { duration: 150 } }
+
+                    MouseArea {
+                        id: prevHover
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: Media.activePlayer?.previous()
+                    }
+                }
+
+                // Next
+                Text {
+                    id: nextBtn
+                    anchors {
+                        right: parent.right
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: "󰒭"
+                    font.family: "JetBrainsMono Nerd Font"
+                    font.pixelSize: 18
+                    color: nextHover.containsMouse ? "white" : Qt.rgba(1, 1, 1, 0.6)
+
+                    Behavior on color { ColorAnimation { duration: 150 } }
+
+                    MouseArea {
+                        id: nextHover
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: Media.activePlayer?.next()
+                    }
+                }
+
+                // Seek bar between prev and next
                 Item {
-                    width: parent.width
-                    height: 4
+                    anchors {
+                        left: prevBtn.right
+                        right: nextBtn.left
+                        leftMargin: 12
+                        rightMargin: 12
+                        verticalCenter: parent.verticalCenter
+                    }
+                    height: 3
                     visible: Media.activePlayer?.lengthSupported ?? false
 
                     Rectangle {
                         anchors.fill: parent
-                        color: Colors.border
+                        color: Qt.rgba(1, 1, 1, 0.25)
                         radius: 2
                     }
 
@@ -318,7 +431,7 @@ PanelWindow {
                             ? parent.width * (mediaProgressTimer.position / Media.activePlayer.length)
                             : 0
                         height: parent.height
-                        color: Colors.primaryText
+                        color: "white"
                         radius: 2
                     }
 
@@ -331,61 +444,6 @@ PanelWindow {
                             mediaProgressTimer.position = pos
                         }
                     }
-                }
-            }
-
-            Row {
-                id: mediaControls
-                anchors {
-                    right: parent.right
-                    rightMargin: 16
-                    verticalCenter: parent.verticalCenter
-                }
-                spacing: 10
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "󰒮"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 22
-                    color: prevHover.containsMouse ? Colors.primaryText : Colors.secondaryText
-
-                    Behavior on color { ColorAnimation { duration: 150 } }
-
-                    MouseArea { id: prevHover; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onClicked: Media.activePlayer?.previous() }
-                }
-
-                Rectangle {
-                    width: 42
-                    height: 42
-                    radius: 999
-                    color: Colors.primaryText
-                    anchors.verticalCenter: parent.verticalCenter
-                    scale: playPauseArea.pressed ? 0.92 : 1.0
-
-                    Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
-
-                    Text {
-                        anchors.centerIn: parent
-                        text: Media.isPlaying ? "󰏤" : "󰐊"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 20
-                        color: Colors.background
-                    }
-
-                    MouseArea { id: playPauseArea; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onClicked: Media.playPause() }
-                }
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "󰒭"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 22
-                    color: nextHover.containsMouse ? Colors.primaryText : Colors.secondaryText
-
-                    Behavior on color { ColorAnimation { duration: 150 } }
-
-                    MouseArea { id: nextHover; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onClicked: Media.activePlayer?.next() }
                 }
             }
         }
