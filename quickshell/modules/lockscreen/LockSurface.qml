@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import Quickshell
+import Quickshell.Io
 import Quickshell.Wayland
 import QtQuick
 import QtQuick.Effects
@@ -22,6 +23,53 @@ WlSessionLockSurface {
 
     readonly property string avatarPath: Quickshell.env("HOME") + "/.face"
     readonly property bool hasAvatar: avatarImage.status === Image.Ready
+
+    property string weatherTemp: "—"
+    property string weatherDesc: "Loading..."
+    property string uptimeLabel: "—"
+
+    Process {
+        id: weatherFetcher
+        command: ["bash", "-c", "curl -sf 'wttr.in/?format=j1'"]
+        running: true
+        stdout: SplitParser {
+            property string buffer: ""
+            onRead: (line) => buffer += line
+        }
+        onRunningChanged: {
+            if (running) { stdout.buffer = ""; return }
+            try {
+                const d = JSON.parse(stdout.buffer)
+                const c = d.current_condition[0]
+                root.weatherTemp = c.temp_C + "°C"
+                root.weatherDesc = c.weatherDesc[0].value
+            } catch (e) {
+                root.weatherTemp = "—"
+                root.weatherDesc = "Unavailable"
+            }
+        }
+    }
+
+    Process {
+        id: uptimeFetcher
+        command: ["bash", "-c", "cat /proc/uptime"]
+        running: true
+        stdout: SplitParser {
+            onRead: (line) => {
+                const secs = Math.floor(parseFloat(line.split(" ")[0]))
+                const h = Math.floor(secs / 3600)
+                const m = Math.floor((secs % 3600) / 60)
+                root.uptimeLabel = h > 0 ? h + "h " + m + "m" : m + "m"
+            }
+        }
+    }
+
+    Timer {
+        interval: 600000
+        repeat: true
+        running: true
+        onTriggered: weatherFetcher.running = true
+    }
 
     // Blurred wallpaper background
     Image {
@@ -185,27 +233,163 @@ WlSessionLockSurface {
                 radius: 20
                 visible: Media.hasPlayer
             }
+
         }
 
-        // Right column — calendar card
-        Rectangle {
+        // Right column — calendar + stats
+        Column {
             anchors {
                 left: leftColumn.right
-                leftMargin: 12
+                leftMargin: 16
                 right: parent.right
                 top: leftColumn.top
-                bottom: leftColumn.bottom
             }
-            radius: 20
-            color: Qt.rgba(1, 1, 1, 0.1)
+            spacing: 16
 
-            Calendar {
-                anchors {
-                    fill: parent
-                    margins: 16
+            // Calendar card
+            Rectangle {
+                width: parent.width
+                height: leftColumn.implicitHeight - 90 - 16
+                radius: 20
+                color: Qt.rgba(1, 1, 1, 0.1)
+
+                Calendar {
+                    anchors {
+                        fill: parent
+                        margins: 16
+                    }
+                cellSize: 46
+                todaySize: 34
                 }
-                cellSize: 58
-                todaySize: 44
+            }
+
+            // Stats row: weather + battery + uptime
+            Row {
+                width: parent.width
+                spacing: 16
+
+                // Weather
+                Rectangle {
+                    width: (parent.width - 32) / 3
+                    height: 90
+                    radius: 20
+                    color: Qt.rgba(1, 1, 1, 0.1)
+
+                    Row {
+                        anchors.centerIn: parent
+                        spacing: 12
+
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: "󰖙"
+                            font.family: "JetBrainsMono Nerd Font"
+                            font.pixelSize: 28
+                            color: Qt.rgba(1, 1, 1, 0.7)
+                        }
+
+                        Column {
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: 2
+
+                            Text {
+                                text: weatherTemp
+                                color: "white"
+                                font.family: "Poppins"
+                                font.pixelSize: 22
+                                font.weight: Font.Bold
+                            }
+
+                            Text {
+                                text: weatherDesc
+                                color: Qt.rgba(1, 1, 1, 0.6)
+                                font.family: "Poppins"
+                                font.pixelSize: 11
+                            }
+                        }
+                    }
+                }
+
+                // Battery
+                Rectangle {
+                    width: (parent.width - 32) / 3
+                    height: 90
+                    radius: 20
+                    color: Qt.rgba(1, 1, 1, 0.1)
+
+                    Row {
+                        anchors.centerIn: parent
+                        spacing: 12
+
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: Battery.isCharging ? "󰂄" : Battery.capacity >= 80 ? "󰁹" : Battery.capacity >= 60 ? "󰂀" : Battery.capacity >= 40 ? "󰁾" : Battery.capacity >= 20 ? "󰁼" : "󰁺"
+                            font.family: "JetBrainsMono Nerd Font"
+                            font.pixelSize: 28
+                            color: Battery.capacity <= 20 && !Battery.isCharging ? Qt.rgba(1, 0.4, 0.4, 1) : Qt.rgba(1, 1, 1, 0.7)
+                        }
+
+                        Column {
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: 2
+
+                            Text {
+                                text: Battery.capacity + "%"
+                                color: "white"
+                                font.family: "Poppins"
+                                font.pixelSize: 22
+                                font.weight: Font.Bold
+                            }
+
+                            Text {
+                                text: Battery.isCharging ? "Charging" : "Battery"
+                                color: Qt.rgba(1, 1, 1, 0.6)
+                                font.family: "Poppins"
+                                font.pixelSize: 11
+                            }
+                        }
+                    }
+                }
+
+                // Uptime
+                Rectangle {
+                    width: (parent.width - 32) / 3
+                    height: 90
+                    radius: 20
+                    color: Qt.rgba(1, 1, 1, 0.1)
+
+                    Row {
+                        anchors.centerIn: parent
+                        spacing: 12
+
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: "󰔚"
+                            font.family: "JetBrainsMono Nerd Font"
+                            font.pixelSize: 28
+                            color: Qt.rgba(1, 1, 1, 0.7)
+                        }
+
+                        Column {
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: 2
+
+                            Text {
+                                text: uptimeLabel
+                                color: "white"
+                                font.family: "Poppins"
+                                font.pixelSize: 22
+                                font.weight: Font.Bold
+                            }
+
+                            Text {
+                                text: "Uptime"
+                                color: Qt.rgba(1, 1, 1, 0.6)
+                                font.family: "Poppins"
+                                font.pixelSize: 11
+                            }
+                        }
+                    }
+                }
             }
         }
     }
