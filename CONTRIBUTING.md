@@ -24,6 +24,7 @@ added onto as the project grows:
 - `sidebar` - control center with notifications + media player
 - `calendar` - calendar + clock + todo
 - `services` - any service singleton
+- `launcher` - the launcher module
 
 **Misc**
 - `hypr` - hyprland configuration
