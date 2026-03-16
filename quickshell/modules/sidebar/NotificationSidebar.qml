@@ -590,7 +590,7 @@ PanelWindow {
                     width: (parent.width - 8) / 2
                     height: 70
                     radius: 999
-                    icon: Wifi.enabled ? "󰤨" : "󰤭"
+                    icon: Wifi.signalIcon
                     label: "Wi-Fi"
                     sublabel: Wifi.networkName !== "" ? Wifi.networkName : (Wifi.enabled ? "On" : "Off")
                     active: Wifi.enabled
