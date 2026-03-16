@@ -22,7 +22,7 @@ PanelWindow {
         if (selectedIndex < 0 || selectedIndex >= filteredApps.length) return
         const app = filteredApps[selectedIndex]
         if (!app) return
-        launcher.command = ["bash", "-c", app.exec.replace(/%[uUfFdDnNickvm]/g, "").trim()]
+        launcher.command = ["gio", "launch", app.exec]
         launcher.running = true
         root.close()
     }
