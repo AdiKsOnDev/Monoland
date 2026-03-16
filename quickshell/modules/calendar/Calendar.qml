@@ -9,8 +9,8 @@ Item {
     implicitWidth: parent?.width ?? 0
     implicitHeight: headerRow.height + weekdayRow.height + grid.height + 24
 
-    readonly property int cellSize: 46
-    readonly property int todaySize: 34
+    property int cellSize: 46
+    property int todaySize: 34
 
     property int displayYear: today.getFullYear()
     property int displayMonth: today.getMonth()

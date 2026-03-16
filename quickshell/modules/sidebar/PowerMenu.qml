@@ -88,7 +88,7 @@ PanelWindow {
 
                 Repeater {
                     model: [
-                        { icon: "󰌾", label: "Lock",      cmd: "hyprlock" },
+                        { icon: "󰌾", label: "Lock",      cmd: "quickshell ipc call lockscreen lock" },
                         { icon: "󰍃", label: "Log out",   cmd: "hyprctl dispatch exit" },
                         { icon: "󰒲", label: "Suspend",   cmd: "systemctl suspend" },
                         { icon: "󰤄", label: "Hibernate", cmd: "systemctl hibernate" },
