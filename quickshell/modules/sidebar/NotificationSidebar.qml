@@ -14,6 +14,7 @@ PanelWindow {
 
     property bool isOpen: false
     signal wallpaperPickerRequested()
+    signal powerMenuRequested()
 
     function toggle() {
         if (!isOpen) visible = true
@@ -561,7 +562,7 @@ PanelWindow {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: {}
+                        onClicked: root.powerMenuRequested()
                     }
                 }
             }

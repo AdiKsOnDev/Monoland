@@ -9,10 +9,16 @@ import qs.modules.sidebar
 
 Scope {
     property var primaryLauncher: null
+    property var primaryPowerMenu: null
 
     IpcHandler {
         target: "launcher"
         function open() { primaryLauncher?.open() }
+    }
+
+    IpcHandler {
+        target: "powermenu"
+        function open() { primaryPowerMenu?.open() }
     }
 
     Variants {
@@ -36,6 +42,7 @@ Scope {
                 NotificationSidebar {
                     screen: modelData
                     onWallpaperPickerRequested: wallpaperPicker.item.open()
+                    onPowerMenuRequested: powerMenu.item.open()
                 }
             }
 
@@ -63,6 +70,18 @@ Scope {
                 loading: true
 
                 WallpaperPicker {}
+            }
+
+            LazyLoader {
+                id: powerMenu
+                loading: true
+
+                PowerMenu {
+                    screen: modelData
+                    Component.onCompleted: {
+                        if (!primaryPowerMenu) primaryPowerMenu = this
+                    }
+                }
             }
 
             LazyLoader {
