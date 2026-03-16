@@ -67,6 +67,20 @@ Rectangle {
             }
         }
 
+        Rectangle {
+            width: 0.5
+            height: 22
+            anchors.verticalCenter: parent.verticalCenter
+            color: root.active ? Qt.rgba(0, 0, 0, 0.2) : Qt.rgba(
+                Colors.primaryText.r ?? 0.87,
+                Colors.primaryText.g ?? 0.87,
+                Colors.primaryText.b ?? 0.87,
+                0.15
+            )
+
+            Behavior on color { ColorAnimation { duration: 150 } }
+        }
+
         Column {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 1
