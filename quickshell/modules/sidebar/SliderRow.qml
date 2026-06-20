@@ -34,7 +34,7 @@ Item {
             }
             width: parent.width * Math.max(0, Math.min(1, root.value / 100))
         radius: 999
-            color: Colors.primaryText
+            color: Colors.fillStrong
 
             // Animate external/wheel changes, but track the cursor 1:1 while dragging
             Behavior on width {
@@ -52,7 +52,7 @@ Item {
             text: root.icon
             font.family: "JetBrainsMono Nerd Font"
             font.pixelSize: 17
-            color: fill.width > x + implicitWidth ? Colors.background : Colors.primaryText
+            color: fill.width > x + implicitWidth ? Colors.fillStrongText : Colors.primaryText
             z: 1
 
             Behavior on color { ColorAnimation { duration: 80 } }
@@ -68,7 +68,7 @@ Item {
             font.family: "Poppins"
                 font.italic: false
             font.pixelSize: 13
-            color: fill.width > parent.width - x ? Colors.background : Colors.secondaryText
+            color: fill.width > parent.width - x ? Colors.fillStrongText : Colors.secondaryText
             z: 1
 
             Behavior on color { ColorAnimation { duration: 80 } }

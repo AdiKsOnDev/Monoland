@@ -201,14 +201,19 @@ Item {
         boundsBehavior: Flickable.StopAtBounds
 
         add: Transition {
-            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200; easing.type: Easing.OutCubic }
-            NumberAnimation { property: "x"; from: 16; to: 0; duration: 200; easing.type: Easing.OutCubic }
+            ParallelAnimation {
+                NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200; easing.type: Easing.OutCubic }
+                NumberAnimation { property: "scale"; from: 0.5; to: 1; duration: 450; easing.type: Easing.OutElastic; easing.amplitude: 1.0; easing.period: 0.4 }
+            }
         }
         remove: Transition {
-            NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 150; easing.type: Easing.InCubic }
+            ParallelAnimation {
+                NumberAnimation { property: "opacity"; to: 0; duration: 180; easing.type: Easing.InCubic }
+                NumberAnimation { property: "scale"; to: 0.4; duration: 220; easing.type: Easing.InBack; easing.overshoot: 1.5 }
+            }
         }
         displaced: Transition {
-            NumberAnimation { property: "y"; duration: 200; easing.type: Easing.OutCubic }
+            NumberAnimation { property: "y"; duration: 260; easing.type: Easing.OutBack; easing.overshoot: 1.2 }
         }
 
         delegate: Item {

@@ -6,7 +6,9 @@ import Quickshell.Widgets
 import Quickshell.Wayland
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import qs.services
+import qs.modules.common
 
 PanelWindow {
     id: root
@@ -17,6 +19,14 @@ PanelWindow {
     property int selectedIndex: -1
 
     readonly property int columns: 4
+
+    // color-typed so .r/.g/.b are available (Colors.primaryText is a string)
+    readonly property color selectionTint: Qt.rgba(
+        Qt.color(Colors.primaryText).r,
+        Qt.color(Colors.primaryText).g,
+        Qt.color(Colors.primaryText).b,
+        0.3
+    )
 
     function launchSelected() {
         if (selectedIndex < 0 || selectedIndex >= filteredApps.length) return
@@ -85,13 +95,24 @@ PanelWindow {
         width: panelWidth
         height: panelHeight
         x: (root.screen.width - panelWidth) / 2
-        y: root.isOpen
-            ? (root.screen.height - panelHeight) / 2
-            : root.screen.height
+        y: (root.screen.height - panelHeight) / 2
         radius: 20
-        color: Colors.background
 
-        Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: Qt.lighter(Colors.background, 1.4) }
+            GradientStop { position: 1.0; color: Colors.background }
+        }
+        border.width: 1
+        border.color: Colors.surfaceVariant
+
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: Qt.rgba(0, 0, 0, 0.5)
+            shadowBlur: 0.8
+            shadowVerticalOffset: 8
+            autoPaddingEnabled: true
+        }
 
         Rectangle {
             id: searchBar
@@ -105,6 +126,10 @@ PanelWindow {
             height: 48
             radius: 12
             color: Colors.surfaceVariant
+            border.width: 1
+            border.color: searchField.activeFocus ? Colors.border : Qt.lighter(Colors.surfaceVariant, 1.6)
+
+            Behavior on border.color { ColorAnimation { duration: 150 } }
 
             Row {
                 anchors {
@@ -129,12 +154,7 @@ PanelWindow {
                     color: Colors.primaryText
                     font.family: "Poppins"
                     font.pixelSize: 14
-                    selectionColor: Qt.rgba(
-                        Colors.primaryText.r ?? 0.87,
-                        Colors.primaryText.g ?? 0.87,
-                        Colors.primaryText.b ?? 0.87,
-                        0.3
-                    )
+                    selectionColor: root.selectionTint
                     clip: true
 
                     Text {
@@ -215,10 +235,13 @@ PanelWindow {
                     color: appTile.isSelected
                         ? Colors.surfaceVariant
                         : tileHover.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.1) : "transparent"
-                    scale: tileHover.pressed ? 0.94 : 1.0
+                    border.width: appTile.isSelected ? 1.5 : 0
+                    border.color: Colors.chipIconActive
+                    scale: tileHover.pressed ? 0.94 : (tileHover.containsMouse ? 1.03 : 1.0)
 
                     Behavior on color { ColorAnimation { duration: 150 } }
-                    Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
+                    Behavior on border.color { ColorAnimation { duration: 150 } }
+                    Behavior on scale { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
 
                     Column {
                         anchors.centerIn: parent
@@ -365,4 +388,10 @@ PanelWindow {
     }
 
     Process { id: launcher }
+
+    Droplet {
+        target: panel
+        shown: root.isOpen
+        origin: Item.Center
+    }
 }

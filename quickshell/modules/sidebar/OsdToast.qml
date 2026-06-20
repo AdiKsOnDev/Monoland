@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import Quickshell
 import QtQuick
 import qs.services
+import qs.modules.common
 
 PanelWindow {
     id: root
@@ -96,12 +97,8 @@ PanelWindow {
         color: Colors.background
         clip: true
 
-        x: root.isVisible
-            ? root.screen.width - width - root.rightMargin
-            : root.screen.width
+        x: root.screen.width - width - root.rightMargin
         y: root.topMargin
-
-        Behavior on x { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
 
         // Filled level bar (grows from bottom)
         Rectangle {
@@ -134,5 +131,11 @@ PanelWindow {
         }
 
 
+    }
+
+    Droplet {
+        target: osdPill
+        shown: root.isVisible
+        origin: Item.Right
     }
 }

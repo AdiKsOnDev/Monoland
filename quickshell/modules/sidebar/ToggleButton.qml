@@ -17,7 +17,7 @@ Rectangle {
     implicitHeight: 44
     radius: 999
     color: active
-        ? (hoverArea.containsMouse ? Qt.lighter(Colors.primaryText, 1.1) : Colors.primaryText)
+        ? (hoverArea.containsMouse ? Qt.lighter(Colors.fillStrong, 1.1) : Colors.fillStrong)
         : (hoverArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.4) : Colors.surfaceVariant)
 
     // Inactive buttons get a hairline edge; active ones are solid-filled so need none
@@ -36,7 +36,7 @@ Rectangle {
         text: root.icon
         font.family: "JetBrainsMono Nerd Font"
         font.pixelSize: 19
-        color: root.active ? Colors.background : Colors.chipIcon
+        color: root.active ? Colors.fillStrongText : Colors.chipIcon
         visible: root.label === ""
 
         Behavior on color { ColorAnimation { duration: 150 } }
@@ -66,7 +66,7 @@ Rectangle {
                 text: root.icon
                 font.family: "JetBrainsMono Nerd Font"
                 font.pixelSize: 22
-                color: root.active ? Colors.background : Colors.chipIcon
+                color: root.active ? Colors.fillStrongText : Colors.chipIcon
 
                 Behavior on color { ColorAnimation { duration: 150 } }
             }
@@ -76,8 +76,9 @@ Rectangle {
             width: 1
             height: 22
             anchors.verticalCenter: parent.verticalCenter
-            // Faint separator: dark on the active (light) fill, light on the inactive surface
-            color: root.active ? Qt.rgba(0, 0, 0, 0.2) : Qt.rgba(1, 1, 1, 0.15)
+            // Faint separator, legible on both the active fill and the inactive surface
+            color: root.active ? Colors.fillStrongText : Colors.primaryText
+            opacity: root.active ? 0.25 : 0.15
 
             Behavior on color { ColorAnimation { duration: 150 } }
         }
@@ -92,7 +93,7 @@ Rectangle {
                 font.italic: false
                 font.pixelSize: 13
                 font.weight: Font.Bold
-                color: root.active ? Colors.background : Colors.primaryText
+                color: root.active ? Colors.fillStrongText : Colors.primaryText
 
                 Behavior on color { ColorAnimation { duration: 150 } }
             }
@@ -102,7 +103,8 @@ Rectangle {
                 font.family: "Poppins"
                 font.italic: false
                 font.pixelSize: 11
-                color: root.active ? Qt.rgba(0,0,0,0.5) : Colors.secondaryText
+                color: root.active ? Colors.fillStrongText : Colors.secondaryText
+                opacity: root.active ? 0.6 : 1.0
                 visible: root.sublabel !== ""
 
                 Behavior on color { ColorAnimation { duration: 150 } }

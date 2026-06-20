@@ -28,6 +28,15 @@ WlSessionLockSurface {
     property string weatherDesc: "Loading..."
     property string uptimeLabel: "—"
 
+    // Translucent card with a hairline edge — matches the shell's surface language
+    // while staying glassy over the blurred wallpaper.
+    component GlassCard: Rectangle {
+        color: Qt.rgba(1, 1, 1, 0.1)
+        radius: 20
+        border.width: 1
+        border.color: Qt.rgba(1, 1, 1, 0.14)
+    }
+
     Process {
         id: weatherFetcher
         command: ["bash", "-c", "curl -sf 'wttr.in/?format=j1'"]
@@ -113,11 +122,9 @@ WlSessionLockSurface {
             spacing: 16
 
             // Profile + clock + notifications card
-            Rectangle {
+            GlassCard {
                 width: parent.width
                 height: 240
-                radius: 20
-                color: Qt.rgba(1, 1, 1, 0.1)
 
                 Column {
                     id: profileColumn
@@ -247,11 +254,9 @@ WlSessionLockSurface {
             spacing: 16
 
             // Calendar card
-            Rectangle {
+            GlassCard {
                 width: parent.width
                 height: leftColumn.implicitHeight - 90 - 16
-                radius: 20
-                color: Qt.rgba(1, 1, 1, 0.1)
 
                 Calendar {
                     anchors {
@@ -269,11 +274,9 @@ WlSessionLockSurface {
                 spacing: 16
 
                 // Weather
-                Rectangle {
+                GlassCard {
                     width: (parent.width - 32) / 3
                     height: 90
-                    radius: 20
-                    color: Qt.rgba(1, 1, 1, 0.1)
 
                     Row {
                         anchors.centerIn: parent
@@ -310,11 +313,9 @@ WlSessionLockSurface {
                 }
 
                 // Battery
-                Rectangle {
+                GlassCard {
                     width: (parent.width - 32) / 3
                     height: 90
-                    radius: 20
-                    color: Qt.rgba(1, 1, 1, 0.1)
 
                     Row {
                         anchors.centerIn: parent
@@ -351,11 +352,9 @@ WlSessionLockSurface {
                 }
 
                 // Uptime
-                Rectangle {
+                GlassCard {
                     width: (parent.width - 32) / 3
                     height: 90
-                    radius: 20
-                    color: Qt.rgba(1, 1, 1, 0.1)
 
                     Row {
                         anchors.centerIn: parent
@@ -421,7 +420,7 @@ WlSessionLockSurface {
             color: Qt.rgba(1, 1, 1, 0.15)
             border.color: root.authFailed
                 ? Qt.rgba(1, 0.4, 0.4, 0.8)
-                : passwordField.activeFocus ? Qt.rgba(1, 1, 1, 0.6) : Qt.rgba(1, 1, 1, 0.2)
+                : passwordField.activeFocus ? Colors.chipIconActive : Qt.rgba(1, 1, 1, 0.2)
             border.width: 1.5
 
             Behavior on border.color { ColorAnimation { duration: 150 } }

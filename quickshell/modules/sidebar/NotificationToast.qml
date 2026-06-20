@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import Quickshell
 import QtQuick
 import qs.services
+import qs.modules.common
 
 PanelWindow {
     id: root
@@ -81,18 +82,21 @@ PanelWindow {
         active: root.pendingNotification !== null
 
         readonly property int targetX: root.screen.width - root.toastWidth - root.toastRightMargin
-        readonly property int hiddenX: root.screen.width
 
-        x: root.isVisible ? targetX : hiddenX
+        x: targetX
         y: root.toastTopMargin
         width: root.toastWidth
-
-        Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
         sourceComponent: NotificationCard {
             notification: root.pendingNotification
             width: cardLoader.width
             onDismissed: root.dismiss()
         }
+    }
+
+    Droplet {
+        target: cardLoader
+        shown: root.isVisible
+        origin: Item.TopRight
     }
 }

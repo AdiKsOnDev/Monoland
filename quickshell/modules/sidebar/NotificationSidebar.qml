@@ -6,6 +6,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import qs.services
+import qs.modules.common
 
 PanelWindow {
     id: root
@@ -21,6 +22,17 @@ PanelWindow {
         isOpen = !isOpen
     }
 
+    onIsOpenChanged: {
+        if (isOpen) visible = true
+        else hideTimer.restart()
+    }
+
+    Timer {
+        id: hideTimer
+        interval: 340
+        onTriggered: root.visible = false
+    }
+
     anchors {
         top: true
         left: true
@@ -34,7 +46,18 @@ PanelWindow {
     exclusiveZone: -1
     color: "transparent"
 
-    mask: Region { item: sidebar }
+    // Mask to a plain proxy, not `sidebar`: `sidebar` has layer.enabled (for the
+    // shadow), and a layered item reports no usable region to Quickshell, which
+    // collapses the window's input region and makes the panel unclickable.
+    mask: Region { item: maskProxy }
+
+    Item {
+        id: maskProxy
+        x: sidebar.x
+        y: sidebar.y
+        width: sidebar.width
+        height: sidebar.height
+    }
 
     Rectangle {
         id: sidebar
@@ -43,7 +66,7 @@ PanelWindow {
 
         readonly property int margin: 16
 
-        x: root.isOpen ? root.barRightEdge - sidebarWidth - margin : root.barRightEdge
+        x: root.barRightEdge - sidebarWidth - margin
         y: root.barHeight + margin
         width: sidebarWidth
         height: parent.height - root.barHeight - margin * 2
@@ -67,14 +90,6 @@ PanelWindow {
             shadowVerticalOffset: 8
             autoPaddingEnabled: true
         }
-
-        Behavior on x { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
-
-        onXChanged: {
-            if (!root.isOpen && x >= root.barRightEdge)
-                root.visible = false
-        }
-
 
         // Notifications section (below media card)
         Item {
@@ -190,16 +205,19 @@ PanelWindow {
                 add: Transition {
                     ParallelAnimation {
                         NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200; easing.type: Easing.OutCubic }
-                        NumberAnimation { property: "x"; from: notifList.width; to: 0; duration: 200; easing.type: Easing.OutCubic }
+                        NumberAnimation { property: "scale"; from: 0.5; to: 1; duration: 450; easing.type: Easing.OutElastic; easing.amplitude: 1.0; easing.period: 0.4 }
                     }
                 }
 
                 remove: Transition {
-                    NumberAnimation { property: "x"; to: notifList.width * 1.5; duration: 250; easing.type: Easing.OutCubic }
+                    ParallelAnimation {
+                        NumberAnimation { property: "opacity"; to: 0; duration: 180; easing.type: Easing.InCubic }
+                        NumberAnimation { property: "scale"; to: 0.4; duration: 220; easing.type: Easing.InBack; easing.overshoot: 1.5 }
+                    }
                 }
 
                 displaced: Transition {
-                    NumberAnimation { property: "y"; duration: 200; easing.type: Easing.OutCubic }
+                    NumberAnimation { property: "y"; duration: 260; easing.type: Easing.OutBack; easing.overshoot: 1.2 }
                 }
 
                 delegate: NotificationCard {
@@ -316,7 +334,7 @@ PanelWindow {
                     width: 40
                     height: 40
                     radius: 999
-                    color: settingsHover.containsMouse ? Colors.primaryText : Colors.surfaceVariant
+                    color: settingsHover.containsMouse ? Colors.fillStrong : Colors.surfaceVariant
                     border.width: settingsHover.containsMouse ? 0 : 1
                     border.color: Qt.lighter(Colors.surfaceVariant, 1.6)
 
@@ -327,7 +345,7 @@ PanelWindow {
                         text: "󰏘"
                         font.family: "JetBrainsMono Nerd Font"
                         font.pixelSize: 18
-                        color: settingsHover.containsMouse ? Colors.background : Colors.primaryText
+                        color: settingsHover.containsMouse ? Colors.fillStrongText : Colors.primaryText
 
                         Behavior on color { ColorAnimation { duration: 150 } }
                     }
@@ -345,7 +363,7 @@ PanelWindow {
                     width: 40
                     height: 40
                     radius: 999
-                    color: powerHover.containsMouse ? Colors.primaryText : Colors.surfaceVariant
+                    color: powerHover.containsMouse ? Colors.fillStrong : Colors.surfaceVariant
                     border.width: powerHover.containsMouse ? 0 : 1
                     border.color: Qt.lighter(Colors.surfaceVariant, 1.6)
 
@@ -356,7 +374,7 @@ PanelWindow {
                         text: "󰐥"
                         font.family: "JetBrainsMono Nerd Font"
                         font.pixelSize: 18
-                        color: powerHover.containsMouse ? Colors.background : Colors.primaryText
+                        color: powerHover.containsMouse ? Colors.fillStrongText : Colors.primaryText
 
                         Behavior on color { ColorAnimation { duration: 150 } }
                     }
@@ -452,5 +470,11 @@ PanelWindow {
                 onMoved: (percent) => Brightness.setBrightnessPercent(percent)
             }
         }
+    }
+
+    Droplet {
+        target: sidebar
+        shown: root.isOpen
+        origin: Item.TopRight
     }
 }

@@ -4,6 +4,7 @@ import Quickshell
 import QtQuick
 import QtQuick.Effects
 import qs.services
+import qs.modules.common
 
 PanelWindow {
     id: root
@@ -15,6 +16,17 @@ PanelWindow {
     function toggle() {
         if (!isOpen) visible = true
         isOpen = !isOpen
+    }
+
+    onIsOpenChanged: {
+        if (isOpen) visible = true
+        else hideTimer.restart()
+    }
+
+    Timer {
+        id: hideTimer
+        interval: 340
+        onTriggered: root.visible = false
     }
 
     // When true, the popup right-aligns to the bar's right edge instead of centering
@@ -38,8 +50,19 @@ PanelWindow {
     color: "transparent"
     focusable: isOpen
 
+    // Mask to a plain proxy, not `box`: `box` has layer.enabled (for the shadow),
+    // and a layered item reports no usable region to Quickshell — which collapses
+    // the window's input region and makes the popup unclickable.
     mask: Region {
-        item: box
+        item: maskProxy
+    }
+
+    Item {
+        id: maskProxy
+        x: box.x
+        y: box.y
+        width: box.width
+        height: box.height
     }
 
     readonly property int barRightEdge: Math.round(root.screen.width * 0.975)
@@ -52,11 +75,9 @@ PanelWindow {
 
         width: root.popupWidth
         x: root.alignRight
-            ? (root.isOpen ? root.barRightEdge - width : root.barRightEdge)
+            ? root.barRightEdge - width
             : (parent.width - width) / 2
-        y: root.alignRight
-            ? root.barTopMargin
-            : (root.isOpen ? root.barTopMargin : -(implicitHeight + root.barTopMargin))
+        y: root.barTopMargin
         implicitHeight: contentColumn.implicitHeight + 24
         height: implicitHeight
         radius: 16
@@ -79,12 +100,6 @@ PanelWindow {
             autoPaddingEnabled: true
         }
 
-        Behavior on x { enabled: root.alignRight; NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
-        Behavior on y { enabled: !root.alignRight; NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
-
-        onXChanged: if (!root.isOpen && root.alignRight && x >= root.barRightEdge) root.visible = false
-        onYChanged: if (!root.isOpen && !root.alignRight && y <= -implicitHeight) root.visible = false
-
         MouseArea {
             id: popupHoverArea
             anchors.fill: parent
@@ -103,5 +118,11 @@ PanelWindow {
             }
             spacing: 20
         }
+    }
+
+    Droplet {
+        target: box
+        shown: root.isOpen
+        origin: root.alignRight ? Item.TopRight : Item.Top
     }
 }

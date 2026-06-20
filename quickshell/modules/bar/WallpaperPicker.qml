@@ -5,6 +5,7 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Controls
 import qs.services
+import qs.modules.common
 
 FloatingWindow {
     id: root
@@ -20,7 +21,13 @@ FloatingWindow {
 
     function close() {
         isOpen = false
-        visible = false
+        hideTimer.restart()
+    }
+
+    Timer {
+        id: hideTimer
+        interval: 340
+        onTriggered: root.visible = false
     }
 
     visible: false
@@ -32,8 +39,14 @@ FloatingWindow {
     property var wallpapers: ListModel { id: wallpapers }
 
     Rectangle {
+        id: content
         anchors.fill: parent
-        color: Colors.background
+
+        // Subtle top-lit gradient for surface depth
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: Qt.lighter(Colors.background, 1.4) }
+            GradientStop { position: 1.0; color: Colors.background }
+        }
 
         // Header
         Item {
@@ -86,8 +99,11 @@ FloatingWindow {
                     radius: 999
                     anchors.verticalCenter: parent.verticalCenter
                     color: root.lightMode ? Colors.primaryText : Colors.surfaceVariant
+                    border.width: root.lightMode ? 0 : 1
+                    border.color: Qt.lighter(Colors.surfaceVariant, 1.6)
 
                     Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on border.color { ColorAnimation { duration: 150 } }
 
                     Row {
                         anchors.centerIn: parent
@@ -130,8 +146,10 @@ FloatingWindow {
                     radius: 999
                     anchors.verticalCenter: parent.verticalCenter
                     color: closeHover.containsMouse ? Colors.surfaceVariant : "transparent"
+                    scale: closeHover.containsMouse ? 1.08 : 1.0
 
                     Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
 
                     Text {
                         anchors.centerIn: parent
@@ -163,7 +181,7 @@ FloatingWindow {
                 rightMargin: 24
             }
             height: 1
-            color: Colors.border
+            color: Colors.surfaceVariant
         }
 
         // Wallpaper grid
@@ -199,6 +217,9 @@ FloatingWindow {
 
                     readonly property bool isHovered: hoverArea.containsMouse
 
+                    scale: isHovered ? 1.03 : 1.0
+                    Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
+
                     Image {
                         anchors.fill: parent
                         source: "file://" + root.wallpaperDir + "/" + parent.parent.modelData
@@ -212,6 +233,8 @@ FloatingWindow {
                         anchors.fill: parent
                         radius: 12
                         color: parent.isHovered ? Qt.rgba(0, 0, 0, 0.45) : "transparent"
+                        border.width: parent.isHovered ? 2 : 0
+                        border.color: Colors.chipIconActive
 
                         Behavior on color { ColorAnimation { duration: 150 } }
 
@@ -239,7 +262,7 @@ FloatingWindow {
                             width: 40
                             height: 40
                             radius: 999
-                            color: Qt.rgba(1, 1, 1, 0.2)
+                            color: Colors.chipIconActive
                             visible: parent.parent.isHovered
 
                             Text {
@@ -247,7 +270,7 @@ FloatingWindow {
                                 text: "󰄬"
                                 font.family: "JetBrainsMono Nerd Font"
                                 font.pixelSize: 20
-                                color: "white"
+                                color: Colors.background
                             }
                         }
                     }
@@ -338,5 +361,12 @@ FloatingWindow {
     Process {
         id: applyProcess
         running: false
+    }
+
+    Droplet {
+        target: content
+        shown: root.isOpen
+        origin: Item.Center
+        fromScale: 0.85
     }
 }
