@@ -18,7 +18,8 @@ PanelWindow {
     }
 
     exclusiveZone: barContainer.height
-    implicitHeight: barContainer.height
+    // A few extra px of non-reserved space so the drop shadow can render below the bar
+    implicitHeight: barContainer.height + 4
     color: "transparent"
 
     Rectangle {
@@ -26,7 +27,12 @@ PanelWindow {
 
         width: parent.width
         height: 44
-        color: Colors.background
+
+        // Subtle top-lit gradient gives the bar a sense of surface depth
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: Qt.lighter(Colors.background, 1.4) }
+            GradientStop { position: 1.0; color: Colors.background }
+        }
 
         // Bottom border only
         Rectangle {
@@ -45,6 +51,20 @@ PanelWindow {
             onArchClicked: root.archClicked()
             onCenterClicked: root.centerClicked()
             onRightClicked: root.rightClicked()
+        }
+    }
+
+    // Soft drop shadow beneath the bar for elevation
+    Rectangle {
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: barContainer.bottom
+        }
+        height: 4
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: Qt.rgba(0, 0, 0, 0.28) }
+            GradientStop { position: 1.0; color: "transparent" }
         }
     }
 }
