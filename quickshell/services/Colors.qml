@@ -21,6 +21,20 @@ Singleton {
     readonly property string chipIconActive:    parsed.colors?.color3       ?? "#ff6154"
     readonly property string border:            parsed.colors?.color8       ?? "#9c9c9c"
 
+    // Distinct accents for per-source coloring (e.g. one per calendar). Theme-aware.
+    readonly property var accents: [
+        parsed.colors?.color1 ?? "#e06c75",
+        parsed.colors?.color2 ?? "#98c379",
+        parsed.colors?.color4 ?? "#61afef",
+        parsed.colors?.color5 ?? "#c678dd",
+        parsed.colors?.color6 ?? "#56b6c2",
+        parsed.colors?.color3 ?? "#e5c07b"
+    ]
+
+    function accentFor(index) {
+        return accents[((index ?? 0) % accents.length + accents.length) % accents.length]
+    }
+
     property var parsed: ({})
 
     property string colorsPath: Quickshell.env("HOME") + "/.cache/wal/colors.json"

@@ -1,7 +1,6 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import qs.services
@@ -14,9 +13,23 @@ Item {
 
     readonly property string scriptPath: Quickshell.shellDir + "/scripts/todo-manager.sh"
 
+    // color-typed so .r/.g/.b are available (Colors.primaryText is a string)
+    readonly property color selectionTint: Qt.rgba(
+        Qt.color(Colors.primaryText).r,
+        Qt.color(Colors.primaryText).g,
+        Qt.color(Colors.primaryText).b,
+        0.3
+    )
+
     property var todos: []
     property int editingId: -1
     property var pendingArgs: []
+
+    readonly property int activeCount: {
+        let n = 0
+        for (let i = 0; i < todos.length; i++) if (!todos[i].done) n++
+        return n
+    }
 
     function runCommand(args) {
         root.pendingArgs = args
@@ -51,35 +64,42 @@ Item {
         }
     }
 
-   
-    Row {
-        id: todoHeader
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-        height: 44
+    // Header: title + active count + add button
+    Item {
+        id: header
+        anchors { top: parent.top; left: parent.left; right: parent.right }
+        height: 30
 
-        Text {
-            text: "Tasks"
-            color: Colors.primaryText
-            font.family: "Poppins"
-            font.italic: false
-            font.pixelSize: 15
-            font.weight: Font.Bold
-            verticalAlignment: Text.AlignVCenter
-            height: parent.height
-            width: parent.width - addBtn.implicitWidth
+        Row {
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 8
+
+            Text {
+                text: "Tasks"
+                color: Colors.primaryText
+                font.family: "Poppins"
+                font.pixelSize: 14
+                font.weight: Font.Bold
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Text {
+                text: root.activeCount > 0 ? root.activeCount : ""
+                color: Colors.secondaryText
+                font.family: "Poppins"
+                font.pixelSize: 12
+                font.weight: Font.Medium
+                anchors.verticalCenter: parent.verticalCenter
+                visible: root.activeCount > 0
+            }
         }
 
-        // Add button
         Rectangle {
             id: addBtn
-            implicitWidth: 30
-            implicitHeight: 30
+            width: 26
+            height: 26
             radius: 8
-            anchors.verticalCenter: parent.verticalCenter
+            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
             color: addHover.containsMouse ? Colors.surfaceVariant : "transparent"
 
             Behavior on color { ColorAnimation { duration: 150 } }
@@ -88,7 +108,7 @@ Item {
                 anchors.centerIn: parent
                 text: "󰐕"
                 font.family: "JetBrainsMono Nerd Font"
-                font.pixelSize: 16
+                font.pixelSize: 15
                 color: addHover.containsMouse ? Colors.primaryText : Colors.secondaryText
 
                 Behavior on color { ColorAnimation { duration: 150 } }
@@ -101,35 +121,28 @@ Item {
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
                     root.editingId = -1
-                    newItemField.text = ""
-                    newItemInput.visible = true
-                    newItemField.forceActiveFocus()
+                    newField.text = ""
+                    newInput.visible = true
+                    newField.forceActiveFocus()
                 }
             }
         }
     }
 
-   
+    // Inline new-task input
     Rectangle {
-        id: newItemInput
-        anchors {
-            top: todoHeader.bottom
-            left: parent.left
-            right: parent.right
-        }
-        height: visible ? 40 : 0
+        id: newInput
+        anchors { top: header.bottom; topMargin: 6; left: parent.left; right: parent.right }
+        height: visible ? 38 : 0
         visible: false
         color: Colors.surfaceVariant
         radius: 10
+        clip: true
 
         Behavior on height { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
 
         Row {
-            anchors {
-                fill: parent
-                leftMargin: 12
-                rightMargin: 12
-            }
+            anchors { fill: parent; leftMargin: 12; rightMargin: 12 }
             spacing: 8
 
             Text {
@@ -141,14 +154,13 @@ Item {
             }
 
             TextInput {
-                id: newItemField
+                id: newField
                 width: parent.width - 28
                 anchors.verticalCenter: parent.verticalCenter
                 color: Colors.primaryText
                 font.family: "Poppins"
-                font.italic: false
                 font.pixelSize: 13
-                selectionColor: Qt.rgba(Colors.primaryText.r, Colors.primaryText.g, Colors.primaryText.b, 0.3)
+                selectionColor: root.selectionTint
                 clip: true
 
                 Text {
@@ -161,88 +173,74 @@ Item {
                 }
 
                 Keys.onReturnPressed: {
-                    const trimmed = newItemField.text.trim()
-                    if (trimmed !== "") root.addTodo(trimmed)
-                    newItemInput.visible = false
-                    newItemField.text = ""
+                    const t = newField.text.trim()
+                    if (t !== "") root.addTodo(t)
+                    newInput.visible = false
+                    newField.text = ""
                 }
                 Keys.onEscapePressed: {
-                    newItemInput.visible = false
-                    newItemField.text = ""
+                    newInput.visible = false
+                    newField.text = ""
                 }
             }
         }
     }
 
-   
     ListView {
-        id: todoListView
+        id: listView
         anchors {
-            top: newItemInput.visible ? newItemInput.bottom : todoHeader.bottom
+            top: newInput.visible ? newInput.bottom : header.bottom
             topMargin: 6
             left: parent.left
             right: parent.right
             bottom: parent.bottom
         }
-        spacing: 4
+        spacing: 2
         clip: true
         model: root.todos
+        boundsBehavior: Flickable.StopAtBounds
 
         add: Transition {
             NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200; easing.type: Easing.OutCubic }
-            NumberAnimation { property: "x"; from: 20; to: 0; duration: 200; easing.type: Easing.OutCubic }
+            NumberAnimation { property: "x"; from: 16; to: 0; duration: 200; easing.type: Easing.OutCubic }
         }
-
         remove: Transition {
             NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 150; easing.type: Easing.InCubic }
         }
-
         displaced: Transition {
             NumberAnimation { property: "y"; duration: 200; easing.type: Easing.OutCubic }
         }
 
-        delegate: Rectangle {
-            id: todoDelegate
+        delegate: Item {
+            id: row
             required property var modelData
-            width: todoListView.width
-            height: 44
-            radius: 10
-            color: todoDelegate.modelData.done ? "transparent" : Colors.surfaceVariant
-
-            Behavior on color { ColorAnimation { duration: 150 } }
+            width: listView.width
+            height: 38
 
             readonly property bool isEditing: root.editingId === modelData.id
-            readonly property bool isHovered: delegateHover.containsMouse
+            readonly property bool isHovered: rowHover.containsMouse
+            readonly property bool done: modelData.done
 
-            // Strikethrough
             Rectangle {
-                anchors {
-                    left: todoText.left
-                    right: todoText.right
-                    verticalCenter: todoText.verticalCenter
-                }
-                height: 1
-                color: Colors.secondaryText
-                visible: todoDelegate.modelData.done && !todoDelegate.isEditing
-                opacity: 0.6
+                anchors.fill: parent
+                radius: 8
+                color: row.isHovered ? Colors.surfaceVariant : "transparent"
+                Behavior on color { ColorAnimation { duration: 150 } }
             }
 
-            // Check button
+            // Checkbox
             Rectangle {
-                id: checkBtn
-                width: 20
-                height: 20
+                id: check
+                width: 19
+                height: 19
                 radius: 6
-                anchors {
-                    left: parent.left
-                    leftMargin: 12
-                    verticalCenter: parent.verticalCenter
-                }
-                color: todoDelegate.modelData.done ? Colors.primaryText : "transparent"
-                border.color: todoDelegate.modelData.done ? Colors.primaryText : Colors.secondaryText
+                anchors { left: parent.left; leftMargin: 8; verticalCenter: parent.verticalCenter }
+                color: row.done ? Colors.chipIconActive : "transparent"
+                border.color: row.done ? Colors.chipIconActive : Colors.secondaryText
                 border.width: 1.5
 
                 Behavior on color { ColorAnimation { duration: 150 } }
+                Behavior on border.color { ColorAnimation { duration: 150 } }
 
                 Text {
                     anchors.centerIn: parent
@@ -250,71 +248,77 @@ Item {
                     font.family: "JetBrainsMono Nerd Font"
                     font.pixelSize: 11
                     color: Colors.background
-                    visible: todoDelegate.modelData.done
+                    visible: row.done
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: root.toggleTodo(todoDelegate.modelData.id)
+                    onClicked: root.toggleTodo(row.modelData.id)
                 }
             }
 
-            // Task text
+            // Task text (click to edit)
             TextInput {
-                id: todoText
+                id: taskText
                 anchors {
-                    left: checkBtn.right
+                    left: check.right
                     leftMargin: 10
                     right: removeBtn.left
-                    rightMargin: 8
+                    rightMargin: 6
                     verticalCenter: parent.verticalCenter
                 }
-                text: todoDelegate.modelData.text
-                color: todoDelegate.modelData.done ? Colors.secondaryText : Colors.primaryText
+                text: row.modelData.text
+                color: row.done ? Colors.secondaryText : Colors.primaryText
                 font.family: "Poppins"
-                font.italic: false
                 font.pixelSize: 13
                 font.weight: Font.Medium
-                readOnly: !todoDelegate.isEditing
-                selectionColor: Qt.rgba(Colors.primaryText.r, Colors.primaryText.g, Colors.primaryText.b, 0.3)
+                readOnly: !row.isEditing
+                selectionColor: root.selectionTint
                 clip: true
-                opacity: todoDelegate.modelData.done ? 0.5 : 1.0
+                opacity: row.done ? 0.5 : 1.0
+                verticalAlignment: Text.AlignVCenter
 
                 Behavior on color   { ColorAnimation { duration: 150 } }
                 Behavior on opacity { NumberAnimation { duration: 150 } }
 
+                // Strikethrough for completed tasks
+                Rectangle {
+                    anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                    width: Math.min(parent.contentWidth, parent.width)
+                    height: 1
+                    color: Colors.secondaryText
+                    opacity: 0.6
+                    visible: row.done && !row.isEditing
+                }
+
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
-                    visible: !todoDelegate.isEditing
+                    visible: !row.isEditing
                     onClicked: {
-                        root.editingId = todoDelegate.modelData.id
-                        todoText.forceActiveFocus()
-                        todoText.selectAll()
+                        root.editingId = row.modelData.id
+                        taskText.forceActiveFocus()
+                        taskText.selectAll()
                     }
                 }
 
-                Keys.onReturnPressed: root.editTodo(todoDelegate.modelData.id, todoText.text.trim())
+                Keys.onReturnPressed: root.editTodo(row.modelData.id, taskText.text.trim())
                 Keys.onEscapePressed: {
-                    todoText.text = todoDelegate.modelData.text
+                    taskText.text = row.modelData.text
                     root.editingId = -1
                 }
             }
 
-            // Remove button — only visible on hover
+            // Delete (hover only)
             Rectangle {
                 id: removeBtn
                 width: 24
                 height: 24
                 radius: 6
-                anchors {
-                    right: parent.right
-                    rightMargin: 10
-                    verticalCenter: parent.verticalCenter
-                }
+                anchors { right: parent.right; rightMargin: 6; verticalCenter: parent.verticalCenter }
                 color: removeHover.containsMouse ? Colors.border : "transparent"
-                opacity: todoDelegate.isHovered ? 1.0 : 0.0
+                opacity: row.isHovered ? 1.0 : 0.0
 
                 Behavior on color   { ColorAnimation { duration: 150 } }
                 Behavior on opacity { NumberAnimation { duration: 150 } }
@@ -323,7 +327,7 @@ Item {
                     anchors.centerIn: parent
                     text: "󰅖"
                     font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 13
+                    font.pixelSize: 12
                     color: Colors.secondaryText
                 }
 
@@ -332,12 +336,12 @@ Item {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: root.removeTodo(todoDelegate.modelData.id)
+                    onClicked: root.removeTodo(row.modelData.id)
                 }
             }
 
             MouseArea {
-                id: delegateHover
+                id: rowHover
                 anchors.fill: parent
                 hoverEnabled: true
                 acceptedButtons: Qt.NoButton
@@ -351,7 +355,6 @@ Item {
             text: "No tasks yet"
             color: Colors.secondaryText
             font.family: "Poppins"
-            font.italic: false
             font.pixelSize: 13
         }
     }

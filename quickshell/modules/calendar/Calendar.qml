@@ -9,8 +9,8 @@ Item {
     implicitWidth: parent?.width ?? 0
     implicitHeight: headerRow.height + weekdayRow.height + grid.height + 24
 
-    property int cellSize: 46
-    property int todaySize: 34
+    property int cellSize: 40
+    property int todaySize: 32
 
     property int displayYear: today.getFullYear()
     property int displayMonth: today.getMonth()
@@ -145,11 +145,9 @@ Item {
                 height: 28
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                color: Colors.secondaryText
                 // Dim weekends
-                color: (index === 0 || index === 6) ? Qt.rgba(
-                    Colors.secondaryText.r ?? 0.6,
-                    Colors.secondaryText.g ?? 0.6,
-                    Colors.secondaryText.b ?? 0.6, 0.5) : Colors.secondaryText
+                opacity: (index === 0 || index === 6) ? 0.5 : 1.0
                 font.family: "Poppins"
                 font.italic: false
                 font.pixelSize: 11
@@ -184,13 +182,15 @@ Item {
                     && root.displayYear === root.todayYear
                     && root.displayMonth === root.todayMonth
                     && day === root.todayDay
+                readonly property bool hasEvents: isValidDay
+                    && Agenda.hasEventsOn(root.displayYear, root.displayMonth, day)
 
                 Rectangle {
                     anchors.centerIn: parent
                     width: root.todaySize
                     height: root.todaySize
                     radius: 8
-                    color: parent.isToday ? Colors.primaryText : (dayHover.containsMouse ? Colors.surfaceVariant : "transparent")
+                    color: parent.isToday ? Colors.chipIconActive : (dayHover.containsMouse ? Colors.surfaceVariant : "transparent")
                     visible: parent.isValidDay
 
                     Behavior on color { ColorAnimation { duration: 150 } }
@@ -202,8 +202,9 @@ Item {
                     color: parent.isToday
                         ? Colors.background
                         : parent.isWeekend
-                            ? Qt.rgba(0.6, 0.6, 0.6, 0.55)
+                            ? Colors.secondaryText
                             : Colors.primaryText
+                    opacity: (parent.isWeekend && !parent.isToday) ? 0.55 : 1.0
                     font.family: "Poppins"
                     font.italic: false
                     font.pixelSize: 13
@@ -211,6 +212,20 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
 
                     Behavior on color { ColorAnimation { duration: 150 } }
+                }
+
+                // Event indicator dot
+                Rectangle {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        bottom: parent.bottom
+                        bottomMargin: 4
+                    }
+                    width: 4
+                    height: 4
+                    radius: 999
+                    visible: parent.hasEvents
+                    color: parent.isToday ? Colors.background : Colors.chipIconActive
                 }
 
                 MouseArea {
