@@ -412,7 +412,7 @@ PanelWindow {
                 ToggleButton {
                     width: (parent.width - 8) / 2
                     height: 70
-                    radius: 999
+                    radius: 22
                     icon: Wifi.signalIcon
                     label: "Wi-Fi"
                     sublabel: Wifi.networkName !== "" ? Wifi.networkName : (Wifi.enabled ? "On" : "Off")
@@ -423,7 +423,7 @@ PanelWindow {
                 ToggleButton {
                     width: (parent.width - 8) / 2
                     height: 70
-                    radius: 999
+                    radius: 22
                     icon: Bluetooth.enabled ? "󰂯" : "󰂲"
                     label: "Bluetooth"
                     sublabel: Bluetooth.connectedDeviceName !== "" ? Bluetooth.connectedDeviceName : (Bluetooth.enabled ? "On" : "Off")
@@ -434,7 +434,7 @@ PanelWindow {
                 ToggleButton {
                     width: (parent.width - 8) / 2
                     height: 70
-                    radius: 999
+                    radius: 22
                     icon: Audio.muted ? "󰖁" : "󰕾"
                     label: "Volume"
                     sublabel: Audio.muted ? "Muted" : Audio.volumePercent + "%"
@@ -445,7 +445,7 @@ PanelWindow {
                 ToggleButton {
                     width: (parent.width - 8) / 2
                     height: 70
-                    radius: 999
+                    radius: 22
                     icon: Audio.micMuted ? "󰍭" : "󰍬"
                     label: "Microphone"
                     sublabel: Audio.micMuted ? "Muted" : "Active"

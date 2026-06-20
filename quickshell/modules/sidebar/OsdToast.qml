@@ -88,49 +88,82 @@ PanelWindow {
         onTriggered: root.visible = false
     }
 
-    Rectangle {
+    // Vertical version of the sidebar slider: filled pill (bottom) | playhead |
+    // remaining pill (top), with the icon overlaid at the bottom.
+    Item {
         id: osdPill
 
         width: root.pillWidth
         height: root.pillHeight
-        radius: root.pillWidth / 2
-        color: Colors.background
-        clip: true
 
         x: root.screen.width - width - root.rightMargin
         y: root.topMargin
 
-        // Filled level bar (grows from bottom)
+        readonly property real frac: Math.max(0, Math.min(1, root.value / 100))
+        readonly property int thumbT: 4
+        readonly property int gap: 5
+        readonly property int pillW: 44
+        readonly property int pillRadius: 8
+        readonly property int innerRadius: 3   // corners adjacent to the playhead
+        readonly property real headY: height * (1 - frac)               // playhead centre (from top)
+        readonly property real filledH: Math.max(0, frac * height - gap - thumbT / 2)
+
+        // Filled (current level) portion — grows from the bottom
         Rectangle {
-            anchors {
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-            }
-            height: parent.height * Math.max(0, Math.min(1, root.value / 100))
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            width: osdPill.pillW
+            height: osdPill.filledH
+            radius: osdPill.pillRadius
+            topLeftRadius: osdPill.innerRadius
+            topRightRadius: osdPill.innerRadius
             color: Colors.primaryText
-            radius: parent.radius
 
             Behavior on height { NumberAnimation { duration: 80; easing.type: Easing.OutCubic } }
         }
 
-        // Icon at bottom
+        // Remaining portion — from the top down to the playhead
+        Rectangle {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            width: osdPill.pillW
+            height: Math.max(0, osdPill.headY - osdPill.gap - osdPill.thumbT / 2)
+            radius: osdPill.pillRadius
+            bottomLeftRadius: osdPill.innerRadius
+            bottomRightRadius: osdPill.innerRadius
+            color: Colors.surfaceVariant
+
+            Behavior on height { NumberAnimation { duration: 80; easing.type: Easing.OutCubic } }
+        }
+
+        // Playhead — a thin horizontal bar, wider than the pills
+        Rectangle {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: osdPill.pillW + 8
+            height: osdPill.thumbT
+            radius: 1
+            color: Colors.primaryText
+            y: Math.max(0, Math.min(osdPill.height - height, osdPill.headY - height / 2))
+
+            Behavior on y { NumberAnimation { duration: 80; easing.type: Easing.OutCubic } }
+        }
+
+        // Icon overlaid at the bottom — on-fill colour over the filled pill, chipIcon otherwise
         Text {
+            id: osdIcon
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
                 bottomMargin: 12
             }
             text: root.icon
-            font.family: Settings.iconFont
-            font.pixelSize: 18
-            color: root.value > 15 ? Colors.background : Colors.primaryText
-            z: 1
+            font.family: "JetBrainsMono Nerd Font"
+            font.pixelSize: 20
+            z: 2
+            color: (12 + height / 2) < osdPill.filledH ? Colors.background : Colors.chipIcon
 
-            Behavior on color { ColorAnimation { duration: 80 } }
+            Behavior on color { ColorAnimation { duration: 120 } }
         }
-
-
     }
 
     Droplet {
