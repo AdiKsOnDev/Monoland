@@ -11,6 +11,9 @@ Rectangle {
     radius: 16
     color: Colors.surfaceVariant
     clip: true
+    // Hairline edge for depth (visible when there's no album art covering it)
+    border.width: 1
+    border.color: Qt.lighter(Colors.surfaceVariant, 1.6)
     layer.enabled: Media.trackArtUrl !== ""
     layer.effect: MultiEffect {
         maskEnabled: true

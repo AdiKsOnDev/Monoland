@@ -19,8 +19,11 @@ Item {
         anchors.fill: parent
         radius: 999
         color: sliderArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.3) : Colors.surfaceVariant
+        border.width: 1
+        border.color: sliderArea.containsMouse ? Colors.border : Qt.lighter(Colors.surfaceVariant, 1.6)
 
         Behavior on color { ColorAnimation { duration: 150 } }
+        Behavior on border.color { ColorAnimation { duration: 150 } }
 
         Rectangle {
             id: fill
@@ -33,7 +36,11 @@ Item {
         radius: 999
             color: Colors.primaryText
 
-            Behavior on width { NumberAnimation { duration: 80; easing.type: Easing.OutCubic } }
+            // Animate external/wheel changes, but track the cursor 1:1 while dragging
+            Behavior on width {
+                enabled: !sliderArea.pressed
+                NumberAnimation { duration: 80; easing.type: Easing.OutCubic }
+            }
         }
 
         Text {
@@ -76,6 +83,15 @@ Item {
             onPositionChanged: (event) => {
                 if (pressed)
                     root.moved(Math.max(0, Math.min(100, Math.round((event.x / width) * 100))))
+            }
+        }
+
+        // Scroll over the slider to nudge the value in 5% steps
+        WheelHandler {
+            acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+            onWheel: (event) => {
+                const step = event.angleDelta.y > 0 ? 5 : -5
+                root.moved(Math.max(0, Math.min(100, root.value + step)))
             }
         }
     }

@@ -20,9 +20,14 @@ Rectangle {
         ? (hoverArea.containsMouse ? Qt.lighter(Colors.primaryText, 1.1) : Colors.primaryText)
         : (hoverArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.4) : Colors.surfaceVariant)
 
-    scale: hoverArea.pressed ? 0.96 : 1.0
+    // Inactive buttons get a hairline edge; active ones are solid-filled so need none
+    border.width: active ? 0 : 1
+    border.color: hoverArea.containsMouse ? Colors.border : Qt.lighter(Colors.surfaceVariant, 1.6)
+
+    scale: hoverArea.pressed ? 0.96 : (hoverArea.containsMouse ? 1.03 : 1.0)
 
     Behavior on color { ColorAnimation { duration: 150 } }
+    Behavior on border.color { ColorAnimation { duration: 150 } }
     Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
 
     // Icon-only mode (no label)
@@ -68,15 +73,11 @@ Rectangle {
         }
 
         Rectangle {
-            width: 0.5
+            width: 1
             height: 22
             anchors.verticalCenter: parent.verticalCenter
-            color: root.active ? Qt.rgba(0, 0, 0, 0.2) : Qt.rgba(
-                Colors.primaryText.r ?? 0.87,
-                Colors.primaryText.g ?? 0.87,
-                Colors.primaryText.b ?? 0.87,
-                0.15
-            )
+            // Faint separator: dark on the active (light) fill, light on the inactive surface
+            color: root.active ? Qt.rgba(0, 0, 0, 0.2) : Qt.rgba(1, 1, 1, 0.15)
 
             Behavior on color { ColorAnimation { duration: 150 } }
         }

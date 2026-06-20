@@ -17,8 +17,11 @@ Rectangle {
     color: hoverArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.18) : Colors.surfaceVariant
     radius: 12
     clip: true
+    border.width: 1
+    border.color: hoverArea.containsMouse ? Colors.border : Qt.lighter(Colors.surfaceVariant, 1.6)
 
     Behavior on color { ColorAnimation { duration: 150 } }
+    Behavior on border.color { ColorAnimation { duration: 150 } }
 
     MouseArea {
         id: hoverArea

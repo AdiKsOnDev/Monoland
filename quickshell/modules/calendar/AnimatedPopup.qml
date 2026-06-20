@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import Quickshell
 import QtQuick
+import QtQuick.Effects
 import qs.services
 
 PanelWindow {
@@ -58,8 +59,25 @@ PanelWindow {
             : (root.isOpen ? root.barTopMargin : -(implicitHeight + root.barTopMargin))
         implicitHeight: contentColumn.implicitHeight + 24
         height: implicitHeight
-        color: Colors.background
         radius: 16
+
+        // Subtle top-lit gradient for surface depth
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: Qt.lighter(Colors.background, 1.4) }
+            GradientStop { position: 1.0; color: Colors.background }
+        }
+        border.width: 1
+        border.color: Colors.surfaceVariant
+
+        // Elevation: soft drop shadow so the popup floats above the desktop
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: Qt.rgba(0, 0, 0, 0.5)
+            shadowBlur: 0.8
+            shadowVerticalOffset: 8
+            autoPaddingEnabled: true
+        }
 
         Behavior on x { enabled: root.alignRight; NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
         Behavior on y { enabled: !root.alignRight; NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }

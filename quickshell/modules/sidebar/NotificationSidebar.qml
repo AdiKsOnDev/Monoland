@@ -49,7 +49,24 @@ PanelWindow {
         height: parent.height - root.barHeight - margin * 2
         radius: 16
         clip: true
-        color: Colors.background
+
+        // Subtle top-lit gradient gives the panel a sense of surface depth
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: Qt.lighter(Colors.background, 1.4) }
+            GradientStop { position: 1.0; color: Colors.background }
+        }
+        border.width: 1
+        border.color: Colors.surfaceVariant
+
+        // Elevation: soft drop shadow so the panel reads as floating above the desktop
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: Qt.rgba(0, 0, 0, 0.5)
+            shadowBlur: 0.8
+            shadowVerticalOffset: 8
+            autoPaddingEnabled: true
+        }
 
         Behavior on x { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
 
@@ -300,6 +317,8 @@ PanelWindow {
                     height: 40
                     radius: 999
                     color: settingsHover.containsMouse ? Colors.primaryText : Colors.surfaceVariant
+                    border.width: settingsHover.containsMouse ? 0 : 1
+                    border.color: Qt.lighter(Colors.surfaceVariant, 1.6)
 
                     Behavior on color { ColorAnimation { duration: 150 } }
 
@@ -327,6 +346,8 @@ PanelWindow {
                     height: 40
                     radius: 999
                     color: powerHover.containsMouse ? Colors.primaryText : Colors.surfaceVariant
+                    border.width: powerHover.containsMouse ? 0 : 1
+                    border.color: Qt.lighter(Colors.surfaceVariant, 1.6)
 
                     Behavior on color { ColorAnimation { duration: 150 } }
 
