@@ -18,6 +18,7 @@ Singleton {
     readonly property string chipBackground:    parsed.colors?.color0       ?? "#1a1a1a"
     readonly property string surfaceVariant:    Qt.darker(parsed.colors?.color8 ?? "#9c9c9c", 3.0)
     readonly property string chipIcon:          parsed.colors?.color7       ?? "#dfdfe0"
+    readonly property string chipIconActive:    parsed.colors?.color3       ?? "#ff6154"
     readonly property string border:            parsed.colors?.color8       ?? "#9c9c9c"
 
     property var parsed: ({})

@@ -100,6 +100,7 @@ Item {
             anchors.centerIn: parent
             spacing: 6
 
+            NotificationChip {}
             StatChip { icon: Wifi.enabled ? "󰤨" : "󰤭" }
             StatChip { icon: Brightness.brightnessPercent > 66 ? "󰃠" : Brightness.brightnessPercent > 33 ? "󰃟" : "󰃞" }
             StatChip { icon: Audio.muted ? "󰖁" : Audio.volumePercent > 66 ? "󰕾" : Audio.volumePercent > 33 ? "󰖀" : "󰕿" }
