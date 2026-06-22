@@ -9,6 +9,15 @@ Singleton {
 
     readonly property bool enabled: Networking.wifiEnabled
 
+    // The active Wi-Fi device and its visible networks (for the control panel)
+    readonly property var device: {
+        for (const d of Networking.devices.values)
+            if (d.type === DeviceType.Wifi) return d
+        return null
+    }
+
+    readonly property var networks: device ? device.networks.values : []
+
     readonly property string networkName: {
         const devices = Networking.devices.values
         for (const device of devices) {

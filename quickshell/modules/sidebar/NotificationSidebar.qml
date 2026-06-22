@@ -22,9 +22,19 @@ PanelWindow {
         isOpen = !isOpen
     }
 
+    // Right-click control panels (expand from the clicked toggle)
+    property string activePanel: ""
+    function openPanel(id, src) {
+        const p = src.mapToItem(controlPanel, src.width / 2, src.height / 2)
+        controlPanel.originX = p.x
+        controlPanel.originY = p.y
+        activePanel = id
+    }
+    function closePanel() { activePanel = "" }
+
     onIsOpenChanged: {
         if (isOpen) visible = true
-        else hideTimer.restart()
+        else { hideTimer.restart(); closePanel() }
     }
 
     Timer {
@@ -397,7 +407,7 @@ PanelWindow {
                 top: sidebarHeader.bottom
                 left: parent.left
                 right: parent.right
-                margins: 16
+                margins: 20
                 topMargin: 16
             }
             spacing: 10
@@ -410,6 +420,7 @@ PanelWindow {
                 rowSpacing: 8
 
                 ToggleButton {
+                    id: wifiToggle
                     width: (parent.width - 8) / 2
                     height: 70
                     radius: 22
@@ -418,9 +429,11 @@ PanelWindow {
                     sublabel: Wifi.networkName !== "" ? Wifi.networkName : (Wifi.enabled ? "On" : "Off")
                     active: Wifi.enabled
                     onClicked: Wifi.toggle()
+                    onExpandRequested: root.openPanel("wifi", wifiToggle)
                 }
 
                 ToggleButton {
+                    id: btToggle
                     width: (parent.width - 8) / 2
                     height: 70
                     radius: 22
@@ -429,9 +442,11 @@ PanelWindow {
                     sublabel: Bluetooth.connectedDeviceName !== "" ? Bluetooth.connectedDeviceName : (Bluetooth.enabled ? "On" : "Off")
                     active: Bluetooth.enabled
                     onClicked: Bluetooth.toggle()
+                    onExpandRequested: root.openPanel("bluetooth", btToggle)
                 }
 
                 ToggleButton {
+                    id: volToggle
                     width: (parent.width - 8) / 2
                     height: 70
                     radius: 22
@@ -439,10 +454,12 @@ PanelWindow {
                     label: "Volume"
                     sublabel: Audio.muted ? "Muted" : Audio.volumePercent + "%"
                     active: !Audio.muted
+                    onExpandRequested: root.openPanel("volume", volToggle)
                     onClicked: Audio.toggleMute()
                 }
 
                 ToggleButton {
+                    id: micToggle
                     width: (parent.width - 8) / 2
                     height: 70
                     radius: 22
@@ -451,6 +468,7 @@ PanelWindow {
                     sublabel: Audio.micMuted ? "Muted" : "Active"
                     active: !Audio.micMuted
                     onClicked: Audio.toggleMicMute()
+                    onExpandRequested: root.openPanel("mic", micToggle)
                 }
             }
 
@@ -470,6 +488,36 @@ PanelWindow {
                 onMoved: (percent) => Brightness.setBrightnessPercent(percent)
             }
         }
+
+        // Right-click control panel (expands from the clicked toggle)
+        ControlPanel {
+            id: controlPanel
+            anchors.fill: parent
+            shown: root.activePanel !== ""
+            title: root.activePanel === "wifi" ? "Wi-Fi"
+                : root.activePanel === "volume" ? "Volume"
+                : root.activePanel === "bluetooth" ? "Bluetooth"
+                : root.activePanel === "mic" ? "Microphone" : ""
+            icon: root.activePanel === "wifi" ? "󰤨"
+                : root.activePanel === "volume" ? "󰕾"
+                : root.activePanel === "bluetooth" ? "󰂯"
+                : root.activePanel === "mic" ? "󰍬" : ""
+            onClosed: root.closePanel()
+
+            Loader {
+                anchors.fill: parent
+                active: root.activePanel !== ""
+                sourceComponent: root.activePanel === "wifi" ? wifiComp
+                    : root.activePanel === "volume" ? volumeComp
+                    : root.activePanel === "bluetooth" ? bluetoothComp
+                    : root.activePanel === "mic" ? micComp : null
+            }
+        }
+
+        Component { id: wifiComp; WifiPanel {} }
+        Component { id: volumeComp; VolumePanel {} }
+        Component { id: bluetoothComp; BluetoothPanel {} }
+        Component { id: micComp; MicPanel {} }
     }
 
     Droplet {

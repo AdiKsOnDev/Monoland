@@ -17,7 +17,19 @@ Singleton {
     function toggleMute() { if (sink?.audio) sink.audio.muted = !sink.audio.muted }
     function toggleMicMute() { if (source?.audio) source.audio.muted = !source.audio.muted }
 
+    // Per-application playback streams (for the volume mixer)
+    readonly property var streams: Pipewire.ready
+        ? Pipewire.nodes.values.filter(n =>
+            n.audio && (n.type & PwNodeType.AudioOutStream) === PwNodeType.AudioOutStream)
+        : []
+
+    // Per-application capture streams (for the mic panel)
+    readonly property var inputStreams: Pipewire.ready
+        ? Pipewire.nodes.values.filter(n =>
+            n.audio && (n.type & PwNodeType.AudioInStream) === PwNodeType.AudioInStream)
+        : []
+
     PwObjectTracker {
-        objects: [root.sink, root.source]
+        objects: [root.sink, root.source].concat(root.streams).concat(root.inputStreams)
     }
 }

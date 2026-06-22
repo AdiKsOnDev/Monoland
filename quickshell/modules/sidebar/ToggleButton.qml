@@ -13,6 +13,7 @@ Rectangle {
     property string sublabel: ""
 
     signal clicked()
+    signal expandRequested()
 
     implicitWidth: 44
     implicitHeight: 44
@@ -28,7 +29,7 @@ Rectangle {
             ? (hoverArea.containsMouse ? Qt.lighter(Colors.fillStrong, 1.1) : Colors.fillStrong)
             : (hoverArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.4) : Colors.surfaceVariant)
 
-    border.width: (!wide && active) ? 0 : 1
+    border.width: wide ? 0 : (active ? 0 : 1)
     border.color: (!wide && hoverArea.containsMouse) ? Colors.border : Qt.lighter(Colors.surfaceVariant, 1.6)
 
     scale: hoverArea.pressed ? 0.97 : (hoverArea.containsMouse ? 1.02 : 1.0)
@@ -58,7 +59,7 @@ Rectangle {
         radius: 14
         anchors {
             left: parent.left
-            leftMargin: 14
+            leftMargin: 10
             verticalCenter: parent.verticalCenter
         }
         color: root.active ? Colors.fillStrong : Colors.surfaceVariant
@@ -127,6 +128,10 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: root.clicked()
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: (mouse) => {
+            if (mouse.button === Qt.RightButton) root.expandRequested()
+            else root.clicked()
+        }
     }
 }

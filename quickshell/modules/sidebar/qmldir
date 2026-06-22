@@ -7,3 +7,8 @@ OsdToast 1.0 OsdToast.qml
 PowerMenu 1.0 PowerMenu.qml
 SliderRow 1.0 SliderRow.qml
 ToggleButton 1.0 ToggleButton.qml
+ControlPanel 1.0 ControlPanel.qml
+WifiPanel 1.0 WifiPanel.qml
+VolumePanel 1.0 VolumePanel.qml
+BluetoothPanel 1.0 BluetoothPanel.qml
+MicPanel 1.0 MicPanel.qml

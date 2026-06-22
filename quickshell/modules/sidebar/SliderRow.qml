@@ -50,8 +50,10 @@ Item {
         Rectangle {
             id: remaining
             anchors.verticalCenter: parent.verticalCenter
-            x: Math.min(track.width, track.headX + track.gap + track.thumbW / 2)
-            width: Math.max(0, track.width - x)
+            // Right edge pinned; only the width animates (derived from the playhead),
+            // so the left edge tracks the playhead 1:1 instead of drifting.
+            anchors.right: parent.right
+            width: Math.max(0, parent.width - (track.headX + track.gap + track.thumbW / 2))
             height: track.pillH
             radius: track.pillRadius
             topLeftRadius: track.innerRadius
@@ -59,10 +61,6 @@ Item {
             color: sliderArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.3) : Colors.surfaceVariant
 
             Behavior on color { ColorAnimation { duration: 150 } }
-            Behavior on x {
-                enabled: !sliderArea.pressed
-                NumberAnimation { duration: 80; easing.type: Easing.OutCubic }
-            }
             Behavior on width {
                 enabled: !sliderArea.pressed
                 NumberAnimation { duration: 80; easing.type: Easing.OutCubic }
