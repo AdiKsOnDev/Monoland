@@ -10,6 +10,9 @@ Singleton {
 
     readonly property var notifications: server.trackedNotifications
 
+    // Focus mode / Do Not Disturb — suppresses notification toasts when on
+    property bool doNotDisturb: false
+
     // Maps notification id -> arrival Date
     property var arrivalTimes: ({})
 

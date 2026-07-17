@@ -368,6 +368,38 @@ PanelWindow {
                 }
                 spacing: 8
 
+                // Focus mode (Do Not Disturb) toggle
+                Rectangle {
+                    width: 40
+                    height: 40
+                    radius: 999
+                    color: Notifications.doNotDisturb
+                        ? Colors.fillStrong
+                        : (focusHover.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.4) : Colors.surfaceVariant)
+                    border.width: Notifications.doNotDisturb ? 0 : 1
+                    border.color: Qt.lighter(Colors.surfaceVariant, 1.6)
+
+                    Behavior on color { ColorAnimation { duration: 150 } }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: Notifications.doNotDisturb ? "󰂛" : "󰂚"
+                        font.family: "JetBrainsMono Nerd Font"
+                        font.pixelSize: 18
+                        color: Notifications.doNotDisturb ? Colors.fillStrongText : Colors.primaryText
+
+                        Behavior on color { ColorAnimation { duration: 150 } }
+                    }
+
+                    MouseArea {
+                        id: focusHover
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: Notifications.doNotDisturb = !Notifications.doNotDisturb
+                    }
+                }
+
                 Rectangle {
                     width: 40
                     height: 40

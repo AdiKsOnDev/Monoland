@@ -47,7 +47,7 @@ PanelWindow {
     Connections {
         target: Notifications
         function onNotificationArrived(notif) {
-            if (!root.sidebarOpen) root.show(notif)
+            if (!root.sidebarOpen && !Notifications.doNotDisturb) root.show(notif)
         }
     }
 
