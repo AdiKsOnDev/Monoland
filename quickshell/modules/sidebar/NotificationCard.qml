@@ -10,12 +10,22 @@ Rectangle {
 
     required property Notification notification
 
+    // When >1, an inline expand chevron (+ count) is shown on the right
+    property int groupCount: 0
+    property bool expanded: false
+
     signal dismissed()
+    signal expandToggled()
+
+    readonly property string title: notification.summary !== "" ? notification.summary : notification.appName
+    readonly property string body: notification.body
+    readonly property bool hasImage: notification.image !== ""
+    readonly property bool hasAppIcon: notification.appIcon !== ""
 
     implicitWidth: parent?.width ?? 0
-    implicitHeight: cardColumn.implicitHeight + 24
+    implicitHeight: Math.max(avatar.height, textCol.implicitHeight) + 28
     color: hoverArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.18) : Colors.surfaceVariant
-    radius: 12
+    radius: 16
     clip: true
     border.width: 1
     border.color: hoverArea.containsMouse ? Colors.border : Qt.lighter(Colors.surfaceVariant, 1.6)
@@ -55,157 +65,205 @@ Rectangle {
         easing.type: Easing.OutCubic
     }
 
-    Column {
-        id: cardColumn
+    // Circular avatar (contact / notification image) with a small app badge
+    Item {
+        id: avatar
+        width: 44
+        height: 44
         anchors {
-            top: parent.top
             left: parent.left
-            right: parent.right
-            margins: 16
-            topMargin: 14
+            leftMargin: 16
+            verticalCenter: parent.verticalCenter
         }
-        spacing: 6
 
+        Rectangle {
+            anchors.fill: parent
+            radius: width / 2
+            color: Colors.chipBackground
+            clip: true
+
+            Image {
+                anchors.fill: parent
+                source: root.hasImage ? root.notification.image : ""
+                visible: root.hasImage
+                fillMode: Image.PreserveAspectCrop
+                smooth: true
+            }
+            IconImage {
+                anchors.fill: parent
+                anchors.margins: 6
+                source: !root.hasImage && root.hasAppIcon ? root.notification.appIcon : ""
+                visible: !root.hasImage && root.hasAppIcon
+                smooth: true
+            }
+            Text {
+                anchors.centerIn: parent
+                text: root.title.length > 0 ? root.title[0].toUpperCase() : "?"
+                color: Colors.primaryText
+                font.family: "Poppins"
+                font.pixelSize: 18
+                font.weight: Font.Bold
+                visible: !root.hasImage && !root.hasAppIcon
+            }
+        }
+
+        // App badge — only when the avatar is a contact image and an app icon also exists
+        Rectangle {
+            visible: root.hasImage && root.hasAppIcon
+            width: 18
+            height: 18
+            radius: width / 2
+            anchors { right: parent.right; bottom: parent.bottom }
+            color: Colors.surfaceVariant
+
+            IconImage {
+                anchors { fill: parent; margins: 2 }
+                source: root.notification.appIcon
+                smooth: true
+            }
+        }
+    }
+
+    Column {
+        id: textCol
+        anchors {
+            left: avatar.right
+            leftMargin: 12
+            right: expandBtn.visible ? expandBtn.left : parent.right
+            rightMargin: 12
+            verticalCenter: parent.verticalCenter
+        }
+        spacing: 3
+
+        // Title · time · bell
         Item {
             width: parent.width
-            height: 20
-
-            Row {
-                anchors {
-                    left: parent.left
-                    verticalCenter: parent.verticalCenter
-                }
-                spacing: 8
-
-                Rectangle {
-                    id: appIcon
-                    width: 20
-                    height: 20
-                    radius: 4
-                    color: root.notification.image === "" && root.notification.appIcon === ""
-                        ? Colors.chipBackground
-                        : "transparent"
-                    clip: true
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    Image {
-                        anchors.fill: parent
-                        source: root.notification.image
-                        visible: root.notification.image !== ""
-                        fillMode: Image.PreserveAspectCrop
-                        smooth: true
-                    }
-
-                    IconImage {
-                        anchors.fill: parent
-                        source: root.notification.appIcon
-                        visible: root.notification.image === "" && root.notification.appIcon !== ""
-                        smooth: true
-                    }
-
-                    Text {
-                        anchors.centerIn: parent
-                        text: root.notification.appName.length > 0
-                            ? root.notification.appName[0].toUpperCase()
-                            : "?"
-                        color: Colors.primaryText
-                        font.family: "Poppins"
-                        font.pixelSize: 10
-                        font.weight: Font.Bold
-                        visible: root.notification.image === "" && root.notification.appIcon === ""
-                    }
-                }
-
-                Text {
-                    text: root.notification.appName
-                    color: Colors.secondaryText
-                    font.family: "Poppins"
-                    font.pixelSize: 11
-                    font.weight: Font.Medium
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
+            height: titleText.implicitHeight
 
             Text {
-                id: timestamp
-                anchors {
-                    right: parent.right
-                    verticalCenter: parent.verticalCenter
-                }
-                text: {
-                    const arrived = Notifications.arrivalTimeFor(root.notification.id)
-                    if (!arrived) return ""
-                    const diffMins = Math.floor((new Date() - arrived) / 60000)
-                    if (diffMins < 1) return "now"
-                    if (diffMins < 60) return diffMins + "m ago"
-                    const diffHours = Math.floor(diffMins / 60)
-                    if (diffHours < 24) return diffHours + "h ago"
-                    return Math.floor(diffHours / 24) + "d ago"
-                }
-                color: Colors.secondaryText
+                id: titleText
+                anchors.left: parent.left
+                text: root.title
+                color: Colors.primaryText
                 font.family: "Poppins"
-                font.pixelSize: 10
+                font.pixelSize: 14
+                font.weight: Font.Bold
+                elide: Text.ElideRight
+                width: Math.max(0, Math.min(implicitWidth, parent.width - metaRow.width - 6))
+            }
 
-                Timer {
-                    interval: 60000
-                    repeat: true
-                    running: true
-                    onTriggered: parent.text = parent.text
+            Row {
+                id: metaRow
+                anchors { left: titleText.right; leftMargin: 6; verticalCenter: titleText.verticalCenter }
+                spacing: 5
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "·"
+                    color: Colors.secondaryText
+                    font.family: "Poppins"
+                    font.pixelSize: 12
+                }
+                Text {
+                    id: timeText
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: {
+                        const arrived = Notifications.arrivalTimeFor(root.notification.id)
+                        if (!arrived) return "now"
+                        const m = Math.floor((new Date() - arrived) / 60000)
+                        if (m < 1) return "now"
+                        if (m < 60) return m + "m"
+                        const h = Math.floor(m / 60)
+                        if (h < 24) return h + "h"
+                        return Math.floor(h / 24) + "d"
+                    }
+                    color: Colors.secondaryText
+                    font.family: "Poppins"
+                    font.pixelSize: 12
+
+                    Timer {
+                        interval: 60000
+                        repeat: true
+                        running: true
+                        onTriggered: parent.text = parent.text
+                    }
+                }
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "󰂚"
+                    color: Colors.secondaryText
+                    font.family: "JetBrainsMono Nerd Font"
+                    font.pixelSize: 11
                 }
             }
         }
 
         Text {
             width: parent.width
-            text: root.notification.summary
-            color: Colors.primaryText
+            text: root.body
+            color: Colors.secondaryText
             font.family: "Poppins"
             font.pixelSize: 13
-            font.weight: Font.Medium
+            wrapMode: Text.WordWrap
+            maximumLineCount: 2
             elide: Text.ElideRight
             visible: text !== ""
         }
+    }
 
-        Item {
-            id: bodySection
-            property bool expanded: false
-            width: parent.width
-            implicitHeight: bodyText.implicitHeight + (showMoreToggle.visible ? showMoreToggle.implicitHeight + 2 : 0)
-            visible: root.notification.body !== ""
+    // Expand chevron (+ count) for grouped notifications
+    Item {
+        id: expandBtn
+        visible: root.groupCount > 1
+        width: 40
+        anchors {
+            right: parent.right
+            rightMargin: 8
+            top: parent.top
+            bottom: parent.bottom
+        }
 
-            Text {
-                id: bodyText
-                width: parent.width
-                text: root.notification.body
-                color: Colors.secondaryText
-                font.family: "Poppins"
-                font.pixelSize: 12
-                wrapMode: Text.WordWrap
-                maximumLineCount: bodySection.expanded ? 999 : 3
-                elide: Text.ElideRight
-            }
+        Rectangle {
+            anchors.centerIn: parent
+            width: chevronRow.implicitWidth + 14
+            height: 30
+            radius: 999
+            color: expandHover.containsMouse ? Colors.chipBackground : "transparent"
 
-            Text {
-                id: showMoreToggle
-                anchors.top: bodyText.bottom
-                anchors.topMargin: 2
-                visible: bodyText.implicitHeight > bodyText.height || bodySection.expanded
-                text: bodySection.expanded ? "Show less" : "Show more"
-                color: showMoreHover.containsMouse ? Colors.primaryText : Colors.secondaryText
-                font.family: "Poppins"
-                font.pixelSize: 11
-                font.weight: Font.Medium
+            Behavior on color { ColorAnimation { duration: 150 } }
 
-                Behavior on color { ColorAnimation { duration: 150 } }
+            Row {
+                id: chevronRow
+                anchors.centerIn: parent
+                spacing: 3
 
-                MouseArea {
-                    id: showMoreHover
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: bodySection.expanded = !bodySection.expanded
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: root.groupCount
+                    color: Colors.secondaryText
+                    font.family: "Poppins"
+                    font.pixelSize: 12
+                    font.weight: Font.Bold
+                }
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "󰅀"
+                    font.family: "JetBrainsMono Nerd Font"
+                    font.pixelSize: 16
+                    color: Colors.secondaryText
+                    rotation: root.expanded ? 180 : 0
+
+                    Behavior on rotation { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
                 }
             }
+        }
+
+        MouseArea {
+            id: expandHover
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: root.expandToggled()
         }
     }
 }

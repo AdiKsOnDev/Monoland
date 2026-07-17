@@ -1,6 +1,7 @@
 module qs.modules.sidebar
 NotificationSidebar 1.0 NotificationSidebar.qml
 NotificationCard 1.0 NotificationCard.qml
+NotificationGroup 1.0 NotificationGroup.qml
 NotificationToast 1.0 NotificationToast.qml
 MediaCard 1.0 MediaCard.qml
 OsdToast 1.0 OsdToast.qml

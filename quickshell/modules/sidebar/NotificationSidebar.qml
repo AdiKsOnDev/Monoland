@@ -32,6 +32,32 @@ PanelWindow {
     }
     function closePanel() { activePanel = "" }
 
+    // Notifications grouped by app, with per-app expand state (Android-style)
+    property var expandedApps: ({})
+    function toggleGroup(app) {
+        const m = Object.assign({}, expandedApps)
+        m[app] = !m[app]
+        expandedApps = m
+    }
+    readonly property var groupedNotifications: {
+        const all = Notifications.notifications.values
+        const map = {}
+        const order = []
+        for (let i = 0; i < all.length; i++) {
+            const n = all[i]
+            const key = n.appName || "Unknown"
+            if (!map[key]) { map[key] = []; order.push(key) }
+            map[key].push(n)
+        }
+        function at(n) {
+            const t = Notifications.arrivalTimeFor(n.id)
+            return t ? t.getTime() : 0
+        }
+        for (const k of order) map[k].sort((a, b) => at(b) - at(a))
+        order.sort((a, b) => at(map[b][0]) - at(map[a][0]))
+        return order.map(k => ({ app: k, items: map[k] }))
+    }
+
     onIsOpenChanged: {
         if (isOpen) visible = true
         else { hideTimer.restart(); closePanel() }
@@ -141,7 +167,7 @@ PanelWindow {
                     }
 
                     Rectangle {
-                        visible: notifList.count > 0
+                        visible: Notifications.notifications.values.length > 0
                         width: notifCountText.implicitWidth + 10
                         height: 18
                         radius: 999
@@ -151,7 +177,7 @@ PanelWindow {
                         Text {
                             id: notifCountText
                             anchors.centerIn: parent
-                            text: notifList.count
+                            text: Notifications.notifications.values.length
                             color: Colors.secondaryText
                             font.family: "Poppins"
                             font.pixelSize: 10
@@ -166,7 +192,7 @@ PanelWindow {
                         right: parent.right
                         verticalCenter: parent.verticalCenter
                     }
-                    visible: notifList.count > 0
+                    visible: Notifications.notifications.values.length > 0
                     width: clearAllLabel.implicitWidth + 16
                     height: 28
                     radius: 999
@@ -210,7 +236,7 @@ PanelWindow {
                 }
                 spacing: 8
                 clip: true
-                model: Notifications.notifications
+                model: root.groupedNotifications
 
                 add: Transition {
                     ParallelAnimation {
@@ -230,11 +256,13 @@ PanelWindow {
                     NumberAnimation { property: "y"; duration: 260; easing.type: Easing.OutBack; easing.overshoot: 1.2 }
                 }
 
-                delegate: NotificationCard {
+                delegate: NotificationGroup {
                     required property var modelData
-                    notification: modelData
                     width: notifList.width
-                    onDismissed: modelData.dismiss()
+                    app: modelData.app
+                    items: modelData.items
+                    expanded: root.expandedApps[modelData.app] ?? false
+                    onToggleRequested: root.toggleGroup(modelData.app)
                 }
 
                 Column {
