@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import Quickshell
+import Quickshell.Services.Notifications
 import QtQuick
 import qs.services
 import qs.modules.common
@@ -47,7 +48,10 @@ PanelWindow {
     Connections {
         target: Notifications
         function onNotificationArrived(notif) {
-            if (!root.sidebarOpen && !Notifications.doNotDisturb) root.show(notif)
+            // Critical notifications (e.g. deep-work breaks) still toast during focus mode
+            const critical = notif.urgency === NotificationUrgency.Critical
+            if (!root.sidebarOpen && (!Notifications.doNotDisturb || critical))
+                root.show(notif)
         }
     }
 

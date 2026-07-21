@@ -7,4 +7,5 @@ singleton Brightness 1.0 Brightness.qml
 singleton Colors 1.0 Colors.qml
 singleton Media 1.0 Media.qml
 singleton Notifications 1.0 Notifications.qml
+singleton DeepWork 1.0 DeepWork.qml
 singleton Wifi 1.0 Wifi.qml

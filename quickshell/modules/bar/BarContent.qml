@@ -151,6 +151,7 @@ Item {
             anchors.centerIn: parent
             spacing: 6
 
+            DeepWorkChip {}
             NotificationChip {}
             StatChip {
                 icon: Wifi.enabled ? "󰤨" : "󰤭"

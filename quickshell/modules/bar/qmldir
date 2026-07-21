@@ -6,5 +6,6 @@ Workspaces 1.0 Workspaces.qml
 WorkspaceButton 1.0 WorkspaceButton.qml
 StatChip 1.0 StatChip.qml
 NotificationChip 1.0 NotificationChip.qml
+DeepWorkChip 1.0 DeepWorkChip.qml
 WallpaperPicker 1.0 WallpaperPicker.qml
 StatsPopup 1.0 StatsPopup.qml
