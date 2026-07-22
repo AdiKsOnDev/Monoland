@@ -117,6 +117,23 @@ PanelWindow {
         // No shadow layer: the layered texture resamples at fractional scale
         // and shows a hairline along the edges. Flat matte matches the frame.
 
+        // Shadow cast by the sidebar onto the workspace, continuous with the
+        // frame's own shadow strips — without it, the frame shadow showing
+        // through the fillet notches reads as a detached dark wedge. Drawn
+        // first so the fillets and box paint over its inner edge; slides with
+        // the plate.
+        Rectangle {
+            x: -Frame.shadowSize
+            width: Frame.shadowSize
+            height: plate.height
+            gradient: Gradient {
+                orientation: Gradient.Horizontal
+                GradientStop { position: 0.0; color: "transparent" }
+                GradientStop { position: 0.6; color: Qt.rgba(0, 0, 0, 0.18) }
+                GradientStop { position: 1.0; color: Qt.rgba(0, 0, 0, 0.5) }
+            }
+        }
+
         Rectangle {
             id: sidebar
 
@@ -581,12 +598,12 @@ PanelWindow {
         // overlapped 1px into the plate to avoid AA seams
         ConcaveCorner {
             corner: "topRight"
-            x: -radius + 1; y: plate.seam
+            x: -radius + 1; y: 0
             radius: Frame.radius; color: Frame.color
         }
         ConcaveCorner {
             corner: "bottomRight"
-            x: -radius + 1; y: plate.height - plate.seam - radius
+            x: -radius + 1; y: plate.height - radius
             radius: Frame.radius; color: Frame.color
         }
     }

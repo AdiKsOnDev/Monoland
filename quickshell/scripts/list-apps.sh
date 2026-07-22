@@ -43,9 +43,11 @@ find /usr/share/applications "$HOME/.local/share/applications" -name '*.desktop'
 
     name=$(grep -m1 '^Name=' "$f" | cut -d= -f2-)
     icon=$(grep -m1 '^Icon=' "$f" | cut -d= -f2-)
+    comment=$(grep -m1 '^Comment=' "$f" | cut -d= -f2-)
+    [ -z "$comment" ] && comment=$(grep -m1 '^GenericName=' "$f" | cut -d= -f2-)
 
     [ -z "$name" ] && continue
 
     resolved=$(resolve_icon "$icon")
-    printf '%s\t%s\t%s\n' "$name" "$resolved" "$f"
+    printf '%s\t%s\t%s\t%s\n' "$name" "$resolved" "$f" "$comment"
 done

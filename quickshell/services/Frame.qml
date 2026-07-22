@@ -12,11 +12,12 @@ Singleton {
     readonly property bool enabled: true
 
     // Left/right/bottom band width (logical px)
-    readonly property int thickness: 22
+    readonly property int thickness: 24
     // Top edge thickness == bar height
-    readonly property int barHeight: 48
+    readonly property int barHeight: 40
     // Concave fillet radius at frame/panel junctions
-    readonly property int radius: 18
+    readonly property int radius: 32
+
     // Reach of the inner shadow the frame casts onto the workspace
     readonly property int shadowSize: 30
 

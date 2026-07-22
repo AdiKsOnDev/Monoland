@@ -140,12 +140,12 @@ PanelWindow {
         // (below), overlapped 1px into the plate to avoid AA seams
         ConcaveCorner {
             corner: "topRight"
-            x: -radius + 1; y: root.seam
+            x: -radius + 1; y: 0
             radius: Frame.radius; color: Frame.color
         }
         ConcaveCorner {
             corner: "topRight"
-            x: plate.width - root.seam - radius; y: plate.height - 1
+            x: plate.width - radius; y: plate.height - 1
             radius: Frame.radius; color: Frame.color
         }
     }

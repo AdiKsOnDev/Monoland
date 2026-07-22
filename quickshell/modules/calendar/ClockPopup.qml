@@ -127,11 +127,26 @@ AnimatedPopup {
                 bottom: parent.bottom
             }
 
+            // Tabs sit side by side in a clipped strip; switching animates each
+            // tab's x so the old one slides out while the new one slides in
+            // from the direction of travel.
+            clip: true
+            readonly property int slideGap: 24
+
+            component TabSlide: Item {
+                required property int tabIndex
+                width: tabContent.width
+                height: tabContent.height
+                x: (tabIndex - root.activeTab) * (tabContent.width + tabContent.slideGap)
+                visible: x + width > 0 && x < tabContent.width
+
+                Behavior on x { NumberAnimation { duration: 260; easing.type: Easing.OutCubic } }
+            }
+
             // ── Tab 0: time / calendar / agenda / tasks ──
-            Item {
+            TabSlide {
                 id: calendarTab
-                anchors.fill: parent
-                visible: root.activeTab === 0
+                tabIndex: 0
 
                 readonly property int gap: 16
                 readonly property int leftW: Math.round((width - gap) * 0.44)
@@ -248,22 +263,28 @@ AnimatedPopup {
             }
 
             // ── Tab 1: Tasks ──
-            Card {
-                anchors.fill: parent
-                visible: root.activeTab === 1
+            TabSlide {
+                tabIndex: 1
 
-                TodoList {
-                    anchors { fill: parent; margins: 20 }
+                Card {
+                    anchors.fill: parent
+
+                    TodoList {
+                        anchors { fill: parent; margins: 20 }
+                    }
                 }
             }
 
             // ── Tab 2: Deep-work timer ──
-            Card {
-                anchors.fill: parent
-                visible: root.activeTab === 2
+            TabSlide {
+                tabIndex: 2
 
-                DeepWorkPanel {
-                    anchors { fill: parent; margins: 24 }
+                Card {
+                    anchors.fill: parent
+
+                    DeepWorkPanel {
+                        anchors { fill: parent; margins: 24 }
+                    }
                 }
             }
         }

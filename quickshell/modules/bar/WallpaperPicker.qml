@@ -367,6 +367,7 @@ FloatingWindow {
         target: content
         shown: root.isOpen
         motion: "rise"
-        distance: 12
+        // Pure slide (no fade) needs a longer travel to read as motion
+        distance: 36
     }
 }

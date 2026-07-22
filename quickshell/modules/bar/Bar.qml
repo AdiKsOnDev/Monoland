@@ -17,11 +17,13 @@ Scope {
     IpcHandler {
         target: "launcher"
         function open() { primaryLauncher?.open() }
+        function close() { primaryLauncher?.close() }
     }
 
     IpcHandler {
         target: "powermenu"
         function open() { primaryPowerMenu?.open() }
+        function close() { primaryPowerMenu?.close() }
     }
 
     IpcHandler {

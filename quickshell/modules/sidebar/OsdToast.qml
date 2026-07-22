@@ -37,7 +37,7 @@ PanelWindow {
 
     readonly property int pillWidth: 56
     readonly property int pillHeight: 280
-    readonly property int padding: 8
+    readonly property int padding: 18
     readonly property int seam: 1
 
     property string icon: ""
@@ -113,15 +113,16 @@ PanelWindow {
         }
 
         // Fillets fusing the plate with the band above and below, overlapped
-        // 1px into the plate to avoid AA seams
+        // 1px into the plate (y) and 1px into the band (x reaches plate.width,
+        // whose last column lies inside the band)
         ConcaveCorner {
             corner: "bottomRight"
-            x: plate.width - root.seam - radius; y: -radius + 1
+            x: plate.width - radius; y: -radius + 1
             radius: Frame.radius; color: Frame.color
         }
         ConcaveCorner {
             corner: "topRight"
-            x: plate.width - root.seam - radius; y: plate.height - 1
+            x: plate.width - radius; y: plate.height - 1
             radius: Frame.radius; color: Frame.color
         }
 
@@ -137,52 +138,28 @@ PanelWindow {
             y: root.padding
 
             readonly property real frac: Math.max(0, Math.min(1, root.value / 100))
-            readonly property int thumbT: 4
-            readonly property int gap: 5
             readonly property int pillW: 44
-            readonly property int pillRadius: 8
-            readonly property int innerRadius: 3   // corners adjacent to the playhead
-            readonly property real headY: height * (1 - frac)               // playhead centre (from top)
-            readonly property real filledH: Math.max(0, frac * height - gap - thumbT / 2)
+            readonly property real filledH: frac * height
 
-            // Filled (current level) portion — grows from the bottom
+            // Track — single capsule spanning the full height
+            Rectangle {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: osdPill.pillW
+                height: parent.height
+                radius: osdPill.pillW / 2
+                color: Colors.surfaceVariant
+            }
+
+            // Filled portion — a capsule inside the track, grows from the bottom
             Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
                 width: osdPill.pillW
                 height: osdPill.filledH
-                radius: osdPill.pillRadius
-                topLeftRadius: osdPill.innerRadius
-                topRightRadius: osdPill.innerRadius
+                radius: osdPill.pillW / 2
                 color: Colors.primaryText
 
                 Behavior on height { NumberAnimation { duration: 80; easing.type: Easing.OutCubic } }
-            }
-
-            // Remaining portion — from the top down to the playhead
-            Rectangle {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: parent.top
-                width: osdPill.pillW
-                height: Math.max(0, osdPill.headY - osdPill.gap - osdPill.thumbT / 2)
-                radius: osdPill.pillRadius
-                bottomLeftRadius: osdPill.innerRadius
-                bottomRightRadius: osdPill.innerRadius
-                color: Colors.surfaceVariant
-
-                Behavior on height { NumberAnimation { duration: 80; easing.type: Easing.OutCubic } }
-            }
-
-            // Playhead — a thin horizontal bar, wider than the pills
-            Rectangle {
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: osdPill.pillW + 8
-                height: osdPill.thumbT
-                radius: 1
-                color: Colors.primaryText
-                y: Math.max(0, Math.min(osdPill.height - height, osdPill.headY - height / 2))
-
-                Behavior on y { NumberAnimation { duration: 80; easing.type: Easing.OutCubic } }
             }
 
             // Icon overlaid at the bottom — on-fill colour over the filled pill, chipIcon otherwise

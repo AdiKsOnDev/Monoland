@@ -87,14 +87,15 @@ PanelWindow {
         // No shadow layer: the layered texture resamples at fractional scale
         // and shows a hairline along the edges. Flat matte matches the frame.
 
+        // Fillets overlap 1px into the plate (x) and the bottom band (y)
         ConcaveCorner {
             corner: "bottomRight"
-            x: -radius + 1; y: plate.height - plate.seam - radius
+            x: -radius + 1; y: plate.height - radius
             radius: Frame.radius; color: Frame.color
         }
         ConcaveCorner {
             corner: "bottomLeft"
-            x: plate.width - 1; y: plate.height - plate.seam - radius
+            x: plate.width - 1; y: plate.height - radius
             radius: Frame.radius; color: Frame.color
         }
 

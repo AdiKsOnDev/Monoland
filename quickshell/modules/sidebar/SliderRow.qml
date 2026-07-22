@@ -14,69 +14,37 @@ Item {
     implicitWidth: parent?.width ?? 200
     implicitHeight: 68
 
-    // Split-pill track: filled pill | playhead | remaining pill, with the icon
-    // overlaid on the left.
+    // Single capsule track with the filled portion inside it, icon overlaid
+    // on the left.
     Item {
         id: track
         anchors.fill: parent
 
         readonly property real frac: Math.max(0, Math.min(1, root.value / 100))
-        readonly property int thumbW: 4
-        readonly property int gap: 5
         readonly property int pillH: 48
-        readonly property int pillRadius: 8
-        readonly property int innerRadius: 3   // corners adjacent to the playhead
-        readonly property real headX: frac * width
-        readonly property real filledWidth: Math.max(0, headX - gap - thumbW / 2)
+        readonly property real filledWidth: frac * width
 
-        // Filled (elapsed) portion
+        // Track
+        Rectangle {
+            anchors.verticalCenter: parent.verticalCenter
+            width: parent.width
+            height: track.pillH
+            radius: track.pillH / 2
+            color: sliderArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.3) : Colors.surfaceVariant
+
+            Behavior on color { ColorAnimation { duration: 150 } }
+        }
+
+        // Filled portion — a capsule inside the track
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             x: 0
             width: track.filledWidth
             height: track.pillH
-            radius: track.pillRadius
-            topRightRadius: track.innerRadius
-            bottomRightRadius: track.innerRadius
+            radius: track.pillH / 2
             color: Colors.primaryText
 
             Behavior on width {
-                enabled: !sliderArea.pressed
-                NumberAnimation { duration: 80; easing.type: Easing.OutCubic }
-            }
-        }
-
-        // Remaining portion
-        Rectangle {
-            id: remaining
-            anchors.verticalCenter: parent.verticalCenter
-            // Right edge pinned; only the width animates (derived from the playhead),
-            // so the left edge tracks the playhead 1:1 instead of drifting.
-            anchors.right: parent.right
-            width: Math.max(0, parent.width - (track.headX + track.gap + track.thumbW / 2))
-            height: track.pillH
-            radius: track.pillRadius
-            topLeftRadius: track.innerRadius
-            bottomLeftRadius: track.innerRadius
-            color: sliderArea.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.3) : Colors.surfaceVariant
-
-            Behavior on color { ColorAnimation { duration: 150 } }
-            Behavior on width {
-                enabled: !sliderArea.pressed
-                NumberAnimation { duration: 80; easing.type: Easing.OutCubic }
-            }
-        }
-
-        // Playhead / thumb — taller than the pills, contrasting colour
-        Rectangle {
-            anchors.verticalCenter: parent.verticalCenter
-            width: track.thumbW
-            height: track.pillH + 8
-            radius: 1
-            color: Colors.primaryText
-            x: Math.max(0, Math.min(track.width - width, track.headX - width / 2))
-
-            Behavior on x {
                 enabled: !sliderArea.pressed
                 NumberAnimation { duration: 80; easing.type: Easing.OutCubic }
             }

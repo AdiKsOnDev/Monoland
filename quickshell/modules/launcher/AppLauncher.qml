@@ -18,10 +18,12 @@ PanelWindow {
     property bool isOpen: false
     property int selectedIndex: -1
 
+    // Explicit assignment, not a binding: ListView adjusts currentIndex on
+    // model changes, which would silently break a declarative binding
+    onSelectedIndexChanged: appList.currentIndex = selectedIndex
+
     // Start unmapped; open()/hideTimer manage visibility around the animation
     visible: false
-
-    readonly property int columns: 4
 
     // color-typed so .r/.g/.b are available (Colors.primaryText is a string)
     readonly property color selectionTint: Qt.rgba(
@@ -48,7 +50,7 @@ PanelWindow {
         } else {
             selectedIndex = Math.max(0, Math.min(count - 1, selectedIndex + delta))
         }
-        appGrid.positionViewAtIndex(selectedIndex, GridView.Contain)
+        appList.positionViewAtIndex(selectedIndex, ListView.Contain)
     }
 
     function open() {
@@ -93,28 +95,41 @@ PanelWindow {
         }
     }
 
-    // Panel docked to the bottom frame band; fillets fuse it with the band
+    // Panel docked to the bottom frame band; fillets fuse it with the band.
+    // Like caelestia's launcher, the panel height follows the result count —
+    // it grows and shrinks out of the frame as you type.
     Item {
         id: plate
 
         readonly property int seam: 1
+        // 20 search top margin + 48 search + 14 list top + 20 list bottom
+        readonly property int chromeHeight: 102
+        readonly property int itemHeight: 56
+        readonly property int itemSpacing: 4
+        readonly property int maxShown: 8
+        readonly property int rowsShown: Math.max(1, Math.min(maxShown, root.filteredApps.length))
 
         width: 640
-        height: 520
+        height: chromeHeight + rowsShown * (itemHeight + itemSpacing) - itemSpacing
         x: (root.screen.width - width) / 2
         y: root.screen.height - Frame.thickness - height + seam
+
+        Behavior on height { NumberAnimation { duration: 260; easing.type: Easing.OutQuint } }
 
         // No shadow layer: the layered texture resamples at fractional scale
         // and shows a hairline along the edges. Flat matte matches the frame.
 
+        // Fillets overlap 1px into the plate (x) AND 1px into the bottom band
+        // (y reaches plate.height, whose last row lies inside the band) so
+        // neither junction can show an AA hairline at fractional scale
         ConcaveCorner {
             corner: "bottomRight"
-            x: -radius + 1; y: plate.height - plate.seam - radius
+            x: -radius + 1; y: plate.height - radius
             radius: Frame.radius; color: Frame.color
         }
         ConcaveCorner {
             corner: "bottomLeft"
-            x: plate.width - 1; y: plate.height - plate.seam - radius
+            x: plate.width - 1; y: plate.height - radius
             radius: Frame.radius; color: Frame.color
         }
 
@@ -183,20 +198,16 @@ PanelWindow {
                         Keys.onEscapePressed: root.close()
                         Keys.onReturnPressed: root.launchSelected()
                         Keys.onEnterPressed: root.launchSelected()
-                        Keys.onUpPressed: root.moveSelection(-root.columns)
-                        Keys.onDownPressed: root.moveSelection(root.columns)
-                        Keys.onLeftPressed: root.moveSelection(-1)
-                        Keys.onRightPressed: root.moveSelection(1)
-                        onTextChanged: {
-                            root.selectedIndex = -1
-                            root.rebuildFiltered()
-                        }
+                        Keys.onUpPressed: root.moveSelection(-1)
+                        Keys.onDownPressed: root.moveSelection(1)
+                        onTextChanged: root.rebuildFiltered()
                     }
                 }
             }
 
-            GridView {
-                id: appGrid
+            // Caelestia-style result list: icon + name + comment rows
+            ListView {
+                id: appList
                 anchors {
                     top: searchBar.bottom
                     left: parent.left
@@ -206,9 +217,43 @@ PanelWindow {
                     topMargin: 14
                 }
                 clip: true
-                cellWidth: (width - 8) / 4
-                cellHeight: cellWidth
-                model: root.filteredApps
+                spacing: plate.itemSpacing
+
+                // ScriptModel diffs values (unlike a plain array, which resets
+                // the view), so add/remove/displaced transitions actually run
+                // while typing
+                model: ScriptModel { values: root.filteredApps }
+
+                // Soft highlight that slides to the keyboard selection
+                highlightFollowsCurrentItem: false
+                highlight: Rectangle {
+                    radius: 12
+                    color: Colors.primaryText
+                    opacity: 0.08
+                    visible: root.selectedIndex >= 0
+                    width: appList.width
+                    height: plate.itemHeight
+                    y: appList.currentItem?.y ?? 0
+
+                    Behavior on y { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+                }
+
+                // Filter reflow: new rows fade in, removed ones fade out,
+                // survivors slide to their new positions
+                add: Transition {
+                    NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200; easing.type: Easing.OutCubic }
+                }
+                remove: Transition {
+                    NumberAnimation { property: "opacity"; to: 0; duration: 120; easing.type: Easing.InCubic }
+                }
+                displaced: Transition {
+                    NumberAnimation { property: "y"; duration: 220; easing.type: Easing.OutCubic }
+                    NumberAnimation { property: "opacity"; to: 1; duration: 100 }
+                }
+                addDisplaced: Transition {
+                    NumberAnimation { property: "y"; duration: 220; easing.type: Easing.OutCubic }
+                    NumberAnimation { property: "opacity"; to: 1; duration: 100 }
+                }
 
                 ScrollBar.vertical: ScrollBar {
                     policy: ScrollBar.AsNeeded
@@ -224,99 +269,110 @@ PanelWindow {
 
                 WheelHandler {
                     onWheel: (event) => {
-                        appGrid.contentY = Math.max(
+                        appList.contentY = Math.max(
                             0,
                             Math.min(
-                                appGrid.contentHeight - appGrid.height,
-                                appGrid.contentY - event.angleDelta.y * 0.8
+                                appList.contentHeight - appList.height,
+                                appList.contentY - event.angleDelta.y * 0.8
                             )
                         )
                     }
                 }
 
                 delegate: Item {
-                    id: appTile
+                    id: appRow
                     required property var modelData
                     required property int index
-                    width: appGrid.cellWidth
-                    height: appGrid.cellHeight
-
-                    readonly property bool isSelected: root.selectedIndex === index
+                    width: appList.width
+                    height: plate.itemHeight
 
                     Rectangle {
-                        anchors { fill: parent; margins: 4 }
-                        radius: 14
-                        color: appTile.isSelected
-                            ? Colors.surfaceVariant
-                            : tileHover.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.1) : "transparent"
-                        border.width: appTile.isSelected ? 1.5 : 0
-                        border.color: Colors.chipIconActive
-                        scale: tileHover.pressed ? 0.94 : (tileHover.containsMouse ? 1.03 : 1.0)
+                        anchors.fill: parent
+                        radius: 12
+                        // Selection is shown by the sliding highlight; rows
+                        // only react to hover
+                        color: rowHover.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.1) : "transparent"
 
                         Behavior on color { ColorAnimation { duration: 150 } }
-                        Behavior on border.color { ColorAnimation { duration: 150 } }
-                        Behavior on scale { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
+                    }
 
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 8
-                            width: parent.width - 16
+                    Item {
+                        id: rowIcon
+                        anchors {
+                            left: parent.left
+                            leftMargin: 12
+                            verticalCenter: parent.verticalCenter
+                        }
+                        width: 36
+                        height: 36
 
-                            Item {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                width: 48
-                                height: 48
-
-                                IconImage {
-                                    id: appIcon
-                                    anchors.fill: parent
-                                    source: appTile.modelData.icon !== ""
-                                        ? "file://" + appTile.modelData.icon
-                                        : ""
-                                    smooth: true
-                                }
-
-                                Rectangle {
-                                    anchors.fill: parent
-                                    radius: 12
-                                    color: Colors.surfaceVariant
-                                    visible: appIcon.status !== Image.Ready
-
-                                    Text {
-                                        anchors.centerIn: parent
-                                        text: appTile.modelData.name.length > 0
-                                            ? appTile.modelData.name[0].toUpperCase()
-                                            : "?"
-                                        color: Colors.primaryText
-                                        font.family: "Poppins"
-                                        font.pixelSize: 18
-                                        font.weight: Font.Bold
-                                    }
-                                }
-                            }
-
-                            Text {
-                                width: parent.width
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: appTile.modelData.name
-                                color: Colors.primaryText
-                                font.family: "Poppins"
-                                font.pixelSize: 11
-                                font.weight: Font.Medium
-                                horizontalAlignment: Text.AlignHCenter
-                                elide: Text.ElideRight
-                            }
+                        IconImage {
+                            id: appIcon
+                            anchors.fill: parent
+                            source: appRow.modelData.icon !== ""
+                                ? "file://" + appRow.modelData.icon
+                                : ""
+                            smooth: true
                         }
 
-                        MouseArea {
-                            id: tileHover
+                        Rectangle {
                             anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                root.selectedIndex = appTile.index
-                                root.launchSelected()
+                            radius: 10
+                            color: Colors.surfaceVariant
+                            visible: appIcon.status !== Image.Ready
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: appRow.modelData.name.length > 0
+                                    ? appRow.modelData.name[0].toUpperCase()
+                                    : "?"
+                                color: Colors.primaryText
+                                font.family: "Poppins"
+                                font.pixelSize: 15
+                                font.weight: Font.Bold
                             }
+                        }
+                    }
+
+                    Column {
+                        anchors {
+                            left: rowIcon.right
+                            leftMargin: 14
+                            right: parent.right
+                            rightMargin: 12
+                            verticalCenter: parent.verticalCenter
+                        }
+                        spacing: 1
+
+                        Text {
+                            width: parent.width
+                            text: appRow.modelData.name
+                            color: Colors.primaryText
+                            font.family: "Poppins"
+                            font.pixelSize: 14
+                            font.weight: Font.Medium
+                            elide: Text.ElideRight
+                        }
+
+                        Text {
+                            width: parent.width
+                            visible: text.length > 0
+                            text: appRow.modelData.comment !== "" ? appRow.modelData.comment : appRow.modelData.name
+                            color: Colors.secondaryText
+                            font.family: "Poppins"
+                            font.pixelSize: 11
+                            elide: Text.ElideRight
+                        }
+                    }
+
+                    MouseArea {
+                        id: rowHover
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            root.selectedIndex = appRow.index
+                            root.launchSelected()
                         }
                     }
                 }
@@ -354,6 +410,8 @@ PanelWindow {
         filteredApps = allApps.filter(app =>
             query === "" || app.name.toLowerCase().includes(query)
         )
+        // Top result preselected so Return launches it immediately
+        selectedIndex = filteredApps.length > 0 ? 0 : -1
     }
 
     Timer {
@@ -376,7 +434,8 @@ PanelWindow {
                 const n = parts[0].trim()
                 const i = parts[1].trim()
                 const e = parts[2].trim()
-                if (n && e) buffer.push({ "name": n, "icon": i, "exec": e })
+                const c = parts.length > 3 ? parts[3].trim() : ""
+                if (n && e) buffer.push({ "name": n, "icon": i, "exec": e, "comment": c })
             }
         }
 

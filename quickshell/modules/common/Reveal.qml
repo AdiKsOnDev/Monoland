@@ -10,10 +10,9 @@ import QtQuick
 //
 // "emerge" is for panels attached flush to the screen frame: the panel slides
 // fully out from behind the bar/band (no fade — the frame masks it) with a
-// squash-stretch anchored at the attached edge and a very slight wobble at
-// the end: it overshoots the resting position by a few px and settles back.
-// The hidden offset is the panel's full extent plus `distance`, so protruding
-// fillets clear the frame too — keep distance >= Frame.radius + seam.
+// squash-stretch anchored at the attached edge, settling smoothly with no
+// overshoot. The hidden offset is the panel's full extent plus `distance`, so
+// protruding fillets clear the frame too — keep distance >= Frame.radius + seam.
 Item {
     id: root
 
@@ -29,7 +28,6 @@ Item {
     property real squash: 0.92           // scale along the emerge axis when hidden
     property real bulge: 1.02            // cross-axis scale when hidden
     property real overshoot: 1.012       // single overshoot keyframe on the way in
-    property real wobble: 3              // px slid past resting before settling back
 
     // Slide offset applied to the target (0,0 when open)
     property Translate off: Translate {}
@@ -37,6 +35,9 @@ Item {
     property Scale squish: Scale {}
 
     readonly property bool vertical: edge === "top" || edge === "bottom"
+
+    // Only these motions fade; directional slides and emerge are pure movement
+    readonly property bool fades: motion === "fade" || motion === "scale"
 
     function offX(open) {
         if (open) return 0
@@ -56,17 +57,6 @@ Item {
             if (edge === "top") return -((target?.height ?? 0) + distance)
             if (edge === "bottom") return (target?.height ?? 0) + distance
         }
-        return 0
-    }
-    // Wobble target: a few px past resting, opposite the hidden direction
-    function wobX() {
-        if (edge === "left") return wobble
-        if (edge === "right") return -wobble
-        return 0
-    }
-    function wobY() {
-        if (edge === "top") return wobble
-        if (edge === "bottom") return -wobble
         return 0
     }
     function scl(open) {
@@ -119,7 +109,7 @@ Item {
         target.transform = [off]
         off.x = offX(shown)
         off.y = offY(shown)
-        target.opacity = shown ? 1 : 0
+        target.opacity = fades ? (shown ? 1 : 0) : 1
         target.scale = scl(shown)
     }
 
@@ -149,25 +139,21 @@ Item {
         NumberAnimation { target: root.target; property: "opacity"; to: 1.0; duration: Math.round(root.inDuration * 0.6); easing.type: Easing.OutCubic }
     }
 
+    // Out fade only for fading motions; slides keep opacity 1 so the exit
+    // movement stays visible
+
     ParallelAnimation {
         id: outAnim
         NumberAnimation { target: root.off; property: "x"; to: root.offX(false); duration: root.outDuration; easing.type: Easing.InCubic }
         NumberAnimation { target: root.off; property: "y"; to: root.offY(false); duration: root.outDuration; easing.type: Easing.InCubic }
         NumberAnimation { target: root.target; property: "scale"; to: root.scl(false); duration: root.outDuration; easing.type: Easing.InCubic }
-        NumberAnimation { target: root.target; property: "opacity"; to: 0.0; duration: root.outDuration; easing.type: Easing.InCubic }
+        NumberAnimation { target: root.target; property: "opacity"; to: root.fades ? 0.0 : 1.0; duration: root.outDuration; easing.type: Easing.InCubic }
     }
 
     ParallelAnimation {
         id: emergeInAnim
-        // Slide: race in, drift a few px past resting, settle back — the wobble
-        SequentialAnimation {
-            NumberAnimation { target: root.off; property: "x"; to: root.wobX(); duration: Math.round(root.inDuration * 0.85); easing.type: Easing.OutQuint }
-            NumberAnimation { target: root.off; property: "x"; to: 0; duration: Math.round(root.inDuration * 0.15); easing.type: Easing.InOutSine }
-        }
-        SequentialAnimation {
-            NumberAnimation { target: root.off; property: "y"; to: root.wobY(); duration: Math.round(root.inDuration * 0.85); easing.type: Easing.OutQuint }
-            NumberAnimation { target: root.off; property: "y"; to: 0; duration: Math.round(root.inDuration * 0.15); easing.type: Easing.InOutSine }
-        }
+        NumberAnimation { target: root.off; property: "x"; to: 0; duration: root.inDuration; easing.type: Easing.OutQuint }
+        NumberAnimation { target: root.off; property: "y"; to: 0; duration: root.inDuration; easing.type: Easing.OutQuint }
         // Axis scale: squash -> gentle overshoot -> settle. One keyframe, no oscillation.
         SequentialAnimation {
             NumberAnimation {

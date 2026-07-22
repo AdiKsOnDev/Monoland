@@ -135,12 +135,12 @@ PanelWindow {
         // light seam against the wallpaper).
         ConcaveCorner {
             corner: "topRight"
-            x: -radius + 1; y: root.seam
+            x: -radius + 1; y: 0
             radius: Frame.radius; color: Frame.color
         }
         ConcaveCorner {
             corner: "topLeft"
-            x: plate.width - 1; y: root.seam
+            x: plate.width - 1; y: 0
             radius: Frame.radius; color: Frame.color
             visible: !root.alignRight
         }
