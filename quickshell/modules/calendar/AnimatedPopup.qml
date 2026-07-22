@@ -120,9 +120,10 @@ PanelWindow {
         }
     }
 
-    Droplet {
+    Reveal {
         target: box
         shown: root.isOpen
-        origin: root.alignRight ? Item.TopRight : Item.Top
+        motion: "rise"
+        distance: 12
     }
 }

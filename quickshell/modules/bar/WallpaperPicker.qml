@@ -363,10 +363,10 @@ FloatingWindow {
         running: false
     }
 
-    Droplet {
+    Reveal {
         target: content
         shown: root.isOpen
-        origin: Item.Center
-        fromScale: 0.85
+        motion: "rise"
+        distance: 12
     }
 }

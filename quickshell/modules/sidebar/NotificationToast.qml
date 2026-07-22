@@ -98,9 +98,10 @@ PanelWindow {
         }
     }
 
-    Droplet {
+    Reveal {
         target: cardLoader
         shown: root.isVisible
-        origin: Item.TopRight
+        motion: "down"
+        distance: 20
     }
 }

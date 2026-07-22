@@ -166,9 +166,10 @@ PanelWindow {
         }
     }
 
-    Droplet {
+    Reveal {
         target: osdPill
         shown: root.isVisible
-        origin: Item.Right
+        motion: "right"
+        distance: 22
     }
 }

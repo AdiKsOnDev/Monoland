@@ -389,9 +389,10 @@ PanelWindow {
 
     Process { id: launcher }
 
-    Droplet {
+    Reveal {
         target: panel
         shown: root.isOpen
-        origin: Item.Center
+        motion: "rise"
+        distance: 12
     }
 }

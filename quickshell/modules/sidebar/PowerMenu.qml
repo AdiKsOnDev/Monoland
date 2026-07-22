@@ -174,9 +174,10 @@ PanelWindow {
 
     Process { id: actionRunner }
 
-    Droplet {
+    Reveal {
         target: card
         shown: root.isOpen
-        origin: Item.Center
+        motion: "rise"
+        distance: 12
     }
 }

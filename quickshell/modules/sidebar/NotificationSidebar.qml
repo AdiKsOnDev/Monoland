@@ -240,20 +240,20 @@ PanelWindow {
 
                 add: Transition {
                     ParallelAnimation {
-                        NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200; easing.type: Easing.OutCubic }
-                        NumberAnimation { property: "scale"; from: 0.5; to: 1; duration: 450; easing.type: Easing.OutElastic; easing.amplitude: 1.0; easing.period: 0.4 }
+                        NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 220; easing.type: Easing.OutCubic }
+                        NumberAnimation { property: "x"; from: 20; to: 0; duration: 280; easing.type: Easing.OutQuint }
                     }
                 }
 
                 remove: Transition {
                     ParallelAnimation {
-                        NumberAnimation { property: "opacity"; to: 0; duration: 180; easing.type: Easing.InCubic }
-                        NumberAnimation { property: "scale"; to: 0.4; duration: 220; easing.type: Easing.InBack; easing.overshoot: 1.5 }
+                        NumberAnimation { property: "opacity"; to: 0; duration: 160; easing.type: Easing.InCubic }
+                        NumberAnimation { property: "x"; to: 28; duration: 200; easing.type: Easing.InCubic }
                     }
                 }
 
                 displaced: Transition {
-                    NumberAnimation { property: "y"; duration: 260; easing.type: Easing.OutBack; easing.overshoot: 1.2 }
+                    NumberAnimation { property: "y"; duration: 220; easing.type: Easing.OutCubic }
                 }
 
                 delegate: NotificationGroup {
@@ -580,9 +580,10 @@ PanelWindow {
         Component { id: micComp; MicPanel {} }
     }
 
-    Droplet {
+    Reveal {
         target: sidebar
         shown: root.isOpen
-        origin: Item.TopRight
+        motion: "right"
+        distance: 26
     }
 }
