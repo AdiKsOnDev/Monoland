@@ -19,14 +19,12 @@ Item {
     readonly property int surfaceRadius: 8
     readonly property color surfaceRest: Colors.chipBackground
     readonly property color surfaceHover: Qt.lighter(Colors.chipBackground, 1.6)
-    readonly property color borderRest: Colors.surfaceVariant
-    readonly property color borderHover: Colors.border
 
     Item {
         id: archLogo
         anchors {
             left: parent.left
-            leftMargin: 10
+            leftMargin: Frame.thickness
             verticalCenter: parent.verticalCenter
         }
         width: 34
@@ -41,11 +39,8 @@ Item {
             anchors.fill: parent
             radius: root.surfaceRadius
             color: archLogo.isHovered ? root.surfaceHover : root.surfaceRest
-            border.width: 1
-            border.color: archLogo.isHovered ? root.borderHover : root.borderRest
 
             Behavior on color { ColorAnimation { duration: 150 } }
-            Behavior on border.color { ColorAnimation { duration: 150 } }
         }
 
         Text {
@@ -90,13 +85,10 @@ Item {
             implicitHeight: 26
             radius: root.surfaceRadius
             color: centerSection.isHovered ? root.surfaceHover : root.surfaceRest
-            border.width: 1
-            border.color: centerSection.isHovered ? root.borderHover : root.borderRest
 
             scale: centerSection.isHovered ? 1.04 : 1.0
 
             Behavior on color { ColorAnimation { duration: 150 } }
-            Behavior on border.color { ColorAnimation { duration: 150 } }
             Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
 
             Text {
@@ -124,7 +116,7 @@ Item {
         id: rightSection
         anchors {
             right: parent.right
-            rightMargin: 12
+            rightMargin: Frame.thickness
             verticalCenter: parent.verticalCenter
         }
         implicitWidth: rightRow.implicitWidth + 18
@@ -139,11 +131,8 @@ Item {
             anchors.bottomMargin: (parent.height - 26) / 2
             radius: root.surfaceRadius
             color: parent.isHovered ? root.surfaceHover : root.surfaceRest
-            border.width: 1
-            border.color: parent.isHovered ? root.borderHover : root.borderRest
 
             Behavior on color { ColorAnimation { duration: 150 } }
-            Behavior on border.color { ColorAnimation { duration: 150 } }
         }
 
         Row {

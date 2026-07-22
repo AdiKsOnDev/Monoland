@@ -50,80 +50,99 @@ PanelWindow {
     color: "transparent"
     focusable: isOpen
 
-    // Mask to a plain proxy, not `box`: `box` has layer.enabled (for the shadow),
-    // and a layered item reports no usable region to Quickshell — which collapses
-    // the window's input region and makes the popup unclickable.
+    // Mask to a plain proxy, not `plate`: `plate` has layer.enabled (for the
+    // shadow), and a layered item reports no usable region to Quickshell — which
+    // collapses the window's input region and makes the popup unclickable.
     mask: Region {
         item: maskProxy
     }
 
     Item {
         id: maskProxy
-        x: box.x
-        y: box.y
-        width: box.width
-        height: box.height
+        x: plate.x
+        y: plate.y
+        width: plate.width
+        height: plate.height
     }
 
-    readonly property int barRightEdge: Math.round(root.screen.width * 0.975)
-    readonly property int barTopMargin: 60
+    // Overlap into the bar so the junction can never show a seam
+    readonly property int seam: 1
 
-    Rectangle {
-        id: box
-
-        clip: true
+    // The plate hangs flush from the bar (the frame's top edge) and carries the
+    // box plus the concave fillets that fuse it with the frame. Reveal animates
+    // the plate, so the fillets move and fade in lockstep with the panel.
+    Item {
+        id: plate
 
         width: root.popupWidth
         x: root.alignRight
-            ? root.barRightEdge - width
+            ? root.screen.width - Frame.thickness - width + root.seam
             : (parent.width - width) / 2
-        y: root.barTopMargin
-        implicitHeight: contentColumn.implicitHeight + 24
-        height: implicitHeight
-        radius: 16
+        y: Frame.barHeight - root.seam
+        height: contentColumn.implicitHeight + 24 + root.seam
 
-        // Subtle top-lit gradient for surface depth
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: Qt.lighter(Colors.background, 1.4) }
-            GradientStop { position: 1.0; color: Colors.background }
-        }
-        border.width: 1
-        border.color: Colors.surfaceVariant
+        // No shadow layer: the layered texture resamples at fractional scale
+        // and shows a hairline along the edges. Flat matte matches the frame.
 
-        // Elevation: soft drop shadow so the popup floats above the desktop
-        layer.enabled: true
-        layer.effect: MultiEffect {
-            shadowEnabled: true
-            shadowColor: Qt.rgba(0, 0, 0, 0.5)
-            shadowBlur: 0.8
-            shadowVerticalOffset: 8
-            autoPaddingEnabled: true
-        }
+        Rectangle {
+            id: box
 
-        MouseArea {
-            id: popupHoverArea
             anchors.fill: parent
-            hoverEnabled: root.visible
-            propagateComposedEvents: true
-            acceptedButtons: Qt.NoButton
+            clip: true
+
+            // Flush surface: same color as the frame, square where attached
+            color: Frame.color
+            topLeftRadius: 0
+            topRightRadius: 0
+            bottomLeftRadius: Frame.radius
+            bottomRightRadius: root.alignRight ? 0 : Frame.radius
+
+            MouseArea {
+                id: popupHoverArea
+                anchors.fill: parent
+                hoverEnabled: root.visible
+                propagateComposedEvents: true
+                acceptedButtons: Qt.NoButton
+            }
+
+            Column {
+                id: contentColumn
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                    margins: 20
+                }
+                anchors.topMargin: 20 + root.seam
+                spacing: 20
+            }
         }
 
-        Column {
-            id: contentColumn
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-                margins: 20
-            }
-            spacing: 20
+        // Concave fillets fusing the panel with the bar above. Shifted 1px into
+        // the box so the fillet/box AA edges overlap solid color — edge-to-edge
+        // they leave a half-covered device pixel at fractional scale (faint
+        // light seam against the wallpaper).
+        ConcaveCorner {
+            corner: "topRight"
+            x: -radius + 1; y: root.seam
+            radius: Frame.radius; color: Frame.color
+        }
+        ConcaveCorner {
+            corner: "topLeft"
+            x: plate.width - 1; y: root.seam
+            radius: Frame.radius; color: Frame.color
+            visible: !root.alignRight
         }
     }
 
     Reveal {
-        target: box
+        target: plate
         shown: root.isOpen
-        motion: "rise"
-        distance: 12
+        motion: "emerge"
+        edge: "top"
+        squash: 0.94
+        bulge: 1.01
+        distance: 10
+        outDuration: 180
     }
 }

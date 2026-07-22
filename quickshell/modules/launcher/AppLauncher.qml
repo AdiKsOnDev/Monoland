@@ -72,13 +72,12 @@ PanelWindow {
 
     Item { id: emptyRegion; width: 0; height: 0 }
 
-    Rectangle {
+    // Fullscreen click-catcher (no dim — the launcher grows from the frame's
+    // bottom edge, caelestia-style). Also the input-mask source while open, so
+    // outside clicks close it and exclusive keyboard focus stays reliable.
+    Item {
         id: overlay
         anchors.fill: parent
-        color: Qt.rgba(0, 0, 0, 0.6)
-        opacity: root.isOpen ? 1 : 0
-
-        Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
 
         MouseArea {
             anchors.fill: parent
@@ -86,251 +85,257 @@ PanelWindow {
         }
     }
 
-    Rectangle {
-        id: panel
+    // Panel docked to the bottom frame band; fillets fuse it with the band
+    Item {
+        id: plate
 
-        readonly property int panelWidth: 640
-        readonly property int panelHeight: 520
+        readonly property int seam: 1
 
-        width: panelWidth
-        height: panelHeight
-        x: (root.screen.width - panelWidth) / 2
-        y: (root.screen.height - panelHeight) / 2
-        radius: 20
+        width: 640
+        height: 520
+        x: (root.screen.width - width) / 2
+        y: root.screen.height - Frame.thickness - height + seam
 
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: Qt.lighter(Colors.background, 1.4) }
-            GradientStop { position: 1.0; color: Colors.background }
+        // No shadow layer: the layered texture resamples at fractional scale
+        // and shows a hairline along the edges. Flat matte matches the frame.
+
+        ConcaveCorner {
+            corner: "bottomRight"
+            x: -radius + 1; y: plate.height - plate.seam - radius
+            radius: Frame.radius; color: Frame.color
         }
-        border.width: 1
-        border.color: Colors.surfaceVariant
-
-        layer.enabled: true
-        layer.effect: MultiEffect {
-            shadowEnabled: true
-            shadowColor: Qt.rgba(0, 0, 0, 0.5)
-            shadowBlur: 0.8
-            shadowVerticalOffset: 8
-            autoPaddingEnabled: true
+        ConcaveCorner {
+            corner: "bottomLeft"
+            x: plate.width - 1; y: plate.height - plate.seam - radius
+            radius: Frame.radius; color: Frame.color
         }
 
         Rectangle {
-            id: searchBar
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-                margins: 20
-                topMargin: 20
-            }
-            height: 48
-            radius: 12
-            color: Colors.surfaceVariant
-            border.width: 1
-            border.color: searchField.activeFocus ? Colors.border : Qt.lighter(Colors.surfaceVariant, 1.6)
+            id: panel
 
-            Behavior on border.color { ColorAnimation { duration: 150 } }
+            anchors.fill: parent
+            color: Frame.color
+            topLeftRadius: 20
+            topRightRadius: 20
+            bottomLeftRadius: 0
+            bottomRightRadius: 0
 
-            Row {
+            Rectangle {
+                id: searchBar
                 anchors {
-                    fill: parent
-                    leftMargin: 14
-                    rightMargin: 14
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                    margins: 20
+                    topMargin: 20
                 }
-                spacing: 10
+                height: 48
+                radius: 12
+                color: Colors.surfaceVariant
+                border.width: 1
+                border.color: searchField.activeFocus ? Colors.border : Qt.lighter(Colors.surfaceVariant, 1.6)
 
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "󰍉"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 18
-                    color: Colors.secondaryText
-                }
+                Behavior on border.color { ColorAnimation { duration: 150 } }
 
-                TextInput {
-                    id: searchField
-                    width: parent.width - 38
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: Colors.primaryText
-                    font.family: "Poppins"
-                    font.pixelSize: 14
-                    selectionColor: root.selectionTint
-                    clip: true
+                Row {
+                    anchors {
+                        fill: parent
+                        leftMargin: 14
+                        rightMargin: 14
+                    }
+                    spacing: 10
 
                     Text {
-                        anchors.fill: parent
-                        text: "Search apps..."
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "󰍉"
+                        font.family: "JetBrainsMono Nerd Font"
+                        font.pixelSize: 18
                         color: Colors.secondaryText
-                        font: parent.font
-                        visible: parent.text.length === 0
-                        verticalAlignment: Text.AlignVCenter
                     }
 
-                    Keys.onEscapePressed: root.close()
-                    Keys.onReturnPressed: root.launchSelected()
-                    Keys.onEnterPressed: root.launchSelected()
-                    Keys.onUpPressed: root.moveSelection(-root.columns)
-                    Keys.onDownPressed: root.moveSelection(root.columns)
-                    Keys.onLeftPressed: root.moveSelection(-1)
-                    Keys.onRightPressed: root.moveSelection(1)
-                    onTextChanged: {
-                        root.selectedIndex = -1
-                        root.rebuildFiltered()
-                    }
-                }
-            }
-        }
-
-        GridView {
-            id: appGrid
-            anchors {
-                top: searchBar.bottom
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-                margins: 20
-                topMargin: 14
-            }
-            clip: true
-            cellWidth: (width - 8) / 4
-            cellHeight: cellWidth
-            model: root.filteredApps
-
-            ScrollBar.vertical: ScrollBar {
-                policy: ScrollBar.AsNeeded
-                contentItem: Rectangle {
-                    implicitWidth: 3
-                    radius: 999
-                    color: Colors.secondaryText
-                    opacity: parent.active ? 0.6 : 0.2
-                    Behavior on opacity { NumberAnimation { duration: 150 } }
-                }
-                background: Item {}
-            }
-
-            WheelHandler {
-                onWheel: (event) => {
-                    appGrid.contentY = Math.max(
-                        0,
-                        Math.min(
-                            appGrid.contentHeight - appGrid.height,
-                            appGrid.contentY - event.angleDelta.y * 0.8
-                        )
-                    )
-                }
-            }
-
-            delegate: Item {
-                id: appTile
-                required property var modelData
-                required property int index
-                width: appGrid.cellWidth
-                height: appGrid.cellHeight
-
-                readonly property bool isSelected: root.selectedIndex === index
-
-                Rectangle {
-                    anchors { fill: parent; margins: 4 }
-                    radius: 14
-                    color: appTile.isSelected
-                        ? Colors.surfaceVariant
-                        : tileHover.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.1) : "transparent"
-                    border.width: appTile.isSelected ? 1.5 : 0
-                    border.color: Colors.chipIconActive
-                    scale: tileHover.pressed ? 0.94 : (tileHover.containsMouse ? 1.03 : 1.0)
-
-                    Behavior on color { ColorAnimation { duration: 150 } }
-                    Behavior on border.color { ColorAnimation { duration: 150 } }
-                    Behavior on scale { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
-
-                    Column {
-                        anchors.centerIn: parent
-                        spacing: 8
-                        width: parent.width - 16
-
-                        Item {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            width: 48
-                            height: 48
-
-                            IconImage {
-                                id: appIcon
-                                anchors.fill: parent
-                                source: appTile.modelData.icon !== ""
-                                    ? "file://" + appTile.modelData.icon
-                                    : ""
-                                smooth: true
-                            }
-
-                            Rectangle {
-                                anchors.fill: parent
-                                radius: 12
-                                color: Colors.surfaceVariant
-                                visible: appIcon.status !== Image.Ready
-
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: appTile.modelData.name.length > 0
-                                        ? appTile.modelData.name[0].toUpperCase()
-                                        : "?"
-                                    color: Colors.primaryText
-                                    font.family: "Poppins"
-                                    font.pixelSize: 18
-                                    font.weight: Font.Bold
-                                }
-                            }
-                        }
+                    TextInput {
+                        id: searchField
+                        width: parent.width - 38
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: Colors.primaryText
+                        font.family: "Poppins"
+                        font.pixelSize: 14
+                        selectionColor: root.selectionTint
+                        clip: true
 
                         Text {
-                            width: parent.width
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            text: appTile.modelData.name
-                            color: Colors.primaryText
-                            font.family: "Poppins"
-                            font.pixelSize: 11
-                            font.weight: Font.Medium
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideRight
+                            anchors.fill: parent
+                            text: "Search apps..."
+                            color: Colors.secondaryText
+                            font: parent.font
+                            visible: parent.text.length === 0
+                            verticalAlignment: Text.AlignVCenter
                         }
-                    }
 
-                    MouseArea {
-                        id: tileHover
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            root.selectedIndex = appTile.index
-                            root.launchSelected()
+                        Keys.onEscapePressed: root.close()
+                        Keys.onReturnPressed: root.launchSelected()
+                        Keys.onEnterPressed: root.launchSelected()
+                        Keys.onUpPressed: root.moveSelection(-root.columns)
+                        Keys.onDownPressed: root.moveSelection(root.columns)
+                        Keys.onLeftPressed: root.moveSelection(-1)
+                        Keys.onRightPressed: root.moveSelection(1)
+                        onTextChanged: {
+                            root.selectedIndex = -1
+                            root.rebuildFiltered()
                         }
                     }
                 }
             }
 
-            Column {
-                anchors.centerIn: parent
-                spacing: 10
-                visible: root.filteredApps.length === 0
+            GridView {
+                id: appGrid
+                anchors {
+                    top: searchBar.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                    margins: 20
+                    topMargin: 14
+                }
+                clip: true
+                cellWidth: (width - 8) / 4
+                cellHeight: cellWidth
+                model: root.filteredApps
 
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: "󰀻"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 36
-                    color: Colors.secondaryText
+                ScrollBar.vertical: ScrollBar {
+                    policy: ScrollBar.AsNeeded
+                    contentItem: Rectangle {
+                        implicitWidth: 3
+                        radius: 999
+                        color: Colors.secondaryText
+                        opacity: parent.active ? 0.6 : 0.2
+                        Behavior on opacity { NumberAnimation { duration: 150 } }
+                    }
+                    background: Item {}
                 }
 
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: searchField.text.length > 0 ? "No apps found" : "Loading..."
-                    color: Colors.secondaryText
-                    font.family: "Poppins"
-                    font.pixelSize: 13
+                WheelHandler {
+                    onWheel: (event) => {
+                        appGrid.contentY = Math.max(
+                            0,
+                            Math.min(
+                                appGrid.contentHeight - appGrid.height,
+                                appGrid.contentY - event.angleDelta.y * 0.8
+                            )
+                        )
+                    }
+                }
+
+                delegate: Item {
+                    id: appTile
+                    required property var modelData
+                    required property int index
+                    width: appGrid.cellWidth
+                    height: appGrid.cellHeight
+
+                    readonly property bool isSelected: root.selectedIndex === index
+
+                    Rectangle {
+                        anchors { fill: parent; margins: 4 }
+                        radius: 14
+                        color: appTile.isSelected
+                            ? Colors.surfaceVariant
+                            : tileHover.containsMouse ? Qt.lighter(Colors.surfaceVariant, 1.1) : "transparent"
+                        border.width: appTile.isSelected ? 1.5 : 0
+                        border.color: Colors.chipIconActive
+                        scale: tileHover.pressed ? 0.94 : (tileHover.containsMouse ? 1.03 : 1.0)
+
+                        Behavior on color { ColorAnimation { duration: 150 } }
+                        Behavior on border.color { ColorAnimation { duration: 150 } }
+                        Behavior on scale { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
+
+                        Column {
+                            anchors.centerIn: parent
+                            spacing: 8
+                            width: parent.width - 16
+
+                            Item {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                width: 48
+                                height: 48
+
+                                IconImage {
+                                    id: appIcon
+                                    anchors.fill: parent
+                                    source: appTile.modelData.icon !== ""
+                                        ? "file://" + appTile.modelData.icon
+                                        : ""
+                                    smooth: true
+                                }
+
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: 12
+                                    color: Colors.surfaceVariant
+                                    visible: appIcon.status !== Image.Ready
+
+                                    Text {
+                                        anchors.centerIn: parent
+                                        text: appTile.modelData.name.length > 0
+                                            ? appTile.modelData.name[0].toUpperCase()
+                                            : "?"
+                                        color: Colors.primaryText
+                                        font.family: "Poppins"
+                                        font.pixelSize: 18
+                                        font.weight: Font.Bold
+                                    }
+                                }
+                            }
+
+                            Text {
+                                width: parent.width
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: appTile.modelData.name
+                                color: Colors.primaryText
+                                font.family: "Poppins"
+                                font.pixelSize: 11
+                                font.weight: Font.Medium
+                                horizontalAlignment: Text.AlignHCenter
+                                elide: Text.ElideRight
+                            }
+                        }
+
+                        MouseArea {
+                            id: tileHover
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                root.selectedIndex = appTile.index
+                                root.launchSelected()
+                            }
+                        }
+                    }
+                }
+
+                Column {
+                    anchors.centerIn: parent
+                    spacing: 10
+                    visible: root.filteredApps.length === 0
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "󰀻"
+                        font.family: "JetBrainsMono Nerd Font"
+                        font.pixelSize: 36
+                        color: Colors.secondaryText
+                    }
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: searchField.text.length > 0 ? "No apps found" : "Loading..."
+                        color: Colors.secondaryText
+                        font.family: "Poppins"
+                        font.pixelSize: 13
+                    }
                 }
             }
-        }
-
-
+            }
     }
 
     property var allApps: []
@@ -390,9 +395,13 @@ PanelWindow {
     Process { id: launcher }
 
     Reveal {
-        target: panel
+        target: plate
         shown: root.isOpen
-        motion: "rise"
-        distance: 12
+        motion: "emerge"
+        edge: "bottom"
+        squash: 0.92
+        bulge: 1.015
+        distance: 14
+        outDuration: 190
     }
 }

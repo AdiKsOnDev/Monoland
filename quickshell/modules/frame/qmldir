@@ -1,0 +1,5 @@
+module qs.modules.frame
+Frames 1.0 Frames.qml
+ScreenFrame 1.0 ScreenFrame.qml
+FrameShadow 1.0 FrameShadow.qml
+FrameExclusions 1.0 FrameExclusions.qml

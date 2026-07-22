@@ -5,6 +5,7 @@ singleton Battery 1.0 Battery.qml
 singleton Bluetooth 1.0 Bluetooth.qml
 singleton Brightness 1.0 Brightness.qml
 singleton Colors 1.0 Colors.qml
+singleton Frame 1.0 Frame.qml
 singleton Media 1.0 Media.qml
 singleton Notifications 1.0 Notifications.qml
 singleton DeepWork 1.0 DeepWork.qml
