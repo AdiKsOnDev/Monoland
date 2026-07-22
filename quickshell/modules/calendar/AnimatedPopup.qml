@@ -13,6 +13,10 @@ PanelWindow {
 
     property int popupWidth: 390
     property bool isOpen: false
+
+    // Start unmapped; toggle()/hideTimer manage visibility around the animation
+    visible: false
+
     function toggle() {
         if (!isOpen) visible = true
         isOpen = !isOpen
@@ -41,21 +45,28 @@ PanelWindow {
 
     anchors {
         top: true
+        bottom: true
         left: true
         right: true
     }
 
+    // The surface starts at the bar's bottom edge (minus the 1px seam), so the
+    // compositor clips the plate as it slides out — the popup can never draw
+    // over the bar, regardless of window stacking.
+    margins.top: Frame.barHeight - seam
+
     exclusiveZone: -1
-    implicitHeight: screen.height
     color: "transparent"
     focusable: isOpen
 
-    // Mask to a plain proxy, not `plate`: `plate` has layer.enabled (for the
-    // shadow), and a layered item reports no usable region to Quickshell — which
-    // collapses the window's input region and makes the popup unclickable.
+    // Mask to a plain proxy (never a layered item — a layered item reports no
+    // usable region to Quickshell, collapsing the window's input region).
+    // Empty while closed so the popup's resting area stays click-through.
     mask: Region {
-        item: maskProxy
+        item: root.isOpen ? maskProxy : emptyRegion
     }
+
+    Item { id: emptyRegion; width: 0; height: 0 }
 
     Item {
         id: maskProxy
@@ -70,7 +81,7 @@ PanelWindow {
 
     // The plate hangs flush from the bar (the frame's top edge) and carries the
     // box plus the concave fillets that fuse it with the frame. Reveal animates
-    // the plate, so the fillets move and fade in lockstep with the panel.
+    // the plate, so the fillets slide in lockstep with the panel.
     Item {
         id: plate
 
@@ -78,7 +89,7 @@ PanelWindow {
         x: root.alignRight
             ? root.screen.width - Frame.thickness - width + root.seam
             : (parent.width - width) / 2
-        y: Frame.barHeight - root.seam
+        y: 0
         height: contentColumn.implicitHeight + 24 + root.seam
 
         // No shadow layer: the layered texture resamples at fractional scale
@@ -142,7 +153,7 @@ PanelWindow {
         edge: "top"
         squash: 0.94
         bulge: 1.01
-        distance: 10
+        distance: Frame.radius + 4
         outDuration: 180
     }
 }

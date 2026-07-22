@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 import qs.modules.calendar
+import qs.modules.frame
 import qs.modules.launcher
 import qs.modules.sidebar
 
@@ -38,14 +39,6 @@ Scope {
 
         delegate: Scope {
             required property var modelData
-
-            BarWindow {
-                id: barWindow
-                screen: modelData
-                onArchClicked: appLauncher.item.open()
-                onCenterClicked: clockPopup.item.toggle()
-                onRightClicked: notificationSidebar.item.toggle()
-            }
 
             LazyLoader {
                 id: notificationSidebar
@@ -114,7 +107,20 @@ Scope {
                 }
             }
 
+            // Last: the bar must map above the panel windows so panels slide
+            // out from behind it (the emerge animation hides them under the bar)
+            BarWindow {
+                id: barWindow
+                screen: modelData
+                onArchClicked: appLauncher.item.open()
+                onCenterClicked: clockPopup.item.toggle()
+                onRightClicked: notificationSidebar.item.toggle()
+            }
 
+            // Very last: the frame bands sit on the same Top layer as the bar
+            // and everything else — fullscreen windows cover them naturally —
+            // so map order alone must put them above the sliding panels
+            ScreenFrame { screen: modelData }
         }
     }
 }

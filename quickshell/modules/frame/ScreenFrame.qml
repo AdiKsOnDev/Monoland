@@ -2,18 +2,18 @@ pragma ComponentBehavior: Bound
 
 import Quickshell
 import Quickshell.Wayland
-import Quickshell.Hyprland
 import QtQuick
 import qs.services
 import qs.modules.common
 
 // Draws the screen frame: left/right/bottom bands plus the four concave
 // fillets at the workspace-area corners. The bar is the top edge and stays
-// its own window; the side bands run full height and paint over the bar's
-// outer pixels so the top corners are seamless by construction.
+// its own window.
 //
-// Overlay layer keeps the frame above lazily-created panels regardless of
-// map order, so panels appear to emerge from behind it. Space reservation
+// Lives on the Top layer like the bar, so fullscreen windows naturally cover
+// it — no fullscreen detection needed. It must be the LAST window mapped per
+// screen (instantiated after BarWindow in Bar.qml) so the bands stack above
+// the panels, letting them slide out from behind the frame. Space reservation
 // is delegated to FrameExclusions — this window is fully click-through.
 PanelWindow {
     id: root
@@ -29,27 +29,13 @@ PanelWindow {
 
     color: "transparent"
     WlrLayershell.exclusionMode: ExclusionMode.Ignore
-    WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "monoland-frame"
 
     // Zero input area — clicks pass through everywhere
     mask: Region {}
 
-    // Overlay would draw over fullscreen apps, so fade the frame away
-    readonly property HyprlandMonitor monitor: Hyprland.monitorFor(root.screen)
-    readonly property bool hasFullscreen:
-        monitor?.activeWorkspace?.toplevels.values.some(t => t.lastIpcObject.fullscreen > 1) ?? false
-
-    property real frameOpacity: hasFullscreen ? 0 : 1
-    visible: frameOpacity > 0.01
-
-    Behavior on frameOpacity {
-        NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
-    }
-
     Item {
         anchors.fill: parent
-        opacity: root.frameOpacity
 
         // Bands. Left/right start 1px above the bar's bottom edge — overlapping
         // the flat bar avoids an AA seam at the junction, while leaving the

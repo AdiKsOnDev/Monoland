@@ -15,6 +15,9 @@ PanelWindow {
 
     property bool isOpen: false
 
+    // Start unmapped; open()/hideTimer manage visibility around the animation
+    visible: false
+
     function open() {
         visible = true
         isOpen = true
@@ -26,6 +29,11 @@ PanelWindow {
     }
 
     anchors { top: true; left: true; right: true; bottom: true }
+
+    // Surface ends at the bottom band's inner edge (plus the 1px seam) so the
+    // compositor clips the slide behind the band, regardless of stacking
+    margins.bottom: Frame.thickness - 1
+
     exclusiveZone: -1
     color: "transparent"
     focusable: isOpen
@@ -54,7 +62,9 @@ PanelWindow {
                 topMargin: Frame.barHeight
                 leftMargin: Frame.thickness
                 rightMargin: Frame.thickness
-                bottomMargin: Frame.thickness
+                // The window surface already ends at the bottom band (see
+                // margins.bottom on the window); only the 1px seam remains
+                bottomMargin: 1
             }
             color: Qt.rgba(0, 0, 0, 0.6)
             opacity: root.isOpen ? 1 : 0
@@ -206,7 +216,7 @@ PanelWindow {
         edge: "bottom"
         squash: 0.93
         bulge: 1.01
-        distance: 14
+        distance: Frame.radius + 4
         outDuration: 190
     }
 }

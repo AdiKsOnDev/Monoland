@@ -18,6 +18,9 @@ PanelWindow {
     property bool isOpen: false
     property int selectedIndex: -1
 
+    // Start unmapped; open()/hideTimer manage visibility around the animation
+    visible: false
+
     readonly property int columns: 4
 
     // color-typed so .r/.g/.b are available (Colors.primaryText is a string)
@@ -63,6 +66,11 @@ PanelWindow {
     }
 
     anchors { top: true; left: true; right: true; bottom: true }
+
+    // Surface ends at the bottom band's inner edge (plus the 1px seam) so the
+    // compositor clips the slide behind the band, regardless of stacking
+    margins.bottom: Frame.thickness - 1
+
     exclusiveZone: -1
     color: "transparent"
     focusable: isOpen
@@ -401,7 +409,7 @@ PanelWindow {
         edge: "bottom"
         squash: 0.92
         bulge: 1.015
-        distance: 14
+        distance: Frame.radius + 4
         outDuration: 190
     }
 }

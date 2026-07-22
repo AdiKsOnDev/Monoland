@@ -13,12 +13,19 @@ PanelWindow {
     required property var screen
     property bool sidebarOpen: false
 
+    // Start unmapped; show()/hideTimer manage visibility
+    visible: false
+
     anchors {
         top: true
         left: true
         right: true
         bottom: true
     }
+
+    // Surface starts below the bar so the compositor clips the slide — the
+    // toast can never draw over the bar, regardless of window stacking
+    margins.top: Frame.barHeight - seam
 
     exclusiveZone: -1
     color: "transparent"
@@ -100,7 +107,7 @@ PanelWindow {
         width: root.toastWidth + 2 * root.toastPadding
         height: (cardLoader.item?.height ?? 0) + 2 * root.toastPadding + root.seam
         x: root.screen.width - Frame.thickness - width + root.seam
-        y: Frame.barHeight - root.seam
+        y: 0
 
         // No shadow layer: the layered texture resamples at fractional scale
         // and shows a hairline along the edges. Flat matte matches the frame.
@@ -151,7 +158,7 @@ PanelWindow {
         squash: 0.92
         bulge: 1.02
         overshoot: 1.015
-        distance: 12
+        distance: Frame.radius + 4
         inDuration: 280
     }
 }

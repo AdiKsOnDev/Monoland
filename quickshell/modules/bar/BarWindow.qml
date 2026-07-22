@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import Quickshell
+import Quickshell.Wayland
 import QtQuick
 import qs.services
 
@@ -17,7 +18,10 @@ PanelWindow {
         right: true
     }
 
-    exclusiveZone: barContainer.height
+    // Ignore the frame's side exclusion zones so the bar spans the full screen
+    // width (otherwise layer-shell insets it and the corners show wallpaper).
+    // Its own 48px reservation lives in FrameExclusions with the rest.
+    WlrLayershell.exclusionMode: ExclusionMode.Ignore
     implicitHeight: barContainer.height
     color: "transparent"
 

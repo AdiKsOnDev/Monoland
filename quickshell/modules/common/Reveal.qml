@@ -8,9 +8,12 @@ import QtQuick
 //
 //   motion: "fade" | "scale" | "up" | "down" | "left" | "right" | "emerge"
 //
-// "emerge" is for panels attached flush to the screen frame: a squash-stretch
-// scale anchored at the attached edge plus a short slide out from behind the
-// frame, with one gentle overshoot keyframe — gooey, not elastic.
+// "emerge" is for panels attached flush to the screen frame: the panel slides
+// fully out from behind the bar/band (no fade — the frame masks it) with a
+// squash-stretch anchored at the attached edge and a very slight wobble at
+// the end: it overshoots the resting position by a few px and settles back.
+// The hidden offset is the panel's full extent plus `distance`, so protruding
+// fillets clear the frame too — keep distance >= Frame.radius + seam.
 Item {
     id: root
 
@@ -26,6 +29,7 @@ Item {
     property real squash: 0.92           // scale along the emerge axis when hidden
     property real bulge: 1.02            // cross-axis scale when hidden
     property real overshoot: 1.012       // single overshoot keyframe on the way in
+    property real wobble: 3              // px slid past resting before settling back
 
     // Slide offset applied to the target (0,0 when open)
     property Translate off: Translate {}
@@ -39,8 +43,8 @@ Item {
         if (motion === "right") return distance
         if (motion === "left") return -distance
         if (motion === "emerge") {
-            if (edge === "left") return -distance
-            if (edge === "right") return distance
+            if (edge === "left") return -((target?.width ?? 0) + distance)
+            if (edge === "right") return (target?.width ?? 0) + distance
         }
         return 0
     }
@@ -49,9 +53,20 @@ Item {
         if (motion === "down") return -distance
         if (motion === "up" || motion === "rise") return distance
         if (motion === "emerge") {
-            if (edge === "top") return -distance
-            if (edge === "bottom") return distance
+            if (edge === "top") return -((target?.height ?? 0) + distance)
+            if (edge === "bottom") return (target?.height ?? 0) + distance
         }
+        return 0
+    }
+    // Wobble target: a few px past resting, opposite the hidden direction
+    function wobX() {
+        if (edge === "left") return wobble
+        if (edge === "right") return -wobble
+        return 0
+    }
+    function wobY() {
+        if (edge === "top") return wobble
+        if (edge === "bottom") return -wobble
         return 0
     }
     function scl(open) {
@@ -72,6 +87,23 @@ Item {
         else { inAnim.stop(); outAnim.restart() }
     }
 
+    // The hidden offset depends on the target's size, which for content-driven
+    // panels settles after Component.onCompleted. Re-sync while hidden so a
+    // late resize never leaves the panel half-emerged (there is no fade to
+    // cover a stale offset).
+    function resyncHidden() {
+        if (shown || emergeInAnim.running || emergeOutAnim.running) return
+        off.x = offX(false)
+        off.y = offY(false)
+    }
+
+    Connections {
+        target: root.target
+        enabled: root.motion === "emerge" && !root.shown
+        function onWidthChanged() { root.resyncHidden() }
+        function onHeightChanged() { root.resyncHidden() }
+    }
+
     Component.onCompleted: {
         if (!target) return
         if (motion === "emerge") {
@@ -80,7 +112,8 @@ Item {
             off.y = offY(shown)
             squish.xScale = vertical ? crossScl(shown) : axisScl(shown)
             squish.yScale = vertical ? axisScl(shown) : crossScl(shown)
-            target.opacity = shown ? 1 : 0
+            // No fade: hidden panels sit fully behind the frame / off-screen
+            target.opacity = 1
             return
         }
         target.transform = [off]
@@ -126,8 +159,15 @@ Item {
 
     ParallelAnimation {
         id: emergeInAnim
-        NumberAnimation { target: root.off; property: "x"; to: 0; duration: root.inDuration; easing.type: Easing.OutQuint }
-        NumberAnimation { target: root.off; property: "y"; to: 0; duration: root.inDuration; easing.type: Easing.OutQuint }
+        // Slide: race in, drift a few px past resting, settle back — the wobble
+        SequentialAnimation {
+            NumberAnimation { target: root.off; property: "x"; to: root.wobX(); duration: Math.round(root.inDuration * 0.85); easing.type: Easing.OutQuint }
+            NumberAnimation { target: root.off; property: "x"; to: 0; duration: Math.round(root.inDuration * 0.15); easing.type: Easing.InOutSine }
+        }
+        SequentialAnimation {
+            NumberAnimation { target: root.off; property: "y"; to: root.wobY(); duration: Math.round(root.inDuration * 0.85); easing.type: Easing.OutQuint }
+            NumberAnimation { target: root.off; property: "y"; to: 0; duration: Math.round(root.inDuration * 0.15); easing.type: Easing.InOutSine }
+        }
         // Axis scale: squash -> gentle overshoot -> settle. One keyframe, no oscillation.
         SequentialAnimation {
             NumberAnimation {
@@ -143,7 +183,6 @@ Item {
             target: root.squish; property: root.vertical ? "xScale" : "yScale"
             to: 1.0; duration: root.inDuration; easing.type: Easing.OutCubic
         }
-        NumberAnimation { target: root.target; property: "opacity"; to: 1.0; duration: Math.round(root.inDuration * 0.6); easing.type: Easing.OutCubic }
     }
 
     ParallelAnimation {
@@ -158,6 +197,5 @@ Item {
             target: root.squish; property: root.vertical ? "xScale" : "yScale"
             to: root.bulge; duration: root.outDuration; easing.type: Easing.InCubic
         }
-        NumberAnimation { target: root.target; property: "opacity"; to: 0.0; duration: root.outDuration; easing.type: Easing.InCubic }
     }
 }

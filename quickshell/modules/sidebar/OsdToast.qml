@@ -11,6 +11,9 @@ PanelWindow {
     required property var screen
     property bool sidebarOpen: false
 
+    // Start unmapped; triggerShow()/hideTimer manage visibility
+    visible: false
+
     onSidebarOpenChanged: {
         if (sidebarOpen) dismiss()
     }
@@ -21,6 +24,10 @@ PanelWindow {
         right: true
         bottom: true
     }
+
+    // Surface ends at the right band's inner edge (plus the 1px seam) so the
+    // compositor clips the slide behind the band, regardless of stacking
+    margins.right: Frame.thickness - seam
 
     exclusiveZone: -1
     color: "transparent"
@@ -205,7 +212,7 @@ PanelWindow {
         squash: 0.90
         bulge: 1.03
         overshoot: 1.02
-        distance: 10
+        distance: Frame.radius + 4
         inDuration: 240
         outDuration: 160
     }

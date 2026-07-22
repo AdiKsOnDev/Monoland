@@ -4,15 +4,16 @@ import Quickshell
 import QtQuick
 import qs.services
 
-// Reserves screen space for the frame bands. The drawing window ignores
-// exclusion (it must span the whole screen to draw seamless corners), so
-// three tiny invisible windows reserve the left/right/bottom edges instead.
-// The top edge is already reserved by BarWindow's exclusive zone.
+// Reserves screen space for the frame. The drawing windows and the bar all
+// ignore exclusion zones (they must span the full screen edge-to-edge for
+// seamless corners), so tiny invisible windows reserve every edge instead:
+// barHeight on top, band thickness on the other three.
 Scope {
     id: root
 
     required property var screen
 
+    ExclusionZone { anchors.top: true; exclusiveZone: Frame.barHeight }
     ExclusionZone { anchors.left: true }
     ExclusionZone { anchors.right: true }
     ExclusionZone { anchors.bottom: true }

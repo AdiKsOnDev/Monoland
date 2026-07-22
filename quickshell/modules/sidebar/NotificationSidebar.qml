@@ -17,6 +17,9 @@ PanelWindow {
     signal wallpaperPickerRequested()
     signal powerMenuRequested()
 
+    // Start unmapped; toggle()/hideTimer manage visibility around the animation
+    visible: false
+
     function toggle() {
         if (!isOpen) visible = true
         isOpen = !isOpen
@@ -76,13 +79,19 @@ PanelWindow {
         bottom: true
     }
 
+    // Surface ends at the right band's inner edge (plus the 1px seam) so the
+    // compositor clips the slide behind the band, regardless of stacking
+    margins.right: Frame.thickness - 1
+
     exclusiveZone: -1
     color: "transparent"
 
-    // Mask to a plain proxy, not `plate`: `plate` has layer.enabled (for the
-    // shadow), and a layered item reports no usable region to Quickshell, which
-    // collapses the window's input region and makes the panel unclickable.
-    mask: Region { item: maskProxy }
+    // Mask to a plain proxy (never a layered item — a layered item reports no
+    // usable region to Quickshell, collapsing the window's input region).
+    // Empty while closed so the sidebar's resting area stays click-through.
+    mask: Region { item: root.isOpen ? maskProxy : emptyRegion }
+
+    Item { id: emptyRegion; width: 0; height: 0 }
 
     Item {
         id: maskProxy
@@ -590,7 +599,7 @@ PanelWindow {
         squash: 0.92
         bulge: 1.0
         overshoot: 1.008
-        distance: 18
+        distance: Frame.radius + 4
         inDuration: 320
         outDuration: 200
     }
