@@ -21,6 +21,9 @@ PanelWindow {
     function open() {
         visible = true
         isOpen = true
+        // The Keys.onEscapePressed handler on the card only fires if the card
+        // has active focus within the window
+        card.forceActiveFocus()
     }
 
     function close() {

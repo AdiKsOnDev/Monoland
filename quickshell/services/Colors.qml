@@ -91,18 +91,7 @@ Singleton {
         }
     }
 
-    // Watch sentinel file written by set-wallpaper.sh after wal finishes
-    FileView {
-        id: sentinel
-        path: Quickshell.env("HOME") + "/.cache/wal/.qs-reload"
-        watchChanges: true
-        preload: true
-    }
-
-    Connections {
-        target: sentinel
-        function onInternalTextChanged() { root.reload() }
-    }
-
+    // set-wallpaper.sh calls `qs ipc call colors reload` (see Bar.qml) after
+    // wal finishes, which drives reload() directly — no fragile file watch.
     Component.onCompleted: root.reload()
 }

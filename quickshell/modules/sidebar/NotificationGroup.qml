@@ -115,10 +115,12 @@ Item {
                         color: Colors.chipBackground
                         clip: true
 
+                        readonly property string headerIcon: group.latest ? Notifications.iconFor(group.latest) : ""
+
                         IconImage {
                             anchors { fill: parent; margins: 5 }
-                            source: group.latest && group.latest.appIcon !== "" ? group.latest.appIcon : ""
-                            visible: group.latest && group.latest.appIcon !== ""
+                            source: parent.headerIcon
+                            visible: parent.headerIcon !== ""
                             smooth: true
                         }
                         Text {
@@ -128,7 +130,7 @@ Item {
                             font.family: "Poppins"
                             font.pixelSize: 14
                             font.weight: Font.Bold
-                            visible: !(group.latest && group.latest.appIcon !== "")
+                            visible: parent.headerIcon === ""
                         }
                     }
 

@@ -20,6 +20,36 @@ Singleton {
         return arrivalTimes[notifId] ?? null
     }
 
+    // Resolve a notification's app logo to a usable image URL. The freedesktop
+    // appIcon hint is usually a theme icon NAME (e.g. "org.telegram.desktop"),
+    // which IconImage cannot open directly — it must go through iconPath().
+    // Falls back to the app's desktop-entry icon when the hint is missing.
+    function iconFor(notif) {
+        if (!notif)
+            return ""
+
+        const ai = notif.appIcon ?? ""
+        if (ai !== "") {
+            if (ai.startsWith("file:") || ai.startsWith("qrc:"))
+                return ai
+            if (ai.startsWith("/"))
+                return "file://" + ai
+            const p = Quickshell.iconPath(ai, true)
+            if (p !== "")
+                return p
+        }
+
+        // Fall back to the matching desktop entry's icon
+        const entry = DesktopEntries.heuristicLookup(notif.appName ?? "")
+        if (entry && entry.icon) {
+            const p = Quickshell.iconPath(entry.icon, true)
+            if (p !== "")
+                return p
+        }
+
+        return ""
+    }
+
     property var dismissQueue: []
 
     function dismissAll() {

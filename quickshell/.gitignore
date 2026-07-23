@@ -1,0 +1,7 @@
+# quickshell-managed qmlls config — machine-specific (points into runtime VFS)
+/.qmlls.ini
+
+# qmlls import-path shim: makes `import qs.services` resolve as <root>/qs/services
+# -> <root>/services (each dir ships a qmldir declaring `module qs.<...>`).
+# Recreate with:  ln -sfn . qs
+/qs

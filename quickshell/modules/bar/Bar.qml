@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import qs.services
 import qs.modules.calendar
 import qs.modules.frame
 import qs.modules.launcher
@@ -13,6 +14,7 @@ Scope {
     property var primaryPowerMenu: null
     property var primaryClockPopup: null
     property var primarySidebar: null
+    property var primaryWallpaperPicker: null
 
     IpcHandler {
         target: "launcher"
@@ -34,6 +36,19 @@ Scope {
     IpcHandler {
         target: "sidebar"
         function toggle() { primarySidebar?.toggle() }
+    }
+
+    IpcHandler {
+        target: "wallpapers"
+        function open() { primaryWallpaperPicker?.open() }
+        function close() { primaryWallpaperPicker?.close() }
+    }
+
+    // set-wallpaper.sh calls this after wal regenerates the palette, so the
+    // shell recolors in place instead of being killed and restarted.
+    IpcHandler {
+        target: "colors"
+        function reload() { Colors.reload() }
     }
 
     Variants {
@@ -82,7 +97,12 @@ Scope {
                 id: wallpaperPicker
                 loading: true
 
-                WallpaperPicker {}
+                WallpaperPicker {
+                    screen: modelData
+                    Component.onCompleted: {
+                        if (!primaryWallpaperPicker) primaryWallpaperPicker = this
+                    }
+                }
             }
 
             LazyLoader {

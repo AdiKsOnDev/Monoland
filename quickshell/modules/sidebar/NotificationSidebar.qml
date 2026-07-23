@@ -52,7 +52,7 @@ PanelWindow {
             if (!map[key]) { map[key] = []; order.push(key) }
             map[key].push(n)
         }
-        function at(n) {
+        const at = (n) => {
             const t = Notifications.arrivalTimeFor(n.id)
             return t ? t.getTime() : 0
         }

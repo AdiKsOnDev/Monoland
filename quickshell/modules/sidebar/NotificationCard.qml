@@ -20,7 +20,9 @@ Rectangle {
     readonly property string title: notification.summary !== "" ? notification.summary : notification.appName
     readonly property string body: notification.body
     readonly property bool hasImage: notification.image !== ""
-    readonly property bool hasAppIcon: notification.appIcon !== ""
+    // Resolved app-logo URL (theme name -> path), "" when none is available
+    readonly property string appIconSource: Notifications.iconFor(notification)
+    readonly property bool hasAppIcon: appIconSource !== ""
 
     implicitWidth: parent?.width ?? 0
     implicitHeight: Math.max(avatar.height, textCol.implicitHeight) + 28
@@ -92,7 +94,7 @@ Rectangle {
             IconImage {
                 anchors.fill: parent
                 anchors.margins: 6
-                source: !root.hasImage && root.hasAppIcon ? root.notification.appIcon : ""
+                source: !root.hasImage && root.hasAppIcon ? root.appIconSource : ""
                 visible: !root.hasImage && root.hasAppIcon
                 smooth: true
             }
@@ -118,7 +120,7 @@ Rectangle {
 
             IconImage {
                 anchors { fill: parent; margins: 2 }
-                source: root.notification.appIcon
+                source: root.appIconSource
                 smooth: true
             }
         }
