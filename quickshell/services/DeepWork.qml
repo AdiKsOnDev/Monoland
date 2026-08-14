@@ -112,14 +112,14 @@ Singleton {
     function startBreak() {
         onBreak = true
         breakRemaining = breakDuration * 60
-        notify("Break time", breakDuration + " min", "complete")
+        notify("Break time", breakDuration + " min", "message")
     }
 
     function endBreak() {
         onBreak = false
         breakRemaining = 0
         sinceBreak = 0
-        notify("Back to work", workInterval + " min until the next break", "message")
+        notify("Back to work", workInterval + " min until the next break", "complete")
     }
 
     function skipBreak() { if (onBreak) endBreak() }
