@@ -28,10 +28,16 @@ Item {
     readonly property int activeCount: todos.filter(t => !t.done).length
     readonly property int doneCount: todos.filter(t => t.done).length
 
+    // Highest priority first (3=high … 0=none). Stable sort: tasks of equal
+    // priority keep their existing/manual order.
+    function byPriority(list) {
+        return list.slice().sort((a, b) => b.priority - a.priority)
+    }
+
     readonly property var filtered: {
-        if (filter === "active") return todos.filter(t => !t.done)
-        if (filter === "done") return todos.filter(t => t.done)
-        return todos
+        if (filter === "active") return byPriority(todos.filter(t => !t.done))
+        if (filter === "done") return byPriority(todos.filter(t => t.done))
+        return byPriority(todos)
     }
 
     function isoKey(d) {
@@ -68,12 +74,28 @@ Item {
         setDue(t.id, seq[(idx + 1) % seq.length])
     }
 
+    // from/to are positions in the displayed (priority-sorted) list. Translate
+    // to the underlying todos order by task identity so drag reorders the
+    // manual tie-break order within a priority group.
     function moveTask(from, to) {
-        to = Math.max(0, Math.min(root.todos.length - 1, to))
+        const view = root.filtered
+        to = Math.max(0, Math.min(view.length - 1, to))
         if (from < 0 || from === to) return
+
+        const moved = view[from]
+        const target = view[to]
+        if (!moved || !target) return
+
         const arr = root.todos.slice()
-        const it = arr.splice(from, 1)[0]
-        arr.splice(to, 0, it)
+        const fromReal = arr.findIndex(t => t.id === moved.id)
+        if (fromReal < 0) return
+        arr.splice(fromReal, 1)
+
+        let toReal = arr.findIndex(t => t.id === target.id)
+        if (toReal < 0) toReal = arr.length
+        if (to > from) toReal += 1             // dragging down inserts after target
+        arr.splice(toReal, 0, moved)
+
         root.todos = arr                       // optimistic
         root.reorder(arr.map(t => String(t.id)))
     }
