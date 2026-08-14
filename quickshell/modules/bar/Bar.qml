@@ -7,6 +7,7 @@ import qs.services
 import qs.modules.calendar
 import qs.modules.frame
 import qs.modules.launcher
+import qs.modules.settings
 import qs.modules.sidebar
 
 Scope {
@@ -15,6 +16,7 @@ Scope {
     property var primaryClockPopup: null
     property var primarySidebar: null
     property var primaryWallpaperPicker: null
+    property var primarySettings: null
 
     IpcHandler {
         target: "launcher"
@@ -44,6 +46,13 @@ Scope {
         function close() { primaryWallpaperPicker?.close() }
     }
 
+    IpcHandler {
+        target: "settings"
+        function open(section: string) { primarySettings?.open(section) }
+        function close() { primarySettings?.close() }
+        function toggle(section: string) { primarySettings?.toggle(section) }
+    }
+
     // set-wallpaper.sh calls this after wal regenerates the palette, so the
     // shell recolors in place instead of being killed and restarted.
     IpcHandler {
@@ -65,8 +74,21 @@ Scope {
                     screen: modelData
                     onWallpaperPickerRequested: wallpaperPicker.item.open()
                     onPowerMenuRequested: powerMenu.item.open()
+                    onSettingsRequested: (section) => settingsWindow.item.open(section)
                     Component.onCompleted: {
                         if (!primarySidebar) primarySidebar = this
+                    }
+                }
+            }
+
+            LazyLoader {
+                id: settingsWindow
+                loading: true
+
+                SettingsWindow {
+                    screen: modelData
+                    Component.onCompleted: {
+                        if (!primarySettings) primarySettings = this
                     }
                 }
             }

@@ -1,0 +1,15 @@
+module qs.modules.settings
+SettingsWindow 1.0 SettingsWindow.qml
+MdNavRail 1.0 MdNavRail.qml
+MdCard 1.0 MdCard.qml
+MdListItem 1.0 MdListItem.qml
+MdSwitch 1.0 MdSwitch.qml
+MdSlider 1.0 MdSlider.qml
+MdIconButton 1.0 MdIconButton.qml
+WifiSection 1.0 WifiSection.qml
+BluetoothSection 1.0 BluetoothSection.qml
+SoundSection 1.0 SoundSection.qml
+MicSection 1.0 MicSection.qml
+DisplaySection 1.0 DisplaySection.qml
+NotificationsSection 1.0 NotificationsSection.qml
+AppearanceSection 1.0 AppearanceSection.qml

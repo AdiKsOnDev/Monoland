@@ -16,6 +16,7 @@ PanelWindow {
     property bool isOpen: false
     signal wallpaperPickerRequested()
     signal powerMenuRequested()
+    signal settingsRequested(string section)
 
     // Start unmapped; toggle()/hideTimer manage visibility around the animation
     visible: false
@@ -24,16 +25,6 @@ PanelWindow {
         if (!isOpen) visible = true
         isOpen = !isOpen
     }
-
-    // Right-click control panels (expand from the clicked toggle)
-    property string activePanel: ""
-    function openPanel(id, src) {
-        const p = src.mapToItem(controlPanel, src.width / 2, src.height / 2)
-        controlPanel.originX = p.x
-        controlPanel.originY = p.y
-        activePanel = id
-    }
-    function closePanel() { activePanel = "" }
 
     // Notifications grouped by app, with per-app expand state (Android-style)
     property var expandedApps: ({})
@@ -63,7 +54,7 @@ PanelWindow {
 
     onIsOpenChanged: {
         if (isOpen) visible = true
-        else { hideTimer.restart(); closePanel() }
+        else hideTimer.restart()
     }
 
     Timer {
@@ -414,6 +405,37 @@ PanelWindow {
                         }
                     }
 
+                    // Settings
+                    Rectangle {
+                        width: 40
+                        height: 40
+                        radius: 999
+                        color: gearHover.containsMouse ? Colors.fillStrong : Colors.surfaceVariant
+                        border.width: gearHover.containsMouse ? 0 : 1
+                        border.color: Qt.lighter(Colors.surfaceVariant, 1.6)
+
+                        Behavior on color { ColorAnimation { duration: 150 } }
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "󰒓"
+                            font.family: "JetBrainsMono Nerd Font"
+                            font.pixelSize: 18
+                            color: gearHover.containsMouse ? Colors.fillStrongText : Colors.primaryText
+
+                            Behavior on color { ColorAnimation { duration: 150 } }
+                        }
+
+                        MouseArea {
+                            id: gearHover
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            // No section: reopens wherever the user last was
+                            onClicked: root.settingsRequested("")
+                        }
+                    }
+
                     Rectangle {
                         width: 40
                         height: 40
@@ -503,7 +525,7 @@ PanelWindow {
                         sublabel: Wifi.networkName !== "" ? Wifi.networkName : (Wifi.enabled ? "On" : "Off")
                         active: Wifi.enabled
                         onClicked: Wifi.toggle()
-                        onExpandRequested: root.openPanel("wifi", wifiToggle)
+                        onExpandRequested: root.settingsRequested("wifi")
                     }
 
                     ToggleButton {
@@ -516,7 +538,7 @@ PanelWindow {
                         sublabel: Bluetooth.connectedDeviceName !== "" ? Bluetooth.connectedDeviceName : (Bluetooth.enabled ? "On" : "Off")
                         active: Bluetooth.enabled
                         onClicked: Bluetooth.toggle()
-                        onExpandRequested: root.openPanel("bluetooth", btToggle)
+                        onExpandRequested: root.settingsRequested("bluetooth")
                     }
 
                     ToggleButton {
@@ -528,7 +550,7 @@ PanelWindow {
                         label: "Volume"
                         sublabel: Audio.muted ? "Muted" : Audio.volumePercent + "%"
                         active: !Audio.muted
-                        onExpandRequested: root.openPanel("volume", volToggle)
+                        onExpandRequested: root.settingsRequested("sound")
                         onClicked: Audio.toggleMute()
                     }
 
@@ -542,7 +564,7 @@ PanelWindow {
                         sublabel: Audio.micMuted ? "Muted" : "Active"
                         active: !Audio.micMuted
                         onClicked: Audio.toggleMicMute()
-                        onExpandRequested: root.openPanel("mic", micToggle)
+                        onExpandRequested: root.settingsRequested("mic")
                     }
                 }
 
@@ -563,35 +585,6 @@ PanelWindow {
                 }
             }
 
-            // Right-click control panel (expands from the clicked toggle)
-            ControlPanel {
-                id: controlPanel
-                anchors.fill: parent
-                shown: root.activePanel !== ""
-                title: root.activePanel === "wifi" ? "Wi-Fi"
-                    : root.activePanel === "volume" ? "Volume"
-                    : root.activePanel === "bluetooth" ? "Bluetooth"
-                    : root.activePanel === "mic" ? "Microphone" : ""
-                icon: root.activePanel === "wifi" ? "󰤨"
-                    : root.activePanel === "volume" ? "󰕾"
-                    : root.activePanel === "bluetooth" ? "󰂯"
-                    : root.activePanel === "mic" ? "󰍬" : ""
-                onClosed: root.closePanel()
-
-                Loader {
-                    anchors.fill: parent
-                    active: root.activePanel !== ""
-                    sourceComponent: root.activePanel === "wifi" ? wifiComp
-                        : root.activePanel === "volume" ? volumeComp
-                        : root.activePanel === "bluetooth" ? bluetoothComp
-                        : root.activePanel === "mic" ? micComp : null
-                }
-            }
-
-            Component { id: wifiComp; WifiPanel {} }
-            Component { id: volumeComp; VolumePanel {} }
-            Component { id: bluetoothComp; BluetoothPanel {} }
-            Component { id: micComp; MicPanel {} }
         }
 
         // Fillets fusing the free left edge with the bar and the bottom band,
