@@ -1,3 +1,4 @@
 module qs.modules.common
 Reveal 1.0 Reveal.qml
 ConcaveCorner 1.0 ConcaveCorner.qml
+MdSlider 1.0 MdSlider.qml

@@ -4,7 +4,6 @@ MdNavRail 1.0 MdNavRail.qml
 MdCard 1.0 MdCard.qml
 MdListItem 1.0 MdListItem.qml
 MdSwitch 1.0 MdSwitch.qml
-MdSlider 1.0 MdSlider.qml
 MdIconButton 1.0 MdIconButton.qml
 WifiSection 1.0 WifiSection.qml
 BluetoothSection 1.0 BluetoothSection.qml

@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import qs.services
+import qs.modules.common
 
 Flickable {
     id: root

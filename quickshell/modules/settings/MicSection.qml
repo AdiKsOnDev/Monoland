@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell.Services.Pipewire
 import qs.services
+import qs.modules.common
 
 Flickable {
     id: root
