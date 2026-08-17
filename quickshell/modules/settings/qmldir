@@ -3,6 +3,9 @@ SettingsWindow 1.0 SettingsWindow.qml
 MdNavRail 1.0 MdNavRail.qml
 MdCard 1.0 MdCard.qml
 MdListItem 1.0 MdListItem.qml
+MdKeyValue 1.0 MdKeyValue.qml
+MdTextField 1.0 MdTextField.qml
+MdSegmented 1.0 MdSegmented.qml
 MdSwitch 1.0 MdSwitch.qml
 MdIconButton 1.0 MdIconButton.qml
 WifiSection 1.0 WifiSection.qml
