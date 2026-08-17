@@ -74,7 +74,10 @@ Scope {
                     screen: modelData
                     onWallpaperPickerRequested: wallpaperPicker.item.open()
                     onPowerMenuRequested: powerMenu.item.open()
-                    onSettingsRequested: (section) => settingsWindow.item.open(section)
+                    onSettingsRequested: (section) => {
+                        settingsWindow.item.open(section)
+                        isOpen = false   // close the sidebar behind the settings window
+                    }
                     Component.onCompleted: {
                         if (!primarySidebar) primarySidebar = this
                     }

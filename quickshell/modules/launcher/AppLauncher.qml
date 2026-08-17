@@ -96,8 +96,8 @@ PanelWindow {
     }
 
     // Panel docked to the bottom frame band; fillets fuse it with the band.
-    // Like caelestia's launcher, the panel height follows the result count —
-    // it grows and shrinks out of the frame as you type.
+    // The panel height follows the result count — it grows and shrinks out of
+    // the frame as you type.
     Item {
         id: plate
 
@@ -107,7 +107,11 @@ PanelWindow {
         readonly property int itemHeight: 56
         readonly property int itemSpacing: 4
         readonly property int maxShown: 8
-        readonly property int rowsShown: Math.max(1, Math.min(maxShown, root.filteredApps.length))
+        // Empty state needs room for the centered icon + message, so reserve a
+        // few rows' worth instead of collapsing to a single row.
+        readonly property int rowsShown: root.filteredApps.length === 0
+            ? 3
+            : Math.min(maxShown, root.filteredApps.length)
 
         width: 640
         height: chromeHeight + rowsShown * (itemHeight + itemSpacing) - itemSpacing
