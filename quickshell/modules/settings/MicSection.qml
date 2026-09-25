@@ -59,6 +59,7 @@ Flickable {
                         verticalCenter: parent.verticalCenter
                     }
                     value: Audio.micVolumePercent
+                    maxValue: 150   // allow boosting a quiet mic past 100%
                     interactive: Audio.source !== null
                     onMoved: (percent) => Audio.setMicVolumePercent(percent)
                 }
@@ -207,6 +208,7 @@ Flickable {
                                 verticalCenter: parent.verticalCenter
                             }
                             value: capEntry.percent
+                            maxValue: 150
                             onMoved: (percent) => {
                                 if (capEntry.modelData.audio)
                                     capEntry.modelData.audio.volume = percent / 100

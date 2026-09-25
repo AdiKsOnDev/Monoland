@@ -19,6 +19,28 @@ Flickable {
         return "󰖁"
     }
 
+    // Per-stream output routing choice, keyed by stream id ("" = follow default)
+    property var routes: ({})
+
+    function routeLabel(stream) {
+        const name = root.routes[stream.id] || ""
+        if (!name) return "Default"
+        const dev = Audio.outputDevices.find(d => d.name === name)
+        return dev ? Audio.deviceName(dev) : "Default"
+    }
+
+    function cycleRoute(stream) {
+        const opts = [""].concat(Audio.outputDevices.map(d => d.name))
+        const cur = root.routes[stream.id] || ""
+        let idx = opts.indexOf(cur)
+        if (idx < 0) idx = 0
+        const next = opts[(idx + 1) % opts.length]
+        const m = Object.assign({}, root.routes)
+        m[stream.id] = next
+        root.routes = m
+        Audio.routeStreamTo(stream, next ? Audio.outputDevices.find(d => d.name === next) : null)
+    }
+
     Column {
         id: column
         width: root.width
@@ -58,6 +80,7 @@ Flickable {
                         verticalCenter: parent.verticalCenter
                     }
                     value: Audio.volumePercent
+                    maxValue: 150   // allow boosting quiet sources past 100%
                     interactive: Audio.sink !== null
                     onMoved: (percent) => Audio.setVolumePercent(percent)
                 }
@@ -137,13 +160,62 @@ Flickable {
                             : streamEntry.percent + "%"
                         interactive: false
 
-                        MdIconButton {
-                            icon: (streamEntry.modelData.audio?.muted ?? false) ? "󰖁" : "󰕾"
-                            toggled: streamEntry.modelData.audio?.muted ?? false
-                            accent: Md.error
-                            onClicked: {
-                                if (streamEntry.modelData.audio)
-                                    streamEntry.modelData.audio.muted = !streamEntry.modelData.audio.muted
+                        Row {
+                            spacing: 6
+
+                            // Output routing: tap to send this app to a specific
+                            // device (cycles through outputs and back to Default)
+                            Rectangle {
+                                anchors.verticalCenter: parent.verticalCenter
+                                height: 28
+                                width: routeRow.implicitWidth + 20
+                                radius: 999
+                                visible: Audio.outputDevices.length > 1
+                                color: routeHover.containsMouse ? Md.surfaceContainerHighest : Md.surfaceContainerHigh
+
+                                Behavior on color { ColorAnimation { duration: Md.durMedium } }
+
+                                Row {
+                                    id: routeRow
+                                    anchors.centerIn: parent
+                                    spacing: 5
+
+                                    Text {
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        text: "󰓃"
+                                        font.family: Md.iconFamily
+                                        font.pixelSize: 14
+                                        color: Md.textOnSurfaceVariant
+                                    }
+                                    Text {
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        text: root.routeLabel(streamEntry.modelData)
+                                        color: Md.textOnSurfaceVariant
+                                        font.family: Md.fontFamily
+                                        font.pixelSize: Md.bodySmall
+                                        elide: Text.ElideRight
+                                        width: Math.min(implicitWidth, 110)
+                                    }
+                                }
+
+                                MouseArea {
+                                    id: routeHover
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: root.cycleRoute(streamEntry.modelData)
+                                }
+                            }
+
+                            MdIconButton {
+                                anchors.verticalCenter: parent.verticalCenter
+                                icon: (streamEntry.modelData.audio?.muted ?? false) ? "󰖁" : "󰕾"
+                                toggled: streamEntry.modelData.audio?.muted ?? false
+                                accent: Md.error
+                                onClicked: {
+                                    if (streamEntry.modelData.audio)
+                                        streamEntry.modelData.audio.muted = !streamEntry.modelData.audio.muted
+                                }
                             }
                         }
                     }
@@ -161,6 +233,7 @@ Flickable {
                                 verticalCenter: parent.verticalCenter
                             }
                             value: streamEntry.percent
+                            maxValue: 150
                             onMoved: (percent) => {
                                 if (streamEntry.modelData.audio)
                                     streamEntry.modelData.audio.volume = percent / 100

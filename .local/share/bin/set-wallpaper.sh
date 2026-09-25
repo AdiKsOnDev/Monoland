@@ -18,7 +18,15 @@ if [ -z "$WALLPAPER_PATH" ] || [ ! -f "$WALLPAPER_PATH" ]; then
 fi
 
 mkdir -p "$CURRENT_DIR"
-cp -f "$WALLPAPER_PATH" "$CURRENT_DIR/current"
+
+# Re-theming the current wallpaper (a light/dark toggle) passes the same file:
+# skip the copy and, later, the hyprpaper restart since the image is unchanged.
+if [ "$WALLPAPER_PATH" -ef "$CURRENT_DIR/current" ]; then
+    SAME_IMAGE=1
+else
+    cp -f "$WALLPAPER_PATH" "$CURRENT_DIR/current"
+    SAME_IMAGE=0
+fi
 
 # wal caches a scheme per image; without clearing it, re-applying the same
 # image in a different light/dark mode returns the previously cached palette.
@@ -45,7 +53,9 @@ qs ipc call colors reload > /dev/null 2>&1 || true
 
 # hyprpaper caches by path and our path ('current') never changes, so restart
 # it to re-read the new image. setsid detaches it into its own session so it
-# outlives this script.
-killall hyprpaper 2>/dev/null || true
-sleep 0.2
-setsid hyprpaper > /dev/null 2>&1 &
+# outlives this script. Skipped on a pure re-theme where the image is unchanged.
+if [ "$SAME_IMAGE" = "0" ]; then
+    killall hyprpaper 2>/dev/null || true
+    sleep 0.2
+    setsid hyprpaper > /dev/null 2>&1 &
+fi

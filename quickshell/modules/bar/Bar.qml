@@ -25,6 +25,12 @@ Scope {
     }
 
     IpcHandler {
+        target: "clipboard"
+        function open() { primaryLauncher?.open("clipboard") }
+        function close() { primaryLauncher?.close() }
+    }
+
+    IpcHandler {
         target: "powermenu"
         function open() { primaryPowerMenu?.open() }
         function close() { primaryPowerMenu?.close() }

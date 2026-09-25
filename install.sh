@@ -61,9 +61,11 @@ declare -A DEP_PACKAGES=(
     [grimblast]="grimblast-git"
     [swappy]="swappy"
     [brightnessctl]="brightnessctl"
+    [cliphist]="cliphist"
     [hyprpaper]="hyprpaper"
     [wal]="python-pywal"
     [kitty]="kitty"
+    [wl-copy]="wl-clipboard"
 )
 
 MISSING=()

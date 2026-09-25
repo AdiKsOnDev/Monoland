@@ -9,9 +9,14 @@ import qs.services
 Item {
     id: root
 
-    property int value: 0          // 0..100
+    property int value: 0          // 0..maxValue
+    property int maxValue: 100     // >100 enables a boost zone (e.g. 150)
     property bool interactive: true
     property int groove: 16
+    // Handle bar height at rest and while pressed. Kept taller than the groove
+    // so it stays proud of the track; scale both up alongside `groove`.
+    property int handleHeight: 30
+    property int handlePressedHeight: 36
     // Corner radius on the two track ends that face the handle. The outer ends
     // stay fully rounded; squaring off the inner ones is what keeps the gap
     // around the handle reading as a notch rather than two bulbous caps.
@@ -19,11 +24,12 @@ Item {
 
     signal moved(int percent)
 
-    implicitHeight: 44
+    // Grow with the (pressed) handle so it is never clipped
+    implicitHeight: Math.max(44, handlePressedHeight + 8)
     implicitWidth: 240
     opacity: interactive ? 1 : Md.disabledOpacity
 
-    readonly property real _fraction: Math.max(0, Math.min(100, value)) / 100
+    readonly property real _fraction: Math.max(0, Math.min(maxValue, value)) / maxValue
     // Handle travel is inset by half a handle width at each end so it never
     // overhangs the groove.
     readonly property real _travel: width - handle.width
@@ -59,12 +65,24 @@ Item {
         Behavior on color { ColorAnimation { duration: Md.durMedium } }
     }
 
+    // Unity (100%) mark, shown only when a boost zone exists past it
+    Rectangle {
+        visible: root.maxValue > 100
+        anchors.verticalCenter: parent.verticalCenter
+        width: 2
+        height: root.groove * 0.5
+        radius: 1
+        color: Md.surface
+        opacity: 0.5
+        x: (100 / root.maxValue) * root._travel + handle.width / 2 - width / 2
+    }
+
     Rectangle {
         id: handle
         anchors.verticalCenter: parent.verticalCenter
         x: root._handleX
         width: 4
-        height: drag.pressed ? 36 : 30
+        height: drag.pressed ? root.handlePressedHeight : root.handleHeight
         radius: width / 2
         color: Md.primary
 
@@ -83,7 +101,7 @@ Item {
 
         function emitFor(mouseX) {
             const clamped = Math.max(0, Math.min(root._travel, mouseX - handle.width / 2))
-            root.moved(Math.round((clamped / root._travel) * 100))
+            root.moved(Math.round((clamped / root._travel) * root.maxValue))
         }
 
         onPressed: (mouse) => emitFor(mouse.x)
@@ -91,7 +109,7 @@ Item {
 
         onWheel: (wheel) => {
             const step = wheel.angleDelta.y > 0 ? 5 : -5
-            root.moved(Math.max(0, Math.min(100, root.value + step)))
+            root.moved(Math.max(0, Math.min(root.maxValue, root.value + step)))
         }
     }
 }

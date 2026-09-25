@@ -9,11 +9,12 @@ AnimatedPopup {
 
     popupWidth: 860
 
-    property int activeTab: 0
+    property int activeTab: 3
     readonly property var tabs: [
         { icon: "󰃭", label: "Calendar" },
         { icon: "󰄬", label: "Tasks" },
-        { icon: "󰔛", label: "Deep Work" }
+        { icon: "󰔛", label: "Deep Work" },
+        { icon: "󰍛", label: "System" }
     ]
 
     SystemClock {
@@ -285,6 +286,15 @@ AnimatedPopup {
                     DeepWorkPanel {
                         anchors { fill: parent; margins: 24 }
                     }
+                }
+            }
+
+            // ── Tab 3: System monitor ──
+            TabSlide {
+                tabIndex: 3
+
+                SystemPanel {
+                    anchors.fill: parent
                 }
             }
         }

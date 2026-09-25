@@ -18,7 +18,6 @@ PanelWindow {
     required property var screen
 
     property bool isOpen: false
-    property bool lightMode: false
 
     // Start unmapped; open()/hideTimer manage visibility around the animation
     visible: false
@@ -112,7 +111,7 @@ PanelWindow {
             color: Frame.color
             clip: true
 
-            // Header: title + light/dark toggle
+            // Header: title + image count
             Item {
                 id: header
                 anchors {
@@ -146,54 +145,6 @@ PanelWindow {
                         font.family: "Poppins"
                         font.italic: false
                         font.pixelSize: 11
-                    }
-                }
-
-                // Light/dark toggle pill
-                Rectangle {
-                    id: lightToggle
-                    width: 92
-                    height: 32
-                    radius: 999
-                    anchors {
-                        right: parent.right
-                        verticalCenter: parent.verticalCenter
-                    }
-                    color: root.lightMode ? Colors.fillStrong : Colors.surfaceVariant
-
-                    Behavior on color { ColorAnimation { duration: 150 } }
-
-                    Row {
-                        anchors.centerIn: parent
-                        spacing: 6
-
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: root.lightMode ? "󰖨" : "󰖔"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 14
-                            color: root.lightMode ? Colors.fillStrongText : Colors.primaryText
-
-                            Behavior on color { ColorAnimation { duration: 150 } }
-                        }
-
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: root.lightMode ? "Light" : "Dark"
-                            font.family: "Poppins"
-                            font.italic: false
-                            font.pixelSize: 12
-                            font.weight: Font.Medium
-                            color: root.lightMode ? Colors.fillStrongText : Colors.primaryText
-
-                            Behavior on color { ColorAnimation { duration: 150 } }
-                        }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: root.lightMode = !root.lightMode
                     }
                 }
             }
@@ -309,7 +260,9 @@ PanelWindow {
                                 applyProcess.command = [
                                     Quickshell.env("HOME") + "/.local/share/bin/set-wallpaper.sh",
                                     root.wallpaperDir + "/" + wallCard.modelData,
-                                    root.lightMode ? "light" : "dark"
+                                    // Apply in whatever theme mode is currently active
+                                    // (toggled from the sidebar), not a picker-local one
+                                    Colors.isLight ? "light" : "dark"
                                 ]
                                 applyProcess.running = true
                                 root.close()

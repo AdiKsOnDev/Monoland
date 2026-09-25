@@ -1,0 +1,702 @@
+[32m  INFO[0m: Launching config: "/home/adil/.config/quickshell/shell.qml"
+[32m  INFO[0m: Shell ID: "f68812a6e52f3f698af723611b9a116e" Path ID "f68812a6e52f3f698af723611b9a116e"
+[32m  INFO[0m: Saving logs to "/run/user/1000/quickshell/by-id/pdd6xezkit/log.qslog"
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/sidebar/SliderRow.qml[55:13]: Unable to assign [undefined] to double
+[33m  WARN[97m scene[0m: @modules/sidebar/SliderRow.qml[55:13]: Unable to assign [undefined] to double
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/sidebar/SliderRow.qml[54:13]: Unable to assign [undefined] to double
+[33m  WARN[97m scene[0m: @modules/sidebar/SliderRow.qml[54:13]: Unable to assign [undefined] to double
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/OsdToast.qml[164:17]: Unable to assign [undefined] to double
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[158:-1]: TypeError: Property 'wobX' of object Reveal_QMLTYPE_22(0x7fa85a0d08a0) is not a function
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[162:-1]: TypeError: Property 'wobY' of object Reveal_QMLTYPE_22(0x7fa85a0d08a0) is not a function
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[158:-1]: TypeError: Property 'wobX' of object Reveal_QMLTYPE_22(0x7fa85a15d640) is not a function
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[162:-1]: TypeError: Property 'wobY' of object Reveal_QMLTYPE_22(0x7fa85a15d640) is not a function
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[158:-1]: TypeError: Property 'wobX' of object Reveal_QMLTYPE_22(0x7fa859be32a0) is not a function
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[162:-1]: TypeError: Property 'wobY' of object Reveal_QMLTYPE_22(0x7fa859be32a0) is not a function
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[158:-1]: TypeError: Property 'wobX' of object Reveal_QMLTYPE_22(0x7fa856b3d5e0) is not a function
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[162:-1]: TypeError: Property 'wobY' of object Reveal_QMLTYPE_22(0x7fa856b3d5e0) is not a function
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[158:-1]: TypeError: Property 'wobX' of object Reveal_QMLTYPE_22(0x7fa82e159360) is not a function
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[162:-1]: TypeError: Property 'wobY' of object Reveal_QMLTYPE_22(0x7fa82e159360) is not a function
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[158:-1]: TypeError: Property 'wobX' of object Reveal_QMLTYPE_22(0x7fa82e188ea0) is not a function
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[162:-1]: TypeError: Property 'wobY' of object Reveal_QMLTYPE_22(0x7fa82e188ea0) is not a function
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[158:-1]: TypeError: Property 'wobX' of object Reveal_QMLTYPE_22(0x7fa82e1b7220) is not a function
+[33m  WARN[97m scene[0m: @modules/common/Reveal.qml[162:-1]: TypeError: Property 'wobY' of object Reveal_QMLTYPE_22(0x7fa82e1b7220) is not a function
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Reloading configuration...
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[162:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[32m  INFO[0m: Launching config: "/home/adil/.config/quickshell/shell.qml"
+[32m  INFO[0m: Shell ID: "f68812a6e52f3f698af723611b9a116e" Path ID "f68812a6e52f3f698af723611b9a116e"
+[32m  INFO[0m: Saving logs to "/run/user/1000/quickshell/by-id/9td5r1mit/log.qslog"
+[32m  INFO[0m: Configuration Loaded
+[33m  WARN[97m scene[0m: QML FileView at @services/Colors.qml[95:5]: Read of /home/adil/.cache/wal/.qs-reload failed: File does not exist.
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationSidebar.qml[179:29]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[211:21]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/Calendar.qml[94:13]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: @modules/calendar/AgendaPanel.qml[192:25]: Unable to assign [undefined] to int
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: QML QQuickImage at qrc:/qt/qml/Quickshell/Widgets/IconImage.qml[59:2]: Cannot open: qrc:/qt/qml/Quickshell/Widgets/org.telegram.desktop
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[21:-1]: TypeError: Cannot read property 'body' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[171:-1]: TypeError: Cannot read property 'id' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[20:-1]: TypeError: Cannot read property 'summary' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[121:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[22:-1]: TypeError: Cannot read property 'image' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[23:-1]: TypeError: Cannot read property 'appIcon' of null
+[33m  WARN[97m scene[0m: @modules/sidebar/NotificationCard.qml[87:-1]: TypeError: Cannot read property 'image' of null
+[32m  INFO[0m: Exiting due to IPC request.
+[33m  WARN[0m: DelegateModel::cancel: index out range 13 1

@@ -11,11 +11,12 @@ Item {
 
     required property string icon
     required property int value
+    property int maxValue: 100
 
     signal moved(int percent)
 
     implicitWidth: parent?.width ?? 200
-    implicitHeight: 48
+    implicitHeight: 52
 
     Text {
         id: iconLabel
@@ -41,7 +42,14 @@ Item {
             leftMargin: 14
             verticalCenter: parent.verticalCenter
         }
+        // Thicker groove than the settings sliders — the sidebar's are the
+        // primary, at-a-glance volume/brightness controls. Handle scales up
+        // with it so it stays proud of the track.
+        groove: 28
+        handleHeight: 36
+        handlePressedHeight: 42
         value: root.value
+        maxValue: root.maxValue
         onMoved: (percent) => root.moved(percent)
     }
 }

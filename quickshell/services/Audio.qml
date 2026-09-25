@@ -2,6 +2,7 @@ pragma Singleton
 pragma ComponentBehavior: Bound
 
 import Quickshell
+import Quickshell.Io
 import Quickshell.Services.Pipewire
 
 Singleton {
@@ -55,6 +56,19 @@ Singleton {
 
     function setOutputDevice(node) { Pipewire.preferredDefaultAudioSink = node }
     function setInputDevice(node) { Pipewire.preferredDefaultAudioSource = node }
+
+    // Per-application output routing. Pins a playback stream to a specific
+    // output device via PipeWire's target.object metadata (persists across the
+    // stream's lifetime); passing a null device clears the pin so the stream
+    // follows the system default again. Uses the stream's PipeWire node id.
+    Process { id: router }
+    function routeStreamTo(streamNode, sinkNode) {
+        if (!streamNode) return
+        router.command = sinkNode
+            ? ["pw-metadata", String(streamNode.id), "target.object", '"' + sinkNode.name + '"']
+            : ["pw-metadata", "-d", String(streamNode.id), "target.object"]
+        router.running = true
+    }
 
     // description is the human label ("Built-in Audio Analog Stereo"); nickname
     // is shorter but often empty, and name is the raw pipewire id.

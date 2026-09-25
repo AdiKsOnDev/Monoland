@@ -6,3 +6,4 @@ NextEvent 1.0 NextEvent.qml
 AgendaPanel 1.0 AgendaPanel.qml
 DeepWorkPanel 1.0 DeepWorkPanel.qml
 TodoList 1.0 TodoList.qml
+SystemPanel 1.0 SystemPanel.qml

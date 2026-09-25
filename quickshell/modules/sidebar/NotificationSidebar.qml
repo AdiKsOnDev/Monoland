@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import Quickshell
+import Quickshell.Io
 import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Controls
@@ -17,6 +18,18 @@ PanelWindow {
     signal wallpaperPickerRequested()
     signal powerMenuRequested()
     signal settingsRequested(string section)
+
+    // Live light/dark toggle: re-theme the current wallpaper in the other mode.
+    // set-wallpaper.sh regenerates the palette and recolors the shell in place.
+    function toggleTheme() {
+        themeSwitcher.command = [
+            Quickshell.env("HOME") + "/.local/share/bin/set-wallpaper.sh",
+            Quickshell.env("HOME") + "/.local/share/monoland/current",
+            Colors.isLight ? "dark" : "light"
+        ]
+        themeSwitcher.running = true
+    }
+    Process { id: themeSwitcher }
 
     // Start unmapped; toggle()/hideTimer manage visibility around the animation
     visible: false
@@ -436,6 +449,36 @@ PanelWindow {
                         }
                     }
 
+                    // Light/dark theme toggle — sun when light, moon when dark
+                    Rectangle {
+                        width: 40
+                        height: 40
+                        radius: 999
+                        color: themeHover.containsMouse ? Colors.fillStrong : Colors.surfaceVariant
+                        border.width: themeHover.containsMouse ? 0 : 1
+                        border.color: Qt.lighter(Colors.surfaceVariant, 1.6)
+
+                        Behavior on color { ColorAnimation { duration: 150 } }
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: Colors.isLight ? "󰖨" : "󰖔"
+                            font.family: "JetBrainsMono Nerd Font"
+                            font.pixelSize: 18
+                            color: themeHover.containsMouse ? Colors.fillStrongText : Colors.primaryText
+
+                            Behavior on color { ColorAnimation { duration: 150 } }
+                        }
+
+                        MouseArea {
+                            id: themeHover
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: root.toggleTheme()
+                        }
+                    }
+
                     Rectangle {
                         width: 40
                         height: 40
@@ -572,10 +615,8 @@ PanelWindow {
                 SliderRow {
                     icon: Audio.muted ? "󰖁" : "󰕾"
                     value: Audio.volumePercent
-                    onMoved: (percent) => {
-                        if (Audio.sink?.audio)
-                            Audio.sink.audio.volume = percent / 100
-                    }
+                    maxValue: 150   // allow boosting quiet sources past 100%
+                    onMoved: (percent) => Audio.setVolumePercent(percent)
                 }
 
                 SliderRow {

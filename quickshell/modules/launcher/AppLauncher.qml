@@ -17,6 +17,10 @@ PanelWindow {
 
     property bool isOpen: false
     property int selectedIndex: -1
+    property string mode: "apps"
+
+    readonly property var currentItems: mode === "clipboard" ? filteredClipboard : filteredApps
+    readonly property bool _clipboardMonitoring: ClipboardHistory.running
 
     // Explicit assignment, not a binding: ListView adjusts currentIndex on
     // model changes, which would silently break a declarative binding
@@ -33,17 +37,23 @@ PanelWindow {
         0.3
     )
 
-    function launchSelected() {
-        if (selectedIndex < 0 || selectedIndex >= filteredApps.length) return
-        const app = filteredApps[selectedIndex]
-        if (!app) return
-        launcher.command = ["gio", "launch", app.exec]
+    function activateSelected() {
+        if (selectedIndex < 0 || selectedIndex >= currentItems.length) return
+        const item = currentItems[selectedIndex]
+        if (!item) return
+        if (mode === "clipboard") {
+            clipboardCopier.command = [clipboardScript, "copy", item.id]
+            clipboardCopier.running = true
+            root.close()
+            return
+        }
+        launcher.command = ["gio", "launch", item.exec]
         launcher.running = true
         root.close()
     }
 
     function moveSelection(delta) {
-        const count = filteredApps.length
+        const count = currentItems.length
         if (count <= 0) return
         if (selectedIndex < 0) {
             selectedIndex = delta > 0 ? 0 : count - 1
@@ -53,13 +63,24 @@ PanelWindow {
         appList.positionViewAtIndex(selectedIndex, ListView.Contain)
     }
 
-    function open() {
-        visible = true
-        isOpen = true
+    function setMode(targetMode) {
+        if (targetMode !== "apps" && targetMode !== "clipboard") return
+        mode = targetMode
         selectedIndex = -1
         searchField.text = ""
-        searchField.forceActiveFocus()
+        if (mode === "clipboard") {
+            clipboardScanner.running = true
+            return
+        }
         appScanner.running = true
+    }
+
+    function open(targetMode) {
+        hideTimer.stop()
+        visible = true
+        isOpen = true
+        setMode(targetMode === "clipboard" ? "clipboard" : "apps")
+        searchField.forceActiveFocus()
     }
 
     function close() {
@@ -102,16 +123,16 @@ PanelWindow {
         id: plate
 
         readonly property int seam: 1
-        // 20 search top margin + 48 search + 14 list top + 20 list bottom
-        readonly property int chromeHeight: 102
+        // Mode tabs, search field, and list margins
+        readonly property int chromeHeight: 146
         readonly property int itemHeight: 56
         readonly property int itemSpacing: 4
         readonly property int maxShown: 8
         // Empty state needs room for the centered icon + message, so reserve a
         // few rows' worth instead of collapsing to a single row.
-        readonly property int rowsShown: root.filteredApps.length === 0
+        readonly property int rowsShown: root.currentItems.length === 0
             ? 3
-            : Math.min(maxShown, root.filteredApps.length)
+            : Math.min(maxShown, root.currentItems.length)
 
         width: 640
         height: chromeHeight + rowsShown * (itemHeight + itemSpacing) - itemSpacing
@@ -147,6 +168,97 @@ PanelWindow {
             bottomLeftRadius: 0
             bottomRightRadius: 0
 
+            Row {
+                id: modeTabs
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    topMargin: 16
+                    leftMargin: 20
+                }
+                spacing: 6
+
+                Repeater {
+                    model: [
+                        { key: "apps", icon: "󰀻", label: "Apps" },
+                        { key: "clipboard", icon: "󰅌", label: "Clipboard" }
+                    ]
+
+                    Rectangle {
+                        id: modeTab
+                        required property var modelData
+                        readonly property bool active: root.mode === modelData.key
+
+                        width: tabLabel.implicitWidth + 34
+                        height: 30
+                        radius: 10
+                        color: active ? Colors.fillStrong : (tabHover.containsMouse ? Colors.surfaceVariant : "transparent")
+
+                        Behavior on color { ColorAnimation { duration: 150 } }
+
+                        Row {
+                            id: tabLabel
+                            anchors.centerIn: parent
+                            spacing: 7
+
+                            Text {
+                                text: modeTab.modelData.icon
+                                color: modeTab.active ? Colors.fillStrongText : Colors.secondaryText
+                                font.family: "JetBrainsMono Nerd Font"
+                                font.pixelSize: 14
+                            }
+
+                            Text {
+                                text: modeTab.modelData.label
+                                color: modeTab.active ? Colors.fillStrongText : Colors.secondaryText
+                                font.family: "Poppins"
+                                font.pixelSize: 12
+                                font.weight: Font.Medium
+                            }
+                        }
+
+                        MouseArea {
+                            id: tabHover
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: root.setMode(modeTab.modelData.key)
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                    topMargin: 16
+                    rightMargin: 20
+                }
+                width: clearLabel.implicitWidth + 22
+                height: 30
+                radius: 10
+                visible: root.mode === "clipboard" && root.allClipboard.length > 0
+                color: clearHover.containsMouse ? Colors.surfaceVariant : "transparent"
+
+                Text {
+                    id: clearLabel
+                    anchors.centerIn: parent
+                    text: "Clear history"
+                    color: Colors.secondaryText
+                    font.family: "Poppins"
+                    font.pixelSize: 11
+                }
+
+                MouseArea {
+                    id: clearHover
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: clipboardClearer.running = true
+                }
+            }
+
             Rectangle {
                 id: searchBar
                 anchors {
@@ -154,7 +266,7 @@ PanelWindow {
                     left: parent.left
                     right: parent.right
                     margins: 20
-                    topMargin: 20
+                    topMargin: 58
                 }
                 height: 48
                 radius: 12
@@ -192,7 +304,7 @@ PanelWindow {
 
                         Text {
                             anchors.fill: parent
-                            text: "Search apps..."
+                            text: root.mode === "clipboard" ? "Search clipboard history..." : "Search apps..."
                             color: Colors.secondaryText
                             font: parent.font
                             visible: parent.text.length === 0
@@ -200,10 +312,12 @@ PanelWindow {
                         }
 
                         Keys.onEscapePressed: root.close()
-                        Keys.onReturnPressed: root.launchSelected()
-                        Keys.onEnterPressed: root.launchSelected()
+                        Keys.onReturnPressed: root.activateSelected()
+                        Keys.onEnterPressed: root.activateSelected()
                         Keys.onUpPressed: root.moveSelection(-1)
                         Keys.onDownPressed: root.moveSelection(1)
+                        Keys.onTabPressed: root.setMode(root.mode === "apps" ? "clipboard" : "apps")
+                        Keys.onDeletePressed: root.deleteSelectedClipboardEntry()
                         onTextChanged: root.rebuildFiltered()
                     }
                 }
@@ -226,7 +340,7 @@ PanelWindow {
                 // ScriptModel diffs values (unlike a plain array, which resets
                 // the view), so add/remove/displaced transitions actually run
                 // while typing
-                model: ScriptModel { values: root.filteredApps }
+                model: ScriptModel { values: root.currentItems }
 
                 // Soft highlight that slides to the keyboard selection
                 highlightFollowsCurrentItem: false
@@ -313,7 +427,7 @@ PanelWindow {
                         IconImage {
                             id: appIcon
                             anchors.fill: parent
-                            source: appRow.modelData.icon !== ""
+                            source: root.mode === "apps" && appRow.modelData.icon !== ""
                                 ? "file://" + appRow.modelData.icon
                                 : ""
                             smooth: true
@@ -327,9 +441,11 @@ PanelWindow {
 
                             Text {
                                 anchors.centerIn: parent
-                                text: appRow.modelData.name.length > 0
-                                    ? appRow.modelData.name[0].toUpperCase()
-                                    : "?"
+                                text: root.mode === "clipboard"
+                                    ? "󰅌"
+                                    : appRow.modelData.name.length > 0
+                                        ? appRow.modelData.name[0].toUpperCase()
+                                        : "?"
                                 color: Colors.primaryText
                                 font.family: "Poppins"
                                 font.pixelSize: 15
@@ -343,14 +459,14 @@ PanelWindow {
                             left: rowIcon.right
                             leftMargin: 14
                             right: parent.right
-                            rightMargin: 12
+                            rightMargin: root.mode === "clipboard" ? 50 : 12
                             verticalCenter: parent.verticalCenter
                         }
                         spacing: 1
 
                         Text {
                             width: parent.width
-                            text: appRow.modelData.name
+                            text: root.mode === "clipboard" ? appRow.modelData.preview : appRow.modelData.name
                             color: Colors.primaryText
                             font.family: "Poppins"
                             font.pixelSize: 14
@@ -361,7 +477,9 @@ PanelWindow {
                         Text {
                             width: parent.width
                             visible: text.length > 0
-                            text: appRow.modelData.comment !== "" ? appRow.modelData.comment : appRow.modelData.name
+                            text: root.mode === "clipboard"
+                                ? "Clipboard entry"
+                                : appRow.modelData.comment !== "" ? appRow.modelData.comment : appRow.modelData.name
                             color: Colors.secondaryText
                             font.family: "Poppins"
                             font.pixelSize: 11
@@ -376,7 +494,39 @@ PanelWindow {
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
                             root.selectedIndex = appRow.index
-                            root.launchSelected()
+                            root.activateSelected()
+                        }
+                    }
+
+                    Rectangle {
+                        anchors {
+                            right: parent.right
+                            rightMargin: 10
+                            verticalCenter: parent.verticalCenter
+                        }
+                        width: 32
+                        height: 32
+                        radius: 9
+                        visible: root.mode === "clipboard" && rowHover.containsMouse
+                        color: deleteHover.containsMouse ? Colors.surfaceVariant : "transparent"
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "󰆴"
+                            color: Colors.secondaryText
+                            font.family: "JetBrainsMono Nerd Font"
+                            font.pixelSize: 14
+                        }
+
+                        MouseArea {
+                            id: deleteHover
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: (mouse) => {
+                                mouse.accepted = true
+                                root.deleteClipboardEntry(appRow.modelData)
+                            }
                         }
                     }
                 }
@@ -384,11 +534,11 @@ PanelWindow {
                 Column {
                     anchors.centerIn: parent
                     spacing: 10
-                    visible: root.filteredApps.length === 0
+                    visible: root.currentItems.length === 0
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: "󰀻"
+                        text: root.mode === "clipboard" ? "󰅌" : "󰀻"
                         font.family: "JetBrainsMono Nerd Font"
                         font.pixelSize: 36
                         color: Colors.secondaryText
@@ -396,7 +546,9 @@ PanelWindow {
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: searchField.text.length > 0 ? "No apps found" : "Loading..."
+                        text: searchField.text.length > 0
+                            ? (root.mode === "clipboard" ? "No clipboard entries found" : "No apps found")
+                            : (root.mode === "clipboard" ? "Clipboard history is empty" : "Loading...")
                         color: Colors.secondaryText
                         font.family: "Poppins"
                         font.pixelSize: 13
@@ -408,14 +560,37 @@ PanelWindow {
 
     property var allApps: []
     property var filteredApps: []
+    property var allClipboard: []
+    property var filteredClipboard: []
+
+    readonly property string clipboardScript: Quickshell.shellDir + "/scripts/clipboard-manager.sh"
 
     function rebuildFiltered() {
         const query = searchField.text.toLowerCase().trim()
+        if (mode === "clipboard") {
+            filteredClipboard = allClipboard.filter(entry =>
+                query === "" || entry.preview.toLowerCase().includes(query)
+            )
+            selectedIndex = filteredClipboard.length > 0 ? 0 : -1
+            return
+        }
         filteredApps = allApps.filter(app =>
             query === "" || app.name.toLowerCase().includes(query)
         )
         // Top result preselected so Return launches it immediately
         selectedIndex = filteredApps.length > 0 ? 0 : -1
+    }
+
+    function deleteClipboardEntry(entry) {
+        if (!entry) return
+        clipboardDeleter.command = [clipboardScript, "delete", entry.id, entry.preview]
+        clipboardDeleter.running = true
+    }
+
+    function deleteSelectedClipboardEntry() {
+        if (mode !== "clipboard") return
+        if (selectedIndex < 0 || selectedIndex >= filteredClipboard.length) return
+        deleteClipboardEntry(filteredClipboard[selectedIndex])
     }
 
     Timer {
@@ -464,6 +639,52 @@ PanelWindow {
     }
 
     Process { id: launcher }
+
+    Process {
+        id: clipboardScanner
+        command: [root.clipboardScript, "list"]
+        running: false
+
+        stdout: SplitParser {
+            property var buffer: []
+            onRead: (line) => {
+                const separator = line.indexOf("\t")
+                if (separator < 1) return
+                const id = line.slice(0, separator).trim()
+                const preview = line.slice(separator + 1).trim()
+                if (id && preview) buffer.push({ "id": id, "preview": preview })
+            }
+        }
+
+        onRunningChanged: {
+            if (running) {
+                clipboardScanner.stdout.buffer = []
+                root.allClipboard = []
+                root.filteredClipboard = []
+                return
+            }
+            root.allClipboard = clipboardScanner.stdout.buffer
+            clipboardScanner.stdout.buffer = []
+            if (root.mode === "clipboard") root.rebuildFiltered()
+        }
+    }
+
+    Process { id: clipboardCopier }
+
+    Process {
+        id: clipboardDeleter
+        onRunningChanged: {
+            if (!running && root.mode === "clipboard") clipboardScanner.running = true
+        }
+    }
+
+    Process {
+        id: clipboardClearer
+        command: [root.clipboardScript, "clear"]
+        onRunningChanged: {
+            if (!running && root.mode === "clipboard") clipboardScanner.running = true
+        }
+    }
 
     Reveal {
         target: plate
