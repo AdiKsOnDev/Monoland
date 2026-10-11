@@ -563,10 +563,11 @@ PanelWindow {
                         width: (parent.width - 8) / 2
                         height: 70
                         radius: 22
-                        icon: Wifi.signalIcon
-                        label: "Wi-Fi"
-                        sublabel: Wifi.networkName !== "" ? Wifi.networkName : (Wifi.enabled ? "On" : "Off")
-                        active: Wifi.enabled
+                        icon: Wifi.ethernetConnected ? "󰈀" : Wifi.signalIcon
+                        label: Wifi.ethernetConnected ? "Ethernet" : "Wi-Fi"
+                        sublabel: Wifi.ethernetConnected ? "Connected" : (Wifi.networkName !== "" ? Wifi.networkName : (Wifi.enabled ? "On" : "Off"))
+                        active: Wifi.ethernetConnected || Wifi.enabled
+                        enabled: !Wifi.ethernetConnected
                         onClicked: Wifi.toggle()
                         onExpandRequested: root.settingsRequested("wifi")
                     }

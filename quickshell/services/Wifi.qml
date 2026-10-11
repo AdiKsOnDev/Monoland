@@ -1,6 +1,7 @@
 pragma Singleton
 pragma ComponentBehavior: Bound
 
+import QtQuick
 import Quickshell
 import Quickshell.Networking
 
@@ -8,6 +9,35 @@ Singleton {
     id: root
 
     readonly property bool enabled: Networking.wifiEnabled
+
+    readonly property bool ethernetConnected: {
+        for (const device of Networking.devices.values) {
+            if (device.type === DeviceType.Wired && device.connected) return true
+        }
+        return false
+    }
+
+    PersistentProperties {
+        id: ethernetPolicy
+        reloadableId: "ethernet-wifi-policy"
+        property bool restoreWifi: false
+        onLoaded: Qt.callLater(root.syncEthernetPolicy)
+    }
+
+    onEthernetConnectedChanged: Qt.callLater(root.syncEthernetPolicy)
+    onEnabledChanged: Qt.callLater(root.syncEthernetPolicy)
+
+    function syncEthernetPolicy() {
+        if (ethernetConnected) {
+            if (!enabled) return
+            ethernetPolicy.restoreWifi = true
+            Networking.wifiEnabled = false
+            return
+        }
+        if (!ethernetPolicy.restoreWifi) return
+        ethernetPolicy.restoreWifi = false
+        Networking.wifiEnabled = true
+    }
 
     // The active Wi-Fi device and its visible networks (for the control panel)
     readonly property var device: {
@@ -51,5 +81,8 @@ Singleton {
         return "󰤯"
     }
 
-    function toggle() { Networking.wifiEnabled = !Networking.wifiEnabled }
+    function toggle() {
+        if (ethernetConnected) return
+        Networking.wifiEnabled = !Networking.wifiEnabled
+    }
 }

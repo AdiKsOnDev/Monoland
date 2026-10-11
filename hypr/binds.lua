@@ -29,7 +29,7 @@ hl.bind(mainMod .. " + CTRL + P", hl.dsp.exec_cmd(scriptPath .. "/screenshot.sh 
 hl.bind(mainMod .. " + ALT + P", hl.dsp.exec_cmd(scriptPath .. "/screenshot.sh m"))
 hl.bind("Print", hl.dsp.exec_cmd(scriptPath .. "/screenshot.sh p"))
 
-hl.bind(mainMod .. " + K", hl.dsp.exec_cmd(scriptPath .. "/keyboardSwitch.sh"))
+hl.bind(mainMod .. " + SHIFT + K", hl.dsp.exec_cmd(scriptPath .. "/keyboardSwitch.sh"))
 
 local resizeBinds = {
     I = { x = 0, y = 150 },
@@ -39,7 +39,7 @@ local resizeBinds = {
 }
 
 for key, offset in pairs(resizeBinds) do
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.resize({
+    hl.bind(mainMod .. " + " .. key, hl.dsp.window.resize({
         x = offset.x,
         y = offset.y,
         relative = true,
