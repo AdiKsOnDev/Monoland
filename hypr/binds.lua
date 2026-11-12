@@ -18,6 +18,7 @@ hl.bind(mainMod .. " + W", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + BackSpace", hl.dsp.exec_cmd(powerMenu))
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("obsidian"))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("quickshell ipc call handy toggle"))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("Telegram"))
 
 for key, direction in pairs({ left = "left", right = "right", up = "up", down = "down" }) do
@@ -77,8 +78,8 @@ local repeatingLockedBinds = {
     XF86AudioLowerVolume = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
     XF86AudioMute = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     XF86AudioMicMute = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
-    XF86MonBrightnessUp = "brightnessctl -e4 -n2 set 5%+",
-    XF86MonBrightnessDown = "brightnessctl -e4 -n2 set 5%-",
+    XF86MonBrightnessUp = "brightnessctl -d amdgpu_bl1 -e4 -n2 set 5%+",
+    XF86MonBrightnessDown = "brightnessctl -d amdgpu_bl1 -e4 -n2 set 5%-",
 }
 
 for key, command in pairs(repeatingLockedBinds) do

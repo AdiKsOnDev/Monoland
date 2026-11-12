@@ -21,3 +21,11 @@ hl.window_rule({
     },
     opacity = "1 override",
 })
+
+hl.window_rule({
+    name = "t3-code-opacity",
+    match = {
+        class = "^(.*t3.*)$",
+    },
+    opacity = "1 override",
+})

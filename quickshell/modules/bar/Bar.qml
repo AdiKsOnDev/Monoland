@@ -37,6 +37,11 @@ Scope {
     }
 
     IpcHandler {
+        target: "handy"
+        function toggle() { Handy.toggle() }
+    }
+
+    IpcHandler {
         target: "clock"
         function toggle() { primaryClockPopup?.toggle() }
     }
@@ -110,6 +115,10 @@ Scope {
             OsdToast {
                 screen: modelData
                 sidebarOpen: notificationSidebar.item?.isOpen ?? false
+            }
+
+            HandyOverlay {
+                screen: modelData
             }
 
             LazyLoader {

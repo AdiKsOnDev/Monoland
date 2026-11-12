@@ -12,7 +12,7 @@ Singleton {
 
     function setBrightnessPercent(percent) {
         const clamped = Math.max(1, Math.min(100, Math.round(percent)))
-        setter.command = ["brightnessctl", "set", clamped + "%"]
+        setter.command = ["brightnessctl", "-d", "amdgpu_bl1", "set", clamped + "%"]
         setter.running = true
     }
 
@@ -22,7 +22,7 @@ Singleton {
 
     Process {
         id: getter
-        command: ["bash", "-c", "brightnessctl info | grep -oP '\\(\\K[0-9]+'"]
+        command: ["bash", "-c", "brightnessctl -d amdgpu_bl1 info | grep -oP '\\(\\K[0-9]+'"]
         running: true
 
         stdout: SplitParser {

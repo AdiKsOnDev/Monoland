@@ -6,6 +6,7 @@ singleton Bluetooth 1.0 Bluetooth.qml
 singleton Brightness 1.0 Brightness.qml
 singleton ClipboardHistory 1.0 ClipboardHistory.qml
 singleton Colors 1.0 Colors.qml
+singleton Handy 1.0 Handy.qml
 singleton Frame 1.0 Frame.qml
 singleton Md 1.0 Md.qml
 singleton Media 1.0 Media.qml

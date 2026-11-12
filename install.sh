@@ -58,6 +58,8 @@ section "Checking dependencies..."
 # Map: <command to check>: <package name to install>
 declare -A DEP_PACKAGES=(
     [quickshell]="quickshell-git"
+    [handy]="handy-bin"
+    [python3]="python"
     [grimblast]="grimblast-git"
     [swappy]="swappy"
     [brightnessctl]="brightnessctl"

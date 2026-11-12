@@ -5,6 +5,8 @@ NotificationGroup 1.0 NotificationGroup.qml
 NotificationToast 1.0 NotificationToast.qml
 MediaCard 1.0 MediaCard.qml
 OsdToast 1.0 OsdToast.qml
+HandyOverlay 1.0 HandyOverlay.qml
+HandyIndicator 1.0 HandyIndicator.qml
 PowerMenu 1.0 PowerMenu.qml
 SliderRow 1.0 SliderRow.qml
 ToggleButton 1.0 ToggleButton.qml
