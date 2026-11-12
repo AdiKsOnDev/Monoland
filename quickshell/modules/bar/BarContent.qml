@@ -153,9 +153,23 @@ Item {
                 icon: Audio.muted ? "󰖁" : Audio.volumePercent > 66 ? "󰕾" : Audio.volumePercent > 33 ? "󰖀" : "󰕿"
                 active: !Audio.muted
             }
-            StatChip {
-                icon: Battery.isCharging ? "󰂄" : Battery.capacity >= 66 ? "󰁹" : Battery.capacity >= 33 ? "󰁾" : "󰁺"
-                accent: Battery.isCharging ? Colors.chipIconActive : Colors.chipIcon
+            Row {
+                spacing: 0
+
+                StatChip {
+                    icon: Battery.isCharging ? "󰂄" : Battery.capacity >= 66 ? "󰁹" : Battery.capacity >= 33 ? "󰁾" : "󰁺"
+                    accent: Battery.isCharging ? Colors.chipIconActive : Colors.chipIcon
+                }
+
+                Text {
+                    height: 22
+                    text: Battery.capacityLabel
+                    verticalAlignment: Text.AlignVCenter
+                    color: Colors.primaryText
+                    font.family: "Poppins"
+                    font.pixelSize: 11
+                    font.weight: Font.Medium
+                }
             }
         }
 
