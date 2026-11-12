@@ -9,8 +9,10 @@ Singleton {
     id: root
 
     property int capacity: 0
-    property string status: "unknown"
+    property string batteryStatus: "unknown"
+    property bool acOnline: false
 
+    readonly property string status: acOnline && batteryStatus !== "charging" ? "pending-charge" : batteryStatus
     readonly property string capacityLabel: capacity + "%"
     readonly property bool isCharging: status === "charging" || status === "pending-charge"
 
@@ -19,15 +21,17 @@ Singleton {
         path: "/sys/class/power_supply/BAT0/capacity"
         watchChanges: true
         preload: true
-        Component.onCompleted: root.capacity = parseInt(capacityFile.text().trim()) || 0
+        onFileChanged: reload()
+        onLoaded: root.capacity = parseInt(capacityFile.text().trim()) || 0
     }
 
-FileView {
+    FileView {
         id: statusFile
         path: "/sys/class/power_supply/BAT0/status"
         watchChanges: true
         preload: true
-        Component.onCompleted: root.status = statusFile.text().trim().toLowerCase()
+        onFileChanged: reload()
+        onLoaded: root.batteryStatus = statusFile.text().trim().toLowerCase()
     }
 
     FileView {
@@ -35,35 +39,19 @@ FileView {
         path: "/sys/class/power_supply/AC0/online"
         watchChanges: true
         preload: true
+        onFileChanged: reload()
+        onLoaded: root.acOnline = parseInt(acOnlineFile.text().trim()) === 1
     }
 
-    Connections {
-        target: statusFile
-        function onInternalTextChanged() {
-            root.status = statusFile.text().trim().toLowerCase()
-        }
-    }
-
-    Connections {
-        target: acOnlineFile
-        function onInternalTextChanged() {
-            // AC online but battery not charging means pending/topping off
-            if (parseInt(acOnlineFile.text().trim()) === 1 && root.status !== "charging") {
-                root.status = "pending-charge"
-            }
-        }
-    }
-
-    Component.onCompleted: {
-        if (parseInt(acOnlineFile.text().trim()) === 1 && root.status !== "charging") {
-            root.status = "pending-charge"
-        }
-    }
-
-    Connections {
-        target: capacityFile
-        function onInternalTextChanged() {
-            root.capacity = parseInt(capacityFile.text().trim()) || 0
+    // Sysfs attributes can change without emitting file-watch notifications.
+    Timer {
+        interval: 5000
+        running: true
+        repeat: true
+        onTriggered: {
+            capacityFile.reload()
+            statusFile.reload()
+            acOnlineFile.reload()
         }
     }
 }

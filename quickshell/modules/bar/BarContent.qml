@@ -165,7 +165,7 @@ Item {
                 active: !Audio.muted
             }
             StatChip {
-                icon: Battery.isCharging ? "󰂄" : Battery.capacityLabel >= "66%" ? "󰁹" : Battery.capacityLabel >= "33%" ? "󰁾" : "󰁺"
+                icon: Battery.isCharging ? "󰂄" : Battery.capacity >= 66 ? "󰁹" : Battery.capacity >= 33 ? "󰁾" : "󰁺"
                 accent: Battery.isCharging ? Colors.chipIconActive : Colors.chipIcon
             }
         }
